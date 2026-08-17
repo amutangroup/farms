@@ -3,7 +3,7 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Amutan Groups | Multi-Unit Enterprise Poultry & AI Portal</title>
+ <title>Amutan Group</title>
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com">
  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -90,7 +90,7 @@
  
 .menu-trigger {
  background: var(--card-bg); border: 2px solid var(--border); width: 46px; height: 46px;
- border-radius: 16px; display: none; flex-direction: column; justify-content: center;
+ border-radius: 16px; display: flex; flex-direction: column; justify-content: center;
  align-items: center; gap: 5px; cursor: pointer; transition: all 0.25s ease;
  box-shadow: var(--shadow-sm);
  }
@@ -122,17 +122,20 @@
  .drawer-overlay.active { opacity: 1; pointer-events: all; }
 
  .drawer {
- position: fixed; top: 0; left: -360px; width: 340px; height: 100%;
- background: var(--card-bg); z-index: 110; padding: 1.8rem 1.4rem;
+ position: fixed; top: 0; left: -360px; width: 340px; height: 100vh;
+ max-height: 100vh;
+ background: var(--card-bg); z-index: 110; padding: 1.4rem 1.2rem;
  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2); transition: left 0.38s cubic-bezier(0.16, 1, 0.3, 1);
- display: flex; flex-direction: column; justify-content: space-between;
+ display: flex; flex-direction: column;
  border-top-right-radius: 32px; border-bottom-right-radius: 32px;
+ overflow: hidden;
  }
  .drawer.active { left: 0; }
 
  .drawer-header {
  display: flex; justify-content: space-between; align-items: center;
- padding-bottom: 1.2rem; border-bottom: 1.5px solid var(--border); margin-bottom: 1rem;
+ padding-bottom: 1rem; border-bottom: 1.5px solid var(--border); margin-bottom: 0.8rem;
+ flex-shrink: 0;
  }
  .drawer-brand h3 { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
  .drawer-brand small { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; display: block; }
@@ -143,11 +146,12 @@
  .close-btn:hover { background: var(--primary); color: #fff; transform: scale(1.05); }
 
  .drawer-scroll-body {
- flex: 1; overflow-y: auto; padding-right: 0.4rem; margin-right: -0.4rem;
+ flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+ padding-right: 0.4rem;
  display: flex; flex-direction: column; gap: 1.4rem;
  }
- .drawer-scroll-body::-webkit-scrollbar { width: 5px; }
- .drawer-scroll-body::-webkit-scrollbar-thumb { background: #fecdd3; border-radius: 10px; }
+ .drawer-scroll-body::-webkit-scrollbar { width: 6px; }
+ .drawer-scroll-body::-webkit-scrollbar-thumb { background: #fda4af; border-radius: 10px; }
 
  .nav-section { display: flex; flex-direction: column; gap: 0.4rem; }
  .nav-section-title {
@@ -174,6 +178,7 @@
  .drawer-footer {
  padding-top: 1rem; border-top: 1.5px solid var(--border);
  display: flex; flex-direction: column; gap: 0.6rem;
+ flex-shrink: 0;
  }
 
  .dashboard-container { max-width: 1240px; margin: 2rem auto; padding: 0 1.2rem; }
@@ -395,11 +400,11 @@
  <form onsubmit="handleLogin(event)">
  <div class="form-group" style="text-align: left; margin-bottom: 1.2rem;">
  <label>Username</label>
- <input type="text" id="loginUser" class="form-control" placeholder="Enter username" required value="amutan">
+ <input type="text" id="loginUser" class="form-control" placeholder="Enter username" required autocomplete="username">
  </div>
  <div class="form-group" style="text-align: left; margin-bottom: 1.8rem;">
  <label>Password</label>
- <input type="password" id="loginPass" class="form-control" placeholder="Enter password" required value="1234">
+ <input type="password" id="loginPass" class="form-control" placeholder="Enter password" required autocomplete="current-password">
  </div>
  <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem;">Enter Farm Portal</button>
  </form>
@@ -410,7 +415,6 @@
  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
  
 <div class="drawer" id="drawer">
- <div>
  <div class="drawer-header">
  <div class="drawer-brand">
  <h3>AMUTAN</h3>
@@ -473,7 +477,6 @@
  <button class="nav-link" onclick="switchNav('backupPanel', this)">
  <span class="icon-box">💾</span> Cloud Backup & Sync
  </button>
- </div>
  </div>
  </div>
 
@@ -549,7 +552,7 @@
  <div class="unit-card" onclick="openUnit(3)">
  <div>
  <div class="unit-icon">
- <svg viewBox="0 0 24 24"><ellipse cx="12" cy="13" rx="7" ry="9"/><path d="M12 4c2 3 2 6 0 9"/></svg>
+ <svg viewBox="0 0 24 24"><ellipse cx="12" rx="7" ry="9" cy="13"/><path d="M12 4c2 3 2 6 0 9"/></svg>
  </div>
  <h3>AMUTAN HATCHERIES</h3>
  <p>Setter, Candling, Incubation & Day Old Chick (DOC) Dispatches</p>
@@ -1433,8 +1436,8 @@
  }
 
  function switchNav(panelId, btn) {
- if (!state.selectedUnitId && panelId !== 'rolesPanel') {
- alert('Please select a unit first.');
+ if (!state.selectedUnitId && panelId !== 'rolesPanel' && panelId !== 'backupPanel') {
+ alert('Please select a farm division unit first.');
  return toggleDrawer();
  }
  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -1453,6 +1456,8 @@
 const found = state.users.find(acc => acc.user.toLowerCase() === u.toLowerCase() && acc.pass === p);
  if (found) {
  state.currentUser = found;
+ document.getElementById('loginUser').value = '';
+ document.getElementById('loginPass').value = '';
  document.getElementById('authOverlay').style.display = 'none';
  document.getElementById('appContainer').style.display = 'block';
  applyPermissions();
@@ -1465,6 +1470,8 @@ const found = state.users.find(acc => acc.user.toLowerCase() === u.toLowerCase()
  function logout() {
  state.currentUser = null;
  state.selectedUnitId = null;
+ document.getElementById('loginUser').value = '';
+ document.getElementById('loginPass').value = '';
  document.getElementById('appContainer').style.display = 'none';
  document.getElementById('authOverlay').style.display = 'flex';
  if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
@@ -1485,7 +1492,6 @@ const found = state.users.find(acc => acc.user.toLowerCase() === u.toLowerCase()
  state.selectedUnitId = null;
  document.getElementById('unitSelectScreen').style.display = 'block';
  document.getElementById('unitWorkspaceScreen').style.display = 'none';
- document.getElementById('mainMenuTrigger').style.display = 'none';
  if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
  }
 
@@ -1494,7 +1500,6 @@ const found = state.users.find(acc => acc.user.toLowerCase() === u.toLowerCase()
  const unit = state.units.find(u => u.id === unitId);
  document.getElementById('unitSelectScreen').style.display = 'none';
  document.getElementById('unitWorkspaceScreen').style.display = 'block';
- document.getElementById('mainMenuTrigger').style.display = 'flex';
 
  document.getElementById('currentUnitTitle').innerText = unit.name;
  document.querySelectorAll('.unit-label-span').forEach(el => el.innerText = unit.name);
@@ -2429,12 +2434,28 @@ doc.setTextColor(255, 255, 255);
  }
 
  function renderWorkspace() {
+ const searchVal = (document.getElementById('staffSearch')?.value || '').toLowerCase();
+ const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+
+ const userTbody = document.getElementById('usersList');
+ if (userTbody) {
+ userTbody.innerHTML = '';
+ state.users.forEach(u => {
+ userTbody.innerHTML += `
+ <tr>
+ <td><strong>${u.user}</strong></td>
+ <td><span class="role-badge">${u.role}</span></td>
+ <td>${u.role === 'MD' ? 'Full Master Access' : (u.role === 'Manager' ? 'Staff & Payroll' : 'Muster Logging')}</td>
+ <td>${u.user !== 'amutan' ? `<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.user}')">Revoke</button>` : 'Master MD'}</td>
+ </tr>
+ `;
+ });
+ }
+
  if (!state.selectedUnitId) return;
 
  const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
  const unitWorkerIds = unitWorkers.map(w => w.id);
- const searchVal = (document.getElementById('staffSearch')?.value || '').toLowerCase();
- const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
 
  const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
  const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
@@ -2662,19 +2683,6 @@ const repNetElem = document.getElementById('repNetPLVal');
  </tr>
  `;
  });
-
- const userTbody = document.getElementById('usersList');
- userTbody.innerHTML = '';
- state.users.forEach(u => {
- userTbody.innerHTML += `
- <tr>
- <td><strong>${u.user}</strong></td>
- <td><span class="role-badge">${u.role}</span></td>
- <td>${u.role === 'MD' ? 'Full Master Access' : (u.role === 'Manager' ? 'Staff & Payroll' : 'Muster Logging')}</td>
- <td>${u.user !== 'amutan' ? `<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.user}')">Revoke</button>` : 'Master MD'}</td>
- </tr>
- `;
- });
  }
 
  // =========================================================
@@ -2883,9 +2891,9 @@ else if (parsedOcrPayload.type === 'EXPENSE_SCAN') {
  // FLEXIBLE INTENT MATCHER (NO EXACT WORDS REQUIRED)
  // =========================================================
 
- function parseNaturalLanguageIntent(raw) {
- const text = raw.toLowerCase().trim();
- const numbers = raw.match(/\d+(\.\d+)?/g) ? raw.match(/\d+(\.\d+)?/g).map(Number) : [];
+ function parseNaturalLanguageIntent(cmd) {
+ const text = cmd.toLowerCase().trim();
+ const numbers = cmd.match(/\d+(\.\d+)?/g) ? cmd.match(/\d+(\.\d+)?/g).map(Number) : [];
  const num1 = numbers[0] || null;
  const num2 = numbers[1] || null;
 
@@ -2918,7 +2926,7 @@ else if (parsedOcrPayload.type === 'EXPENSE_SCAN') {
  // Intent: Expenses queries vs Expense Add
  if (/(expense|cost|bill|diesel|power|current|spend|செலவு|பணம்|வாங்கியது)/i.test(text)) {
  if (num1) {
- return { intent: 'ADD_EXPENSE', amount: num1, text: raw };
+ return { intent: 'ADD_EXPENSE', amount: num1, text: cmd };
  }
  return { intent: 'QUERY_FINANCES' };
  }
@@ -2951,7 +2959,7 @@ else if (parsedOcrPayload.type === 'EXPENSE_SCAN') {
  return { intent: 'ACTION_THEME' };
  }
 
- return { intent: 'UNKNOWN', raw };
+ return { intent: 'UNKNOWN', raw: cmd };
  }
 
  function parseAndExecuteAiCommand(cmd) {
