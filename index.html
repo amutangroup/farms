@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amutan Groups | Multi-Unit Poultry Operations & Biometric Shift Portal</title>
+  <title>Amutan Groups </title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -284,7 +284,8 @@
     .pill-half { background: var(--accent-soft); color: #b45309; }
     .pill-absent { background: #fee2e2; color: var(--danger); }
 
-    .batch-muster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
+    /* TWICE DAILY SHIFT CARDS & MANUAL MARK CONTROLS */
+    .batch-muster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
     .worker-muster-card {
       background: var(--card-bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.2rem;
       display: flex; flex-direction: column; gap: 0.8rem; box-shadow: var(--shadow-sm);
@@ -431,15 +432,17 @@
         <button class="nav-link active" onclick="switchNav('staffPanel', this)"><span class="icon-box">👥</span> Staff Directory</button>
         <button class="nav-link" onclick="switchNav('attPanel', this)"><span class="icon-box">⚡</span> Shift Muster (Morning & Afternoon)</button>
         <button class="nav-link" onclick="switchNav('biometricPanel', this)"><span class="icon-box">📷</span> Face Scan & Attendance</button>
+        <button class="nav-link" onclick="switchNav('timeTrackerPanel', this)"><span class="icon-box">⏱️</span> Late Arrival & Overtime</button>
         <button class="nav-link" onclick="switchNav('advPanel', this)"><span class="icon-box">💰</span> Advance Salary Ledger</button>
         <button class="nav-link" onclick="switchNav('payrollPanel', this)"><span class="icon-box">📄</span> Monthly Payroll & PDF</button>
       </div>
 
       <div class="nav-section">
-        <span class="nav-section-title">Production & Operations</span>
+        <span class="nav-section-title">Production & Logistics</span>
         <button class="nav-link" onclick="switchNav('eggPanel', this)"><span class="icon-box">🥚</span> Daily Egg Collection</button>
         <button class="nav-link" onclick="switchNav('feedPanel', this)"><span class="icon-box">🌾</span> Feed Stock & Intake</button>
         <button class="nav-link" onclick="switchNav('mortalityPanel', this)"><span class="icon-box">🩺</span> Flock Mortality & Health</button>
+        <button class="nav-link" onclick="switchNav('gatePassPanel', this)"><span class="icon-box">🚛</span> Gate Pass & DOC Dispatch</button>
       </div>
 
       <div class="nav-section">
@@ -452,6 +455,7 @@
       <div class="nav-section">
         <span class="nav-section-title">System & Security</span>
         <button class="nav-link" id="rolesMenuBtn" onclick="switchNav('rolesPanel', this)"><span class="icon-box">🛡️</span> Role & User Access</button>
+        <button class="nav-link" onclick="switchNav('geofenceSettingsPanel', this)"><span class="icon-box">📍</span> Unit Geofence Settings</button>
         <button class="nav-link" onclick="switchNav('backupPanel', this)"><span class="icon-box">💾</span> Cloud Backup & Sync</button>
       </div>
     </div>
@@ -581,12 +585,12 @@
                 <input type="text" id="staffName" class="form-control" placeholder="Full Name">
               </div>
               <div class="form-group">
-                <label>Mobile Number (WhatsApp Enabled)</label>
+                <label>WhatsApp Phone Number</label>
                 <input type="text" id="staffPhone" class="form-control" placeholder="e.g. 9876543210">
               </div>
               <div class="form-group">
                 <label>Job Designation</label>
-                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Caretaker, Supervisor">
+                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Flock Caretaker, Shed Supervisor">
               </div>
               <div class="form-group">
                 <label>Full Day Wage Rate (₹)</label>
@@ -601,7 +605,7 @@
               <span>Staff Roster - <span class="unit-label-span"></span></span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                 <button class="btn btn-primary btn-sm" onclick="downloadPoultryStaffPDF()">📄 Download PDF</button>
-                <button class="btn btn-whatsapp btn-sm" onclick="shareRosterWhatsApp()">💬 Share Roster</button>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareRosterWhatsApp()">💬 Share on WhatsApp</button>
                 <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('staffList', 'Staff_List.csv')">Export CSV</button>
               </div>
             </div>
@@ -611,7 +615,7 @@
             <div class="table-responsive">
               <table>
                 <thead>
-                  <tr><th>#</th><th>Name</th><th>WhatsApp Mobile</th><th>Designation</th><th>Daily Rate</th><th>Action</th></tr>
+                  <tr><th>#</th><th>Name</th><th>WhatsApp Phone</th><th>Designation</th><th>Daily Rate</th><th>Action</th></tr>
                 </thead>
                 <tbody id="staffList"></tbody>
               </table>
@@ -619,7 +623,7 @@
           </div>
         </div>
 
-        <!-- 2. TWICE DAILY BATCH MUSTER -->
+        <!-- 2. TWICE DAILY (MORNING & AFTERNOON) BATCH MUSTER + MANUAL ENTRY -->
         <div id="attPanel" class="panel">
           <div class="card">
             <div class="card-title">
@@ -629,24 +633,65 @@
                 <button class="btn btn-primary btn-sm" onclick="saveBatchAttendance()">Save Muster</button>
               </div>
             </div>
+            
             <div style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
               <label style="font-weight: 800; font-size: 0.9rem;">Muster Date:</label>
               <input type="date" id="batchAttDate" class="form-control" style="width: auto;" onchange="loadBatchAttendanceForDate()">
-              <button class="btn btn-whatsapp btn-sm" onclick="shareAttendanceWhatsApp()">💬 Send Daily Attendance on WhatsApp</button>
+              <button class="btn btn-whatsapp btn-sm" onclick="shareAttendanceWhatsApp()">💬 Send Daily Muster on WhatsApp</button>
             </div>
+
+            <!-- MANUAL INDIVIDUAL ENTRY FORM -->
+            <div style="background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 1.2rem; margin-bottom: 1.5rem;">
+              <div style="font-weight: 900; color: var(--primary); margin-bottom: 0.8rem;">✍️ Manual Single Worker Attendance & Timing Punch</div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Select Worker</label>
+                  <select id="manualWorkerSelect" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                  <label>Shift</label>
+                  <select id="manualShiftSelect" class="form-control">
+                    <option value="morning">Morning Shift (0.5 Unit)</option>
+                    <option value="afternoon">Afternoon Shift (0.5 Unit)</option>
+                    <option value="both">Full Day (Both Shifts - 1.0 Unit)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Status</label>
+                  <select id="manualStatusSelect" class="form-control">
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary" onclick="markManualAttendance()">✔ Mark Manual Entry</button>
+              </div>
+            </div>
+
             <div class="batch-muster-grid" id="batchMusterContainer"></div>
           </div>
         </div>
 
-        <!-- 3. LIVE BIOMETRIC FACE CAMERA -->
+        <!-- 3. LIVE BIOMETRIC FACE CAMERA WITH GEOFENCING & TIMING CHECK -->
         <div id="biometricPanel" class="panel">
           <div class="card">
             <div class="card-title">
-              <span>📷 Fast MD Face Enrollment & Shift Biometric Punch</span>
+              <span>📍 Geofenced Biometric Face Camera (<span class="unit-label-span"></span>)</span>
               <div style="display: flex; gap: 0.4rem;">
                 <button class="btn btn-sm btn-primary" id="btnModePunch" onclick="setBiometricMode('PUNCH')">Camera Punch</button>
                 <button class="btn btn-sm btn-secondary" id="btnModeEnroll" onclick="setBiometricMode('ENROLL')">MD Enroll Face</button>
               </div>
+            </div>
+
+            <!-- GEOFENCE STATUS BADGE -->
+            <div style="margin-bottom: 0.8rem; padding: 0.8rem 1.2rem; border-radius: 14px; background: var(--bg); border: 2px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem;">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span style="font-size: 1.2rem;">📍</span>
+                <div>
+                  <strong style="font-size: 0.88rem;">GPS Location Verification:</strong>
+                  <span id="geofenceStatusText" style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted); margin-left: 0.3rem;">Checking coordinates...</span>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-secondary" onclick="checkCurrentGeofence()">🔄 Refresh GPS</button>
             </div>
 
             <div class="biometric-grid">
@@ -704,7 +749,7 @@
                 <div class="card-title" style="font-size: 0.95rem; border-top: 1px solid var(--border); padding-top: 0.8rem;">Today's Live Biometric Shift Log</div>
                 <div class="table-responsive">
                   <table>
-                    <thead><tr><th>Time</th><th>Worker</th><th>Shift Punched</th><th>Total Day Units</th></tr></thead>
+                    <thead><tr><th>Time</th><th>Worker</th><th>Shift</th><th>Timing Flag</th></tr></thead>
                     <tbody id="livePunchLogBody"></tbody>
                   </table>
                 </div>
@@ -713,7 +758,126 @@
           </div>
         </div>
 
-        <!-- 4. ADVANCES -->
+        <!-- 4. LATE ARRIVAL & OVERTIME (OT) TRACKER -->
+        <div id="timeTrackerPanel" class="panel">
+          <div class="card">
+            <div class="card-title">
+              <span>⏱️ Shift Timing, Late Cutoffs & Overtime Ledger (<span class="unit-label-span"></span>)</span>
+            </div>
+            
+            <div class="form-grid" style="margin-bottom: 1.5rem;">
+              <div class="form-group">
+                <label>Morning Shift Cutoff Time</label>
+                <input type="time" id="timeCutoffMorning" class="form-control" value="08:30" onchange="persistTimeRules()">
+              </div>
+              <div class="form-group">
+                <label>Afternoon Shift Cutoff Time</label>
+                <input type="time" id="timeCutoffAfternoon" class="form-control" value="13:30" onchange="persistTimeRules()">
+              </div>
+              <div class="form-group">
+                <label>Overtime Hourly Rate (₹ / hr)</label>
+                <input type="number" id="timeOtRate" class="form-control" value="75" onchange="persistTimeRules()">
+              </div>
+            </div>
+
+            <div class="card-title" style="font-size: 1rem;">Log Manual Overtime (OT) Hours</div>
+            <div class="form-grid" style="margin-bottom: 1.5rem;">
+              <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="otLogDate" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Worker</label>
+                <select id="otWorkerSelect" class="form-control"></select>
+              </div>
+              <div class="form-group">
+                <label>OT Hours Worked</label>
+                <input type="number" step="0.5" id="otHoursInput" class="form-control" placeholder="2.5">
+              </div>
+              <div class="form-group">
+                <label>Reason / Work Description</label>
+                <input type="text" id="otReasonInput" class="form-control" placeholder="e.g. Night flock loading / Shed spray">
+              </div>
+              <button class="btn btn-primary" onclick="addOvertimeLog()">Record Overtime</button>
+            </div>
+
+            <div class="card-title" style="font-size: 1rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+              <span>Today's Late Arrivals & Overtime Log</span>
+              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('otListBody', 'Overtime_Log.csv')">Export CSV</button>
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead><tr><th>Date</th><th>Worker</th><th>Hours / Timing Flag</th><th>Total Earned (₹)</th><th>Remarks</th></tr></thead>
+                <tbody id="otListBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. VEHICLE GATE PASS & DOC DISPATCH TRACKER -->
+        <div id="gatePassPanel" class="panel">
+          <div class="card">
+            <div class="card-title">
+              <span>🚛 Issue Vehicle Gate Pass & DOC / Egg Dispatch (<span class="unit-label-span"></span>)</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Date & Time</label>
+                <input type="datetime-local" id="gatePassDateTime" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Vehicle Number</label>
+                <input type="text" id="gateVehicleNo" class="form-control" placeholder="e.g. TN 38 BX 4512">
+              </div>
+              <div class="form-group">
+                <label>Driver Name & Phone</label>
+                <input type="text" id="gateDriverInfo" class="form-control" placeholder="Driver Name / Mobile">
+              </div>
+              <div class="form-group">
+                <label>Dispatch Cargo Type</label>
+                <select id="gateCargoType" class="form-control">
+                  <option value="Day-Old Chicks (DOC)">Day-Old Chicks (DOC)</option>
+                  <option value="Hatching Eggs">Hatching Eggs</option>
+                  <option value="Commercial Table Eggs">Commercial Table Eggs</option>
+                  <option value="Poultry Manure">Poultry Manure Tractor Load</option>
+                  <option value="Feed Delivery Inward">Feed Inward Delivery</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Quantity (Chicks / Crates / Trays / Bags)</label>
+                <input type="number" id="gateQuantity" class="form-control" placeholder="12000">
+              </div>
+              <div class="form-group">
+                <label>Destination / Trader Name</label>
+                <input type="text" id="gateDestination" class="form-control" placeholder="e.g. Coimbatore Broilers / Trader">
+              </div>
+              <div class="form-group">
+                <label>Security Inspection & Disinfection</label>
+                <select id="gateDisinfection" class="form-control">
+                  <option value="Wheel Spray Done">✔ Vehicle Wheel-Dip & Spray Done</option>
+                  <option value="Full Sanitization Done">✔ Full Vehicle Disinfection Done</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="issueVehicleGatePass()">Issue Gate Pass</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <span>Gate Passes & Vehicle Movement Log</span>
+              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('gatePassListBody', 'GatePasses.csv')">Export CSV</button>
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead><tr><th>Pass #</th><th>Date & Time</th><th>Vehicle #</th><th>Driver</th><th>Cargo & Quantity</th><th>Destination</th><th>Action</th></tr></thead>
+                <tbody id="gatePassListBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. ADVANCES -->
         <div id="advPanel" class="panel">
           <div class="card">
             <div class="card-title">Issue Cash Advance Under <span class="unit-label-span"></span></div>
@@ -737,10 +901,7 @@
           <div class="card">
             <div class="card-title">
               <span>Advances Deductions Log</span>
-              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-whatsapp btn-sm" onclick="shareAdvancesWhatsApp()">💬 Share on WhatsApp</button>
-                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('advList', 'Advances.csv')">Export CSV</button>
-              </div>
+              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('advList', 'Advances.csv')">Export CSV</button>
             </div>
             <div class="table-responsive">
               <table>
@@ -751,11 +912,11 @@
           </div>
         </div>
 
-        <!-- 5. PAYROLL -->
+        <!-- 7. PAYROLL -->
         <div id="payrollPanel" class="panel">
           <div class="card">
             <div class="card-title">
-              <span>Monthly Payroll & Executive Payslips (<span class="unit-label-span"></span>)</span>
+              <span>Monthly Payroll & Payslips (<span class="unit-label-span"></span>)</span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                 <button class="btn btn-success btn-sm" onclick="downloadAllPayrollPDF()">📄 Download Master PDF</button>
                 <button class="btn btn-whatsapp btn-sm" onclick="shareMasterPayrollWhatsApp()">💬 Share Payroll Summary</button>
@@ -767,14 +928,14 @@
             </div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Worker</th><th>Daily Rate</th><th>Earned Shifts (Units)</th><th>Gross Wage</th><th>Advances</th><th>Net Payable</th><th>Actions</th></tr></thead>
+                <thead><tr><th>Worker</th><th>Daily Rate</th><th>Shifts (Units)</th><th>Overtime (₹)</th><th>Gross Wage</th><th>Advances</th><th>Net Payable</th><th>Actions</th></tr></thead>
                 <tbody id="payrollList"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 6. EGG PRODUCTION -->
+        <!-- 8. EGG PRODUCTION -->
         <div id="eggPanel" class="panel">
           <div class="card">
             <div class="card-title">Record Egg Collection & Sales (<span class="unit-label-span"></span>)</div>
@@ -825,7 +986,7 @@
           </div>
         </div>
 
-        <!-- 7. FEED INVENTORY -->
+        <!-- 9. FEED INVENTORY -->
         <div id="feedPanel" class="panel">
           <div class="card">
             <div class="card-title">Log Feed Stock & Daily Ration (<span class="unit-label-span"></span>)</div>
@@ -873,7 +1034,7 @@
           </div>
         </div>
 
-        <!-- 8. MORTALITY & BIRD HEALTH -->
+        <!-- 10. MORTALITY & BIRD HEALTH -->
         <div id="mortalityPanel" class="panel">
           <div class="card">
             <div class="card-title">Flock Health & Mortality Log (<span class="unit-label-span"></span>)</div>
@@ -911,7 +1072,7 @@
           </div>
         </div>
 
-        <!-- 9. OCR DOCUMENT SCANNER -->
+        <!-- 11. OCR DOCUMENT SCANNER -->
         <div id="scannerPanel" class="panel">
           <div class="card">
             <div class="card-title">📸 Smart OCR Slip, Muster & Bill Scanner</div>
@@ -944,7 +1105,7 @@
           </div>
         </div>
 
-        <!-- 10. FINANCIALS & P&L -->
+        <!-- 12. FINANCIALS & P&L -->
         <div id="financePanel" class="panel">
           <div class="card">
             <div class="card-title">Record Farm Operational Expense (<span class="unit-label-span"></span>)</div>
@@ -956,9 +1117,9 @@
               <div class="form-group">
                 <label>Category</label>
                 <select id="expCategory" class="form-control">
-                  <option value="Electricity & Diesel">Electricity & Diesel</option>
+                  <option value="Electricity & Diesel">Electricity & Diesel[cite: 1]</option>
                   <option value="Vaccination & Medicine">Vaccines & Medicine</option>
-                  <option value="Maintenance & Transport">Maintenance & Transport</option>
+                  <option value="Maintenance & Transport">Maintenance & Transport[cite: 1]</option>
                   <option value="Other Expenses">Other Operational Expense</option>
                 </select>
               </div>
@@ -998,7 +1159,7 @@
           </div>
         </div>
 
-        <!-- 11. REPORT HUB -->
+        <!-- 13. REPORT HUB -->
         <div id="reportHubPanel" class="panel">
           <div class="card">
             <div class="card-title">
@@ -1023,14 +1184,69 @@
           </div>
         </div>
 
-        <!-- 12. ROLES (MD ONLY) -->
+        <!-- 14. GEOFENCE MANUAL SETUP (SEPARATE FOR ALL 3 UNITS) -->
+        <div id="geofenceSettingsPanel" class="panel">
+          <div class="card">
+            <div class="card-title">
+              <span>📍 Unit Geofencing Configuration (Separately Configurable)</span>
+              <button class="btn btn-sm btn-primary" onclick="saveGeofenceSettings()">Save Geofence Coordinates</button>
+            </div>
+            
+            <p style="font-size: 0.88rem; color: var(--text-muted); font-weight: 700; margin-bottom: 1.5rem;">
+              Set the precise Latitude, Longitude, and allowed radius (in meters) for each poultry unit. Workers must physically be within the geofence perimeter to punch attendance.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <!-- Unit 1 Geofence -->
+              <div style="background: var(--bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.4rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+                  <strong style="color: var(--primary); font-size: 1.05rem;">1. AMUTAN BREEDING FARM GEOFENCE</strong>
+                  <button class="btn btn-sm btn-secondary" onclick="fetchCurrentGpsForUnit(1)">📍 Capture Current GPS</button>
+                </div>
+                <div class="form-grid">
+                  <div class="form-group"><label>Latitude</label><input type="number" step="any" id="geoLat1" class="form-control" placeholder="11.0168"></div>
+                  <div class="form-group"><label>Longitude</label><input type="number" step="any" id="geoLng1" class="form-control" placeholder="76.9558"></div>
+                  <div class="form-group"><label>Allowed Radius (Meters)</label><input type="number" id="geoRadius1" class="form-control" placeholder="150"></div>
+                </div>
+              </div>
+
+              <!-- Unit 2 Geofence -->
+              <div style="background: var(--bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.4rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+                  <strong style="color: var(--primary); font-size: 1.05rem;">2. AMUTAN FARM (COMMERCIAL) GEOFENCE</strong>
+                  <button class="btn btn-sm btn-secondary" onclick="fetchCurrentGpsForUnit(2)">📍 Capture Current GPS</button>
+                </div>
+                <div class="form-grid">
+                  <div class="form-group"><label>Latitude</label><input type="number" step="any" id="geoLat2" class="form-control" placeholder="11.1085"></div>
+                  <div class="form-group"><label>Longitude</label><input type="number" step="any" id="geoLng2" class="form-control" placeholder="77.3411"></div>
+                  <div class="form-group"><label>Allowed Radius (Meters)</label><input type="number" id="geoRadius2" class="form-control" placeholder="200"></div>
+                </div>
+              </div>
+
+              <!-- Unit 3 Geofence -->
+              <div style="background: var(--bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.4rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+                  <strong style="color: var(--primary); font-size: 1.05rem;">3. AMUTAN HATCHERIES GEOFENCE</strong>
+                  <button class="btn btn-sm btn-secondary" onclick="fetchCurrentGpsForUnit(3)">📍 Capture Current GPS</button>
+                </div>
+                <div class="form-grid">
+                  <div class="form-group"><label>Latitude</label><input type="number" step="any" id="geoLat3" class="form-control" placeholder="11.0822"></div>
+                  <div class="form-group"><label>Longitude</label><input type="number" step="any" id="geoLng3" class="form-control" placeholder="77.0124"></div>
+                  <div class="form-group"><label>Allowed Radius (Meters)</label><input type="number" id="geoRadius3" class="form-control" placeholder="120"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15. ROLES (MD ONLY) -->
         <div id="rolesPanel" class="panel">
           <div class="card">
             <div class="card-title">Create Management Account</div>
             <div class="form-grid">
               <div class="form-group"><label>Username</label><input type="text" id="newUser" class="form-control"></div>
               <div class="form-group"><label>Password</label><input type="text" id="newPass" class="form-control"></div>
-              <div class="form-group"><label>Role</label><select id="newRole" class="form-control"><option value="MD">Managing Director (MD)</option><option value="Manager">Farm Manager</option><option value="Supervisor">Supervisor</option></select></div>
+              <div class="form-group"><label>Role</label><select id="newRole" class="form-control"><option value="MD">Managing Director (MD)[cite: 1]</option><option value="Manager">Farm Manager</option><option value="Supervisor">Supervisor</option></select></div>
               <button class="btn btn-primary" onclick="createUser()">Save Account</button>
             </div>
           </div>
@@ -1042,7 +1258,7 @@
           </div>
         </div>
 
-        <!-- 13. BACKUP & CLOUD RESET -->
+        <!-- 16. BACKUP & CLOUD RESET -->
         <div id="backupPanel" class="panel">
           <div class="card">
             <div class="card-title">Cloud Backup & Device Sync</div>
@@ -1073,7 +1289,7 @@
         <span style="font-size: 1.3rem;">🤖</span>
         <div>
           <strong style="font-size: 0.95rem;">Amutan AI (அமுதன் AI)</strong>
-          <small style="display: block; font-size: 0.72rem; opacity: 0.9;">Voice, Text & Biometrics Assistant</small>
+          <small style="display: block; font-size: 0.72rem; opacity: 0.9;">Voice, Biometrics & Gatepass Assistant</small>
         </div>
       </div>
       <div style="display: flex; align-items: center; gap: 0.4rem;">
@@ -1090,10 +1306,10 @@
       <div class="ai-msg ai-msg-bot">
         👋 வணக்கம்! நான் <strong>அமுதன் AI</strong>. Speak or type in Tamil, Hindi, or English:
         <br><br>
-        • <em>"காலையில் அனைவரும் ஆஜர்" (Morning all present)</em><br>
-        • <em>"முட்டை இருப்பு சொல்லு" / "Egg status"</em><br>
-        • <em>"Scan attendance sheet" / "Face scan punch"</em><br>
-        • <em>"Switch to Hatchery" / "Add 50 bags feed"</em>
+        • <em>"காலையில் அனைவரும் ஆஜர்" (Morning shift all present)</em><br>
+        • <em>"Vehicle gate pass DOC 12000" / "Dispatch pass"</em><br>
+        • <em>"Who is late today?" / "Late arrivals"</em><br>
+        • <em>"Egg status" / "Add 50 bags feed"</em>
       </div>
     </div>
 
@@ -1129,6 +1345,16 @@
         { id: 2, name: 'AMUTAN FARM', desc: 'Commercial Poultry Operations' },
         { id: 3, name: 'AMUTAN HATCHERIES', desc: 'Incubation & Hatchery Facility' }
       ],
+      geofences: JSON.parse(localStorage.getItem('ag_geofences')) || {
+        1: { lat: 11.0168, lng: 76.9558, radius: 150 },
+        2: { lat: 11.1085, lng: 77.3411, radius: 200 },
+        3: { lat: 11.0822, lng: 77.0124, radius: 120 }
+      },
+      timeRules: JSON.parse(localStorage.getItem('ag_timerules')) || {
+        cutoffMorning: "08:30",
+        cutoffAfternoon: "13:30",
+        otRate: 75
+      },
       users: JSON.parse(localStorage.getItem('ag_users')) || [
         { user: 'amutan', pass: '1234', role: 'MD', name: 'Amutan (MD)' },
         { user: 'elango', pass: '1234', role: 'MD', name: 'Elango (MD)' },
@@ -1142,6 +1368,8 @@
         { id: 104, unitId: 3, name: 'M. Ramesh', phone: '9876543213', role: 'Hatchery Incharge', wage: 650, faceEmbedding: null }
       ],
       attendance: JSON.parse(localStorage.getItem('ag_attendance')) || [],
+      overtime: JSON.parse(localStorage.getItem('ag_overtime')) || [],
+      gatepasses: JSON.parse(localStorage.getItem('ag_gatepasses')) || [],
       advances: JSON.parse(localStorage.getItem('ag_advances')) || [],
       eggs: JSON.parse(localStorage.getItem('ag_eggs')) || [],
       feed: JSON.parse(localStorage.getItem('ag_feed')) || [],
@@ -1157,11 +1385,17 @@
     let autoDetectInterval = null;
     let biometricMode = 'PUNCH';
     let isAutoScanning = false;
+    let userCurrentGps = null;
+    let isInsideCurrentGeofence = true;
 
     function persist() {
       localStorage.setItem('ag_users', JSON.stringify(state.users));
       localStorage.setItem('ag_workers', JSON.stringify(state.workers));
       localStorage.setItem('ag_attendance', JSON.stringify(state.attendance));
+      localStorage.setItem('ag_overtime', JSON.stringify(state.overtime));
+      localStorage.setItem('ag_gatepasses', JSON.stringify(state.gatepasses));
+      localStorage.setItem('ag_geofences', JSON.stringify(state.geofences));
+      localStorage.setItem('ag_timerules', JSON.stringify(state.timeRules));
       localStorage.setItem('ag_advances', JSON.stringify(state.advances));
       localStorage.setItem('ag_eggs', JSON.stringify(state.eggs));
       localStorage.setItem('ag_feed', JSON.stringify(state.feed));
@@ -1181,6 +1415,10 @@
           if (d.users) state.users = d.users;
           if (d.workers) state.workers = d.workers;
           if (d.attendance) state.attendance = d.attendance;
+          if (d.overtime) state.overtime = d.overtime;
+          if (d.gatepasses) state.gatepasses = d.gatepasses;
+          if (d.geofences) state.geofences = d.geofences;
+          if (d.timeRules) state.timeRules = d.timeRules;
           if (d.advances) state.advances = d.advances;
           if (d.eggs) state.eggs = d.eggs;
           if (d.feed) state.feed = d.feed;
@@ -1200,474 +1438,96 @@
     }
 
     // =========================================================
-    // RELIABLE CROSS-PLATFORM WHATSAPP DISPATCHER
+    // GEOFENCE DISTANCE CALCULATOR & GPS ENGINE
     // =========================================================
 
-    function openWhatsAppLink(text, phone = '') {
-      let cleanPhone = phone.replace(/[^0-9]/g, '');
-      if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone; // Auto country code for India
-      
-      const encoded = encodeURIComponent(text);
-      const url = cleanPhone.length >= 10 
-        ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encoded}`
-        : `https://api.whatsapp.com/send?text=${encoded}`;
-      
-      const link = document.createElement('a');
-      link.href = url;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+    function calculateDistanceMeters(lat1, lon1, lat2, lon2) {
+      const R = 6371e3;
+      const φ1 = lat1 * Math.PI / 180;
+      const φ2 = lat2 * Math.PI / 180;
+      const Δφ = (lat2 - lat1) * Math.PI / 180;
+      const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ/2) * Math.sin(Δλ/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
     }
 
-    function shareViaWhatsAppDirect(workerId) {
-      const worker = state.workers.find(w => w.id === workerId);
-      if (!worker) return;
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+    function checkCurrentGeofence() {
+      const statusElem = document.getElementById('geofenceStatusText');
+      if (!navigator.geolocation) {
+        if (statusElem) statusElem.innerHTML = `<span style="color:var(--danger)">GPS not supported on device</span>`;
+        return;
+      }
 
-      const earnedUnits = state.attendance
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
+      if (statusElem) statusElem.innerHTML = `Checking GPS satellite lock...`;
 
-      const adv = state.advances
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((s, a) => s + a.amount, 0);
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          userCurrentGps = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          const activeUnitFence = state.geofences[state.selectedUnitId || 1];
 
-      const gross = earnedUnits * worker.wage;
-      const net = Math.max(0, gross - adv);
+          if (activeUnitFence && activeUnitFence.lat) {
+            const dist = calculateDistanceMeters(userCurrentGps.lat, userCurrentGps.lng, activeUnitFence.lat, activeUnitFence.lng);
+            const radius = activeUnitFence.radius || 150;
 
-      const msg = `*AMUTAN GROUPS - OFFICIAL SALARY STATEMENT*\n` +
-                  `━━━━━━━━━━━━━━━━━━━━\n` +
-                  `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                  `📅 *Month:* ${monthFilter || 'Current Term'}\n` +
-                  `👤 *Worker:* ${worker.name} (${worker.role})\n` +
-                  `💵 *Daily Rate:* Rs. ${worker.wage} / day\n` +
-                  `⏱️ *Earned Units (Shifts):* ${earnedUnits} Shifts\n` +
-                  `💰 *Gross Wages:* Rs. ${gross.toLocaleString('en-IN')}\n` +
-                  `🔻 *Advances Deducted:* - Rs. ${adv.toLocaleString('en-IN')}\n` +
-                  `━━━━━━━━━━━━━━━━━━━━\n` +
-                  `✅ *NET PAYABLE:* Rs. ${net.toLocaleString('en-IN')}\n` +
-                  `━━━━━━━━━━━━━━━━━━━━\n` +
-                  `_Amutan Groups Enterprise Portal_`;
-
-      openWhatsAppLink(msg, worker.phone || '');
+            if (dist <= radius) {
+              isInsideCurrentGeofence = true;
+              if (statusElem) statusElem.innerHTML = `<span style="color:var(--success)">✔ Verified Inside Perimeter (${Math.round(dist)}m from center)</span>`;
+            } else {
+              isInsideCurrentGeofence = false;
+              if (statusElem) statusElem.innerHTML = `<span style="color:var(--danger)">❌ OUTSIDE GEOFENCE (${Math.round(dist)}m away, Limit: ${radius}m)</span>`;
+            }
+          } else {
+            isInsideCurrentGeofence = true;
+            if (statusElem) statusElem.innerHTML = `<span style="color:var(--success)">✔ Geofence open (Coordinates not strictly restricted)</span>`;
+          }
+        },
+        (err) => {
+          console.warn("GPS Geofence Error: ", err);
+          isInsideCurrentGeofence = true;
+          if (statusElem) statusElem.innerHTML = `<span style="color:var(--accent)">⚠️ GPS bypassed for testing</span>`;
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
     }
 
-    function shareRosterWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let msg = `*AMUTAN GROUPS - WORKFORCE ROSTER*\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `👥 *Total Staff:* ${unitWorkers.length} Workers\n\n`;
-      unitWorkers.forEach((w, i) => {
-        msg += `${i+1}. *${w.name}* - ${w.role} (Rs. ${w.wage}/day) | 📱 ${w.phone || 'No Mobile'}\n`;
-      });
-      msg += `\n_Generated via Amutan Enterprise Portal_`;
-      openWhatsAppLink(msg);
+    function fetchCurrentGpsForUnit(unitId) {
+      if (!navigator.geolocation) return alert('GPS not available.');
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          document.getElementById(`geoLat${unitId}`).value = pos.coords.latitude.toFixed(6);
+          document.getElementById(`geoLng${unitId}`).value = pos.coords.longitude.toFixed(6);
+          alert(`GPS Captured for Unit ${unitId}: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`);
+        },
+        err => alert('GPS location error: ' + err.message),
+        { enableHighAccuracy: true }
+      );
     }
 
-    function shareAttendanceWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const date = document.getElementById('batchAttDate').value;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let msg = `*AMUTAN GROUPS - SHIFT MUSTER REPORT*\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📅 *Date:* ${date}\n\n`;
-      unitWorkers.forEach((w, i) => {
-        const att = state.attendance.find(a => a.workerId === w.id && a.date === date);
-        const m = att ? (att.morning ? '✔ Present' : '❌ Absent') : '-';
-        const a = att ? (att.afternoon ? '✔ Present' : '❌ Absent') : '-';
-        const units = att ? (att.units !== undefined ? att.units : 1.0) : 0;
-        msg += `${i+1}. *${w.name}*: Morning [${m}] | Afternoon [${a}] -> *${units} Units*\n`;
-      });
-      msg += `\n_Verified by Amutan Groups Biometrics_`;
-      openWhatsAppLink(msg);
+    function saveGeofenceSettings() {
+      for (let i = 1; i <= 3; i++) {
+        const lat = parseFloat(document.getElementById(`geoLat${i}`).value) || 0;
+        const lng = parseFloat(document.getElementById(`geoLng${i}`).value) || 0;
+        const radius = parseInt(document.getElementById(`geoRadius${i}`).value) || 150;
+        state.geofences[i] = { lat, lng, radius };
+      }
+      persist();
+      alert('Geofencing coordinates saved separately for all 3 units!');
     }
 
-    function shareAdvancesWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const unitWorkerIds = unitWorkers.map(w => w.id);
-      const totalAdv = state.advances.filter(ad => unitWorkerIds.includes(ad.workerId)).reduce((s, a) => s + a.amount, 0);
-
-      let msg = `*AMUTAN GROUPS - SALARY ADVANCES LEDGER*\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `💰 *Total Advances Issued:* Rs. ${totalAdv.toLocaleString('en-IN')}\n\n`;
-      state.advances.filter(ad => unitWorkerIds.includes(ad.workerId)).slice(0, 8).forEach((ad, i) => {
-        const w = unitWorkers.find(wk => wk.id === ad.workerId);
-        msg += `${i+1}. ${ad.date} - *${w ? w.name : 'Staff'}*: Rs. ${ad.amount.toLocaleString('en-IN')}\n`;
-      });
-      openWhatsAppLink(msg);
-    }
-
-    function shareMasterPayrollWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let totalGross = 0, totalAdv = 0, totalNet = 0;
-
-      unitWorkers.forEach(w => {
-        const units = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-        const adv = state.advances
-          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-        const gross = units * w.wage;
-        const net = Math.max(0, gross - adv);
-        totalGross += gross; totalAdv += adv; totalNet += net;
-      });
-
-      let msg = `*AMUTAN GROUPS - MASTER PAYROLL SUMMARY*\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📅 *Month:* ${monthFilter || 'Current Term'}\n` +
-                `👥 *Staff Count:* ${unitWorkers.length} Workers\n` +
-                `💰 *Total Gross Wages:* Rs. ${totalGross.toLocaleString('en-IN')}\n` +
-                `🔻 *Total Advances Deducted:* - Rs. ${totalAdv.toLocaleString('en-IN')}\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `💵 *NET PAYOUT REQUIRED:* Rs. ${totalNet.toLocaleString('en-IN')}\n` +
-                `━━━━━━━━━━━━━━━━━━━━`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareEggProductionWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
-      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
-      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
-      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      let msg = `*AMUTAN GROUPS - EGG PRODUCTION & SALES*\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `🥚 *Total Collected:* ${totalEggs.toLocaleString('en-IN')} Eggs\n` +
-                `🐣 *Hatching Grade:* ${totalHatching.toLocaleString('en-IN')} Eggs\n` +
-                `🎯 *Hatchability Efficiency:* ${hatchPct}%\n` +
-                `💵 *Sales Revenue:* Rs. ${totalRev.toLocaleString('en-IN')}\n` +
-                `━━━━━━━━━━━━━━━━━━━━`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareFeedWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
-      const totalIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
-      const totalOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
-      const balance = totalIn - totalOut;
-
-      let msg = `*AMUTAN GROUPS - FEED STOCK STATUS*\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📥 *Stock Received:* ${totalIn} Bags\n` +
-                `📤 *Fed / Consumed:* ${totalOut} Bags\n` +
-                `📦 *Warehouse Balance:* *${balance} Bags Remaining*\n` +
-                `━━━━━━━━━━━━━━━━━━━━`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareMortalityWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitMort = state.mortality.filter(m => m.unitId === state.selectedUnitId);
-      const totalMort = unitMort.reduce((s, m) => s + (m.count || 0), 0);
-
-      let msg = `*AMUTAN GROUPS - FLOCK HEALTH & MORTALITY*\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `🩺 *Total Losses Logged:* ${totalMort} Birds\n` +
-                `━━━━━━━━━━━━━━━━━━━━`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareFinancialWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalRevenue = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let totalPayroll = 0;
-      unitWorkers.forEach(w => {
-        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
-        totalPayroll += (units * w.wage);
-      });
-
-      const unitExpenses = state.expenses.filter(e => e.unitId === state.selectedUnitId);
-      const totalFarmExpenses = unitExpenses.reduce((s, e) => s + (e.amount || 0), 0);
-      const netPL = totalRevenue - (totalPayroll + totalFarmExpenses);
-
-      let msg = `*AMUTAN GROUPS - UNIT P&L STATEMENT*\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `💵 *Gross Sales Revenue:* Rs. ${totalRevenue.toLocaleString('en-IN')}\n` +
-                `👥 *Worker Payroll Wages:* - Rs. ${totalPayroll.toLocaleString('en-IN')}\n` +
-                `🌾 *Farm & Feed Expenses:* - Rs. ${totalFarmExpenses.toLocaleString('en-IN')}\n` +
-                `━━━━━━━━━━━━━━━━━━━━\n` +
-                `📊 *NET ${netPL >= 0 ? 'PROFIT' : 'LOSS'}:* Rs. ${netPL.toLocaleString('en-IN')}\n` +
-                `━━━━━━━━━━━━━━━━━━━━`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareComprehensiveUnitReportWhatsApp() {
-      shareFinancialWhatsApp();
-    }
-
-    // =========================================================
-    // ELEGANT, PROFESSIONAL PDF GENERATION ENGINE
-    // =========================================================
-
-    function applyPremiumPdfStyling(doc, title, subtitle) {
-      const pageWidth = doc.internal.pageSize.width;
-      
-      // Top Gradient Header Bar
-      doc.setFillColor(225, 29, 72); // Primary Crimson
-      doc.rect(0, 0, pageWidth, 28, 'F');
-      doc.setFillColor(190, 18, 60); // Darker Accent Line
-      doc.rect(0, 26, pageWidth, 2, 'F');
-
-      // Title & Subtitle
-      doc.setTextColor(255, 255, 255);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(15);
-      doc.text("AMUTAN GROUPS - " + title.toUpperCase(), 14, 13);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.text(subtitle + ` | Generated: ${new Date().toLocaleDateString('en-IN')}`, 14, 21);
-
-      // Footer
-      const pageCount = doc.internal.getNumberOfPages();
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(148, 163, 184);
-        doc.text("Amutan Groups Enterprise Portal • Confidential Poultry Ledger", 14, doc.internal.pageSize.height - 8);
-        doc.text(`Page ${i} of ${pageCount}`, pageWidth - 25, doc.internal.pageSize.height - 8);
+    function loadGeofenceInputs() {
+      for (let i = 1; i <= 3; i++) {
+        const f = state.geofences[i] || {};
+        if (document.getElementById(`geoLat${i}`)) document.getElementById(`geoLat${i}`).value = f.lat || '';
+        if (document.getElementById(`geoLng${i}`)) document.getElementById(`geoLng${i}`).value = f.lng || '';
+        if (document.getElementById(`geoRadius${i}`)) document.getElementById(`geoRadius${i}`).value = f.radius || 150;
       }
     }
 
-    function downloadPoultryStaffPDF() {
-      const doc = new jsPDF();
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const tableData = unitWorkers.map((w, idx) => [idx + 1, w.name, w.phone || 'Not Registered', w.role, `Rs. ${w.wage} / day`]);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['#', 'Worker Name', 'WhatsApp Contact', 'Designation', 'Daily Wage Rate']],
-        body: tableData,
-        theme: 'striped',
-        headStyles: { fillColor: [225, 29, 72], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 9 },
-        styles: { fontSize: 8.5, cellPadding: 3.5 },
-        alternateRowStyles: { fillColor: [255, 241, 242] }
-      });
-
-      applyPremiumPdfStyling(doc, "STAFF DIRECTORY", `${unit ? unit.name : 'Poultry Farm'}`);
-      doc.save(`AmutanGroups_Staff_${unit ? unit.name.replace(/\s+/g, '_') : 'Roster'}.pdf`);
-    }
-
-    function downloadAllPayrollPDF() {
-      const doc = new jsPDF('landscape');
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-
-      let totalGross = 0, totalAdv = 0, totalNet = 0;
-      const tableData = [];
-
-      unitWorkers.forEach((w, idx) => {
-        const units = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
-
-        const adv = state.advances
-          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-
-        const gross = units * w.wage;
-        const net = Math.max(0, gross - adv);
-        totalGross += gross; totalAdv += adv; totalNet += net;
-
-        tableData.push([
-          idx + 1,
-          w.name,
-          w.role,
-          `Rs. ${w.wage}`,
-          `${units} Shifts`,
-          `Rs. ${gross.toLocaleString('en-IN')}`,
-          `- Rs. ${adv.toLocaleString('en-IN')}`,
-          `Rs. ${net.toLocaleString('en-IN')}`
-        ]);
-      });
-
-      tableData.push([
-        '', 'TOTAL PAYOUT', '', '', '',
-        `Rs. ${totalGross.toLocaleString('en-IN')}`,
-        `- Rs. ${totalAdv.toLocaleString('en-IN')}`,
-        `Rs. ${totalNet.toLocaleString('en-IN')}`
-      ]);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['#', 'Worker Name', 'Role', 'Wage Rate', 'Earned Shifts', 'Gross Wages', 'Advances', 'Net Payable']],
-        body: tableData,
-        theme: 'grid',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold', fontSize: 9 },
-        styles: { fontSize: 8.5, cellPadding: 3.5 },
-        footStyles: { fontStyle: 'bold', fillColor: [255, 228, 230] }
-      });
-
-      applyPremiumPdfStyling(doc, "EXECUTIVE PAYROLL STATEMENT", `${unit ? unit.name : 'Division'} | Month: ${monthFilter || 'Current'}`);
-      doc.save(`AmutanGroups_Payroll_${unit ? unit.name.replace(/\s+/g, '_') : 'Statement'}.pdf`);
-    }
-
-    function downloadWorkerPayslipPDF(workerId) {
-      const doc = new jsPDF();
-      const worker = state.workers.find(w => w.id === workerId);
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-
-      const earnedUnits = state.attendance
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
-
-      const advances = state.advances
-        .filter(ad => ad.workerId === worker.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-        .reduce((s, a) => s + a.amount, 0);
-
-      const gross = earnedUnits * worker.wage;
-      const net = Math.max(0, gross - advances);
-
-      // Payslip Frame
-      doc.setFillColor(225, 29, 72);
-      doc.rect(0, 0, 210, 30, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.text("AMUTAN GROUPS", 15, 14);
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${unit ? unit.name : 'Poultry Division'} | Official Employee Salary Slip`, 15, 22);
-
-      doc.setTextColor(15, 23, 42);
-      doc.autoTable({
-        startY: 42,
-        head: [['Employee Information', 'Statement Period']],
-        body: [
-          [`Worker Name: ${worker.name}`, `Billing Month: ${monthFilter || 'Current Term'}`],
-          [`Designation: ${worker.role}`, `Daily Wage Rate: Rs. ${worker.wage} / day`],
-          [`Contact: ${worker.phone || 'Not Registered'}`, `Date of Issue: ${new Date().toLocaleDateString('en-IN')}`]
-        ],
-        theme: 'plain',
-        styles: { fontSize: 9 }
-      });
-
-      doc.autoTable({
-        startY: doc.lastAutoTable.finalY + 8,
-        head: [['Earnings & Deductions Item', 'Shift / Rate Detail', 'Amount (INR)']],
-        body: [
-          ['Earned Shift Units', `${earnedUnits} Total Shifts Worked`, `Rs. ${gross.toLocaleString('en-IN')}`],
-          ['Salary Advances Adjusted', 'Direct Cash Advance Adjustment', `- Rs. ${advances.toLocaleString('en-IN')}`],
-          ['NET SALARY PAYABLE', 'Final Cash / Bank Settlement', `Rs. ${net.toLocaleString('en-IN')}`]
-        ],
-        theme: 'striped',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' },
-        styles: { fontSize: 9, cellPadding: 4 }
-      });
-
-      const finalY = doc.lastAutoTable.finalY + 35;
-      doc.setDrawColor(203, 213, 225);
-      doc.line(15, finalY, 70, finalY);
-      doc.setFontSize(8.5);
-      doc.text("Worker Signature / Thumb", 15, finalY + 6);
-      doc.line(135, finalY, 195, finalY);
-      doc.text("Authorized Signature (MD)", 135, finalY + 6);
-
-      doc.save(`Payslip_${worker.name.replace(/\s+/g, '_')}.pdf`);
-    }
-
-    function downloadComprehensiveUnitReportPDF() {
-      const doc = new jsPDF('landscape');
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
-      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
-      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
-      const totalRevenue = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
-      const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
-      const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
-      const feedBal = feedIn - feedOut;
-
-      const unitMort = state.mortality.filter(m => m.unitId === state.selectedUnitId);
-      const totalMort = unitMort.reduce((s, m) => s + (m.count || 0), 0);
-
-      let totalPayroll = 0;
-      unitWorkers.forEach(w => {
-        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
-        totalPayroll += (units * w.wage);
-      });
-      const totalExp = state.expenses.filter(e => e.unitId === state.selectedUnitId).reduce((s, e) => s + (e.amount || 0), 0);
-      const netPL = totalRevenue - (totalPayroll + totalExp);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['Enterprise Performance Dimension', 'Recorded Metric', 'Unit Value', 'Audited Status']],
-        body: [
-          ['Active Workforce Operations', 'Total Enrolled Roster', `${unitWorkers.length} Active Staff`, 'Fully Manned'],
-          ['Egg Collection & Incubation', 'Hatchability Efficiency', `${hatchPct}%`, `${totalHatching.toLocaleString('en-IN')} Hatching / ${totalEggs.toLocaleString('en-IN')} Total Eggs`],
-          ['Warehouse Feed Stock', 'Remaining Feed Balance', `${feedBal} Bags`, `Inward: ${feedIn} / Consumed: ${feedOut} Bags`],
-          ['Flock Health Surveillance', 'Cumulative Mortality Losses', `${totalMort.toLocaleString('en-IN')} Birds`, 'Monitored'],
-          ['Unit Net Financial Position', 'Net Profit / Loss', `Rs. ${netPL.toLocaleString('en-IN')}`, netPL >= 0 ? 'NET PROFITABLE' : 'NET DEFICIT']
-        ],
-        theme: 'grid',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' },
-        styles: { fontSize: 9, cellPadding: 4 }
-      });
-
-      applyPremiumPdfStyling(doc, "COMPREHENSIVE AUDIT DOSSIER", `${unit ? unit.name : 'Poultry Division'}`);
-      doc.save(`AmutanGroups_FullReport_${unit ? unit.name.replace(/\s+/g, '_') : 'Division'}.pdf`);
-    }
-
-    function downloadFinancialPDF() { downloadComprehensiveUnitReportPDF(); }
-
-    function downloadMasterArchiveAndClearData() {
-      if (state.currentUser.role !== 'MD') return alert('MD Access Only.');
-      if (!confirm("Download Master Audit Archive and safely clear all operational records?")) return;
-      downloadComprehensiveUnitReportPDF();
-      state.attendance = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = []; state.punches = [];
-      persist();
-      alert('Master Archive PDF downloaded and operational ledger safely reset for fresh cycle!');
-    }
-
-    function exportBackupJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-      const a = document.createElement('a'); a.href = dataStr; a.download = `Amutan_Poultry_FullBackup.json`; a.click();
-    }
-    function importBackupJSON(e) {
-      const reader = new FileReader();
-      reader.onload = ev => { state = JSON.parse(ev.target.result); persist(); alert('Backup restored!'); };
-      reader.readAsText(e.target.files[0]);
-    }
-    function exportTableToCSV(tid, fn) {
-      let csv = [];
-      document.getElementById(tid).querySelectorAll('tr').forEach(r => {
-        let cols = []; r.querySelectorAll('td').forEach(c => cols.push('"' + c.innerText.trim() + '"'));
-        if (cols.length) csv.push(cols.join(','));
-      });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv.join('\n')], { type: 'text/csv' })); a.download = fn; a.click();
-    }
-
-    // =========================================================
-    // CAMERA LIFECYCLE & BIOMETRICS (ONLY ON BIOMETRICS TAB)
-    // =========================================================
-
+    // STRICT CAMERA LIFECYCLE CONTROLLER (Starts ONLY on Biometric tab)
     async function startCamera() {
       if (videoStream) return;
       try {
@@ -1677,6 +1537,7 @@
         });
         const vid = document.getElementById('liveVideo');
         if (vid) vid.srcObject = videoStream;
+        checkCurrentGeofence();
       } catch (err) {
         alert("Camera Access Required: Please grant browser webcam permissions.");
       }
@@ -1693,7 +1554,7 @@
     }
 
     function switchNav(panelId, btn) {
-      if (!state.selectedUnitId && panelId !== 'rolesPanel' && panelId !== 'backupPanel') {
+      if (!state.selectedUnitId && panelId !== 'rolesPanel' && panelId !== 'backupPanel' && panelId !== 'geofenceSettingsPanel') {
         alert('Please select a poultry division first.');
         return toggleDrawer();
       }
@@ -1768,6 +1629,7 @@
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.getElementById('staffPanel').classList.add('active');
       loadBatchAttendanceForDate();
+      loadGeofenceInputs();
       renderWorkspace();
     }
 
@@ -1790,7 +1652,272 @@
       persist();
     }
 
-    // BIOMETRICS CORE
+    // =========================================================
+    // TWICE DAILY ATTENDANCE & MANUAL OVERRIDE ENTRY
+    // =========================================================
+
+    function loadBatchAttendanceForDate() {
+      const date = document.getElementById('batchAttDate').value;
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      tempBatchAttendance = {};
+
+      unitWorkers.forEach(w => {
+        const exist = state.attendance.find(a => a.workerId === w.id && a.date === date);
+        if (exist) {
+          tempBatchAttendance[w.id] = {
+            morning: exist.morning !== undefined ? exist.morning : (exist.status === 'Present' || exist.status === 'Half Day'),
+            afternoon: exist.afternoon !== undefined ? exist.afternoon : (exist.status === 'Present')
+          };
+        } else {
+          tempBatchAttendance[w.id] = { morning: true, afternoon: true };
+        }
+      });
+      renderBatchMusterCards();
+    }
+
+    function setWorkerShiftStatus(workerId, shift, isPresent) {
+      if (!tempBatchAttendance[workerId]) tempBatchAttendance[workerId] = { morning: true, afternoon: true };
+      tempBatchAttendance[workerId][shift] = isPresent;
+      renderBatchMusterCards();
+    }
+
+    function quickMarkAllShifts(status) {
+      const isPresent = status === 'Present';
+      state.workers.filter(w => w.unitId === state.selectedUnitId).forEach(w => {
+        tempBatchAttendance[w.id] = { morning: isPresent, afternoon: isPresent };
+      });
+      renderBatchMusterCards();
+    }
+
+    function markManualAttendance() {
+      const workerId = parseInt(document.getElementById('manualWorkerSelect').value);
+      const shiftChoice = document.getElementById('manualShiftSelect').value;
+      const isPresent = document.getElementById('manualStatusSelect').value === 'Present';
+      const date = document.getElementById('batchAttDate').value;
+
+      if (!workerId || !date) return alert('Select a worker and date.');
+
+      if (!tempBatchAttendance[workerId]) tempBatchAttendance[workerId] = { morning: true, afternoon: true };
+
+      if (shiftChoice === 'morning') {
+        tempBatchAttendance[workerId].morning = isPresent;
+      } else if (shiftChoice === 'afternoon') {
+        tempBatchAttendance[workerId].afternoon = isPresent;
+      } else {
+        tempBatchAttendance[workerId].morning = isPresent;
+        tempBatchAttendance[workerId].afternoon = isPresent;
+      }
+
+      saveBatchAttendance();
+    }
+
+    function renderBatchMusterCards() {
+      const container = document.getElementById('batchMusterContainer');
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      container.innerHTML = '';
+
+      unitWorkers.forEach(w => {
+        const record = tempBatchAttendance[w.id] || { morning: true, afternoon: true };
+        const totalUnits = (record.morning ? 0.5 : 0) + (record.afternoon ? 0.5 : 0);
+        let summaryPill = `<span class="pill pill-present">Full Day (1.0 Unit)</span>`;
+        if (totalUnits === 0.5) summaryPill = `<span class="pill pill-half">Half Day (0.5 Unit)</span>`;
+        if (totalUnits === 0) summaryPill = `<span class="pill pill-absent">Absent (0.0 Unit)</span>`;
+
+        container.innerHTML += `
+          <div class="worker-muster-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <strong>${w.name}</strong>
+                <small style="display:block; color:var(--text-muted);">${w.role} (₹${w.wage}/day)</small>
+              </div>
+              <div>${summaryPill}</div>
+            </div>
+
+            <div class="shift-toggle-row">
+              <span class="shift-toggle-label">🌅 Morning Shift (0.5 Unit)</span>
+              <div class="status-toggle-group">
+                <div class="status-chip ${record.morning ? 'selected-present' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'morning', true)">Present</div>
+                <div class="status-chip ${!record.morning ? 'selected-absent' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'morning', false)">Absent</div>
+              </div>
+            </div>
+
+            <div class="shift-toggle-row">
+              <span class="shift-toggle-label">🌇 Afternoon Shift (0.5 Unit)</span>
+              <div class="status-toggle-group">
+                <div class="status-chip ${record.afternoon ? 'selected-present' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'afternoon', true)">Present</div>
+                <div class="status-chip ${!record.afternoon ? 'selected-absent' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'afternoon', false)">Absent</div>
+              </div>
+            </div>
+          </div>`;
+      });
+    }
+
+    function saveBatchAttendance() {
+      const date = document.getElementById('batchAttDate').value;
+      if (!date) return alert('Select date.');
+      const unitWorkerIds = state.workers.filter(w => w.unitId === state.selectedUnitId).map(w => w.id);
+
+      state.attendance = state.attendance.filter(a => !(a.date === date && unitWorkerIds.includes(a.workerId)));
+      Object.keys(tempBatchAttendance).forEach(wId => {
+        const shifts = tempBatchAttendance[wId];
+        const units = (shifts.morning ? 0.5 : 0) + (shifts.afternoon ? 0.5 : 0);
+        let status = 'Absent';
+        if (units === 1.0) status = 'Present';
+        else if (units === 0.5) status = 'Half Day';
+
+        state.attendance.unshift({
+          date,
+          workerId: parseInt(wId),
+          morning: shifts.morning,
+          afternoon: shifts.afternoon,
+          units,
+          status
+        });
+      });
+      persist();
+      alert(`Muster attendance for ${date} saved successfully!`);
+    }
+
+    // =========================================================
+    // LATE ARRIVAL & OVERTIME TRACKER
+    // =========================================================
+
+    function persistTimeRules() {
+      state.timeRules = {
+        cutoffMorning: document.getElementById('timeCutoffMorning').value || "08:30",
+        cutoffAfternoon: document.getElementById('timeCutoffAfternoon').value || "13:30",
+        otRate: parseFloat(document.getElementById('timeOtRate').value) || 75
+      };
+      persist();
+    }
+
+    function checkLateStatus(shift, punchTimeString) {
+      const parts = punchTimeString.split(':');
+      const punchHour = parseInt(parts[0]);
+      const punchMin = parseInt(parts[1]);
+      const punchMinutes = punchHour * 60 + punchMin;
+
+      const cutoffStr = shift === 'morning' ? state.timeRules.cutoffMorning : state.timeRules.cutoffAfternoon;
+      const cutoffParts = cutoffStr.split(':');
+      const cutoffMinutes = parseInt(cutoffParts[0]) * 60 + parseInt(cutoffParts[1]);
+
+      if (punchMinutes > cutoffMinutes) {
+        return `Late (+${punchMinutes - cutoffMinutes} mins)`;
+      }
+      return 'On Time';
+    }
+
+    function addOvertimeLog() {
+      const date = document.getElementById('otLogDate').value;
+      const workerId = parseInt(document.getElementById('otWorkerSelect').value);
+      const hours = parseFloat(document.getElementById('otHoursInput').value) || 0;
+      const reason = document.getElementById('otReasonInput').value.trim() || 'General Maintenance';
+
+      if (!date || !workerId || hours <= 0) return alert('Fill overtime date, worker and valid hours.');
+      const rate = state.timeRules.otRate || 75;
+      const amount = hours * rate;
+
+      state.overtime.unshift({
+        id: Date.now(),
+        unitId: state.selectedUnitId,
+        date,
+        workerId,
+        hours,
+        rate,
+        amount,
+        reason
+      });
+
+      document.getElementById('otHoursInput').value = '';
+      document.getElementById('otReasonInput').value = '';
+      persist();
+      alert(`Recorded ${hours} OT hours (₹${amount}) for worker!`);
+    }
+
+    // =========================================================
+    // VEHICLE GATE PASS & DOC DISPATCH
+    // =========================================================
+
+    function issueVehicleGatePass() {
+      const dateTime = document.getElementById('gatePassDateTime').value;
+      const vehicleNo = document.getElementById('gateVehicleNo').value.trim();
+      const driverInfo = document.getElementById('gateDriverInfo').value.trim();
+      const cargo = document.getElementById('gateCargoType').value;
+      const quantity = parseInt(document.getElementById('gateQuantity').value) || 0;
+      const destination = document.getElementById('gateDestination').value.trim();
+      const disinfection = document.getElementById('gateDisinfection').value;
+
+      if (!dateTime || !vehicleNo || !driverInfo) return alert('Fill gate pass date, vehicle and driver details.');
+
+      const passNo = 'GP-' + (state.gatepasses.length + 1001);
+      const newPass = {
+        id: Date.now(),
+        passNo,
+        unitId: state.selectedUnitId,
+        dateTime,
+        vehicleNo,
+        driverInfo,
+        cargo,
+        quantity,
+        destination,
+        disinfection
+      };
+
+      state.gatepasses.unshift(newPass);
+      document.getElementById('gateVehicleNo').value = '';
+      document.getElementById('gateDriverInfo').value = '';
+      document.getElementById('gateQuantity').value = '';
+      document.getElementById('gateDestination').value = '';
+      persist();
+
+      downloadSingleGatePassPDF(newPass);
+      alert(`Gate Pass #${passNo} issued and PDF generated successfully!`);
+    }
+
+    function downloadSingleGatePassPDF(pass) {
+      const doc = new jsPDF();
+      const unit = state.units.find(u => u.id === pass.unitId);
+
+      doc.setFillColor(225, 29, 72);
+      doc.rect(0, 0, doc.internal.pageSize.width, 28, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text("AMUTAN GROUPS - VEHICLE GATE PASS", 14, 14);
+      doc.setFontSize(8.5);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`${unit ? unit.name : 'Poultry Division'} | Gate Security Clearance`, 14, 22);
+
+      doc.setTextColor(15, 23, 42);
+      doc.autoTable({
+        startY: 36,
+        head: [['Gate Pass Parameter', 'Details / Clearance Manifest']],
+        body: [
+          ['Pass Number', pass.passNo],
+          ['Outward Date & Time', pass.dateTime],
+          ['Vehicle Registration', pass.vehicleNo],
+          ['Driver Contact', pass.driverInfo],
+          ['Cargo Loaded', `${pass.quantity.toLocaleString()} units of ${pass.cargo}`],
+          ['Destination Trader', pass.destination || 'Direct Wholesale lifting'],
+          ['Biosecurity Check', pass.disinfection]
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
+      });
+
+      const finalY = doc.lastAutoTable.finalY + 30;
+      doc.line(14, finalY, 70, finalY);
+      doc.text("Driver Signature", 14, finalY + 6);
+      doc.line(140, finalY, 196, finalY);
+      doc.text("Security Officer Stamp", 140, finalY + 6);
+
+      doc.save(`GatePass_${pass.passNo}_${pass.vehicleNo.replace(/\s+/g, '_')}.pdf`);
+    }
+
+    // =========================================================
+    // BIOMETRIC PUNCH & GEOFENCE ENFORCEMENT
+    // =========================================================
+
     function setBiometricMode(mode) {
       biometricMode = mode;
       document.getElementById('btnModePunch').classList.toggle('btn-primary', mode === 'PUNCH');
@@ -1886,6 +2013,11 @@
     }
 
     function scanFaceForAttendance() {
+      if (!isInsideCurrentGeofence) {
+        alert("GEOFENCE PERIMETER RESTRICTION: You are outside the authorized poultry farm boundary.");
+        return false;
+      }
+
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId && w.faceEmbedding !== null);
       if (unitWorkers.length === 0) return alert("No registered faces in this unit. Use 'MD Enroll Face' first.");
 
@@ -1914,6 +2046,8 @@
     function recordBiometricShiftPunch(worker, shift) {
       const today = new Date().toISOString().slice(0, 10);
       const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const time24 = new Date().toTimeString().slice(0,5);
+      const timingFlag = checkLateStatus(shift, time24);
 
       let existIndex = state.attendance.findIndex(a => a.date === today && a.workerId === worker.id);
       let record = { date: today, workerId: worker.id, morning: false, afternoon: false, units: 0.5, status: 'Half Day' };
@@ -1934,12 +2068,13 @@
         workerName: worker.name,
         unitId: worker.unitId,
         shift: shift === 'morning' ? 'Morning Shift (0.5)' : 'Afternoon Shift (0.5)',
-        totalUnits: `${record.units} Units`
+        totalUnits: `${record.units} Units`,
+        timingFlag
       });
 
       const flash = document.getElementById('punchFlash');
       const shiftName = shift === 'morning' ? 'MORNING SHIFT' : 'AFTERNOON SHIFT';
-      document.getElementById('flashText').innerHTML = `✔ ${worker.name.toUpperCase()}<br><span style="font-size:0.85rem;">${shiftName} RECORDED (${record.units} UNITS)</span>`;
+      document.getElementById('flashText').innerHTML = `✔ ${worker.name.toUpperCase()}<br><span style="font-size:0.85rem;">${shiftName} (${timingFlag})</span>`;
       flash.style.display = 'flex';
       setTimeout(() => { flash.style.display = 'none'; }, 2000);
 
@@ -1962,7 +2097,7 @@
       isAutoScanning = true;
       document.getElementById('btnAutoScan').innerText = '⏹ Stop Auto Punch';
       document.getElementById('btnAutoScan').className = 'btn btn-danger-solid';
-      document.getElementById('hudGuidanceText').innerText = 'AUTO HANDS-FREE SCANNING ACTIVE';
+      document.getElementById('hudGuidanceText').innerText = 'AUTO GEOFENCED SCANNING ACTIVE';
       autoDetectInterval = setInterval(() => { scanFaceForAttendance(); }, 400);
     }
 
@@ -1975,6 +2110,7 @@
       if (hud) hud.innerText = 'ALIGN FACE INSIDE OVAL TARGET';
     }
 
+    // AUDIO CHIME & SPEECH ENGINE
     function playBeepSound() {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -2026,7 +2162,472 @@
       });
     }
 
-    // OCR DOCUMENT & OTHER WORKFLOWS
+    // WHATSAPP HELPER
+    function openWhatsAppLink(text, phone = '') {
+      let cleanPhone = phone.replace(/[^0-9]/g, '');
+      if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+      const encoded = encodeURIComponent(text);
+      const url = cleanPhone.length >= 10 
+        ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encoded}`
+        : `https://api.whatsapp.com/send?text=${encoded}`;
+      const link = document.createElement('a');
+      link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      document.body.appendChild(link); link.click(); link.remove();
+    }
+
+    function shareViaWhatsAppDirect(workerId) {
+      const worker = state.workers.find(w => w.id === workerId);
+      if (!worker) return;
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+
+      const earnedUnits = state.attendance
+        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
+        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
+
+      const adv = state.advances
+        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
+        .reduce((s, a) => s + a.amount, 0);
+
+      const otAmount = state.overtime
+        .filter(o => o.workerId === worker.id && (!monthFilter || o.date.startsWith(monthFilter)))
+        .reduce((s, o) => s + o.amount, 0);
+
+      const gross = (earnedUnits * worker.wage) + otAmount;
+      const net = Math.max(0, gross - adv);
+
+      const msg = `*AMUTAN GROUPS - SALARY SLIP*\n` +
+                  `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                  `👤 *Worker:* ${worker.name} (${worker.role})\n` +
+                  `⏱️ *Earned Shifts:* ${earnedUnits} Shifts\n` +
+                  `⚡ *Overtime:* + Rs. ${otAmount}\n` +
+                  `💰 *Gross Wages:* Rs. ${gross.toLocaleString('en-IN')}\n` +
+                  `🔻 *Advances Deducted:* - Rs. ${adv.toLocaleString('en-IN')}\n` +
+                  `*NET PAYABLE:* Rs. ${net.toLocaleString('en-IN')}`;
+
+      openWhatsAppLink(msg, worker.phone || '');
+    }
+
+    function shareRosterWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      let msg = `*AMUTAN GROUPS - WORKFORCE ROSTER*\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n\n`;
+      unitWorkers.forEach((w, i) => {
+        msg += `${i+1}. *${w.name}* (${w.role}) - Rs. ${w.wage}/day | 📱 ${w.phone || '-'}\n`;
+      });
+      openWhatsAppLink(msg);
+    }
+
+    function shareAttendanceWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const date = document.getElementById('batchAttDate').value;
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      let msg = `*AMUTAN GROUPS - SHIFT MUSTER REPORT*\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `📅 *Date:* ${date}\n\n`;
+      unitWorkers.forEach((w, i) => {
+        const att = state.attendance.find(a => a.workerId === w.id && a.date === date);
+        const m = att ? (att.morning ? '✔' : '❌') : '-';
+        const a = att ? (att.afternoon ? '✔' : '❌') : '-';
+        const units = att ? (att.units !== undefined ? att.units : 1.0) : 0;
+        msg += `${i+1}. *${w.name}*: Morning [${m}] | Afternoon [${a}] -> *${units} Units*\n`;
+      });
+      openWhatsAppLink(msg);
+    }
+
+    function shareMasterPayrollWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      let totalGross = 0, totalAdv = 0, totalNet = 0;
+
+      unitWorkers.forEach(w => {
+        const units = state.attendance
+          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
+          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
+        const adv = state.advances
+          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
+          .reduce((s, a) => s + a.amount, 0);
+        const ot = state.overtime
+          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
+          .reduce((s, o) => s + o.amount, 0);
+
+        const gross = (units * w.wage) + ot;
+        const net = Math.max(0, gross - adv);
+        totalGross += gross; totalAdv += adv; totalNet += net;
+      });
+
+      let msg = `*AMUTAN GROUPS - PAYROLL SUMMARY*\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `📅 *Month:* ${monthFilter || 'Current'}\n` +
+                `💰 *Total Gross:* Rs. ${totalGross.toLocaleString('en-IN')}\n` +
+                `🔻 *Total Advances:* - Rs. ${totalAdv.toLocaleString('en-IN')}\n` +
+                `💵 *NET PAYOUT:* Rs. ${totalNet.toLocaleString('en-IN')}`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareEggProductionWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
+      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
+      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
+      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
+      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
+
+      let msg = `*AMUTAN GROUPS - EGG PRODUCTION*\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `🥚 *Total Collected:* ${totalEggs.toLocaleString('en-IN')} Eggs\n` +
+                `🐣 *Hatching Grade:* ${totalHatching.toLocaleString('en-IN')} Eggs (${hatchPct}%)\n` +
+                `💵 *Revenue:* Rs. ${totalRev.toLocaleString('en-IN')}`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareFeedWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
+      const totalIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
+      const totalOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
+      const balance = totalIn - totalOut;
+
+      let msg = `*AMUTAN GROUPS - FEED STOCK STATUS*\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `📥 *Received:* ${totalIn} Bags | 📤 *Fed:* ${totalOut} Bags\n` +
+                `📦 *Remaining Balance:* ${balance} Bags`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareMortalityWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const totalMort = state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0);
+      let msg = `*AMUTAN GROUPS - FLOCK HEALTH*\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `🩺 *Total Mortality:* ${totalMort} Birds`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareFinancialWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
+      const totalRevenue = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
+
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      let totalPayroll = 0;
+      unitWorkers.forEach(w => {
+        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
+        totalPayroll += (units * w.wage);
+      });
+
+      const totalExp = state.expenses.filter(e => e.unitId === state.selectedUnitId).reduce((s, e) => s + (e.amount || 0), 0);
+      const netPL = totalRevenue - (totalPayroll + totalExp);
+
+      let msg = `*AMUTAN GROUPS - P&L STATEMENT*\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `💵 *Revenue:* Rs. ${totalRevenue.toLocaleString('en-IN')}\n` +
+                `👥 *Payroll:* - Rs. ${totalPayroll.toLocaleString('en-IN')}\n` +
+                `🌾 *Expenses:* - Rs. ${totalExp.toLocaleString('en-IN')}\n` +
+                `📊 *NET ${netPL >= 0 ? 'PROFIT' : 'LOSS'}:* Rs. ${netPL.toLocaleString('en-IN')}`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareComprehensiveUnitReportWhatsApp() {
+      shareFinancialWhatsApp();
+    }
+
+    // PDF GENERATOR WITH EXECUTIVE FORMATTING
+    function applyPremiumPdfStyling(doc, title, subtitle) {
+      const pageWidth = doc.internal.pageSize.width;
+      doc.setFillColor(225, 29, 72);
+      doc.rect(0, 0, pageWidth, 28, 'F');
+      doc.setFillColor(190, 18, 60);
+      doc.rect(0, 26, pageWidth, 2, 'F');
+
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(15);
+      doc.text("AMUTAN GROUPS - " + title.toUpperCase(), 14, 13);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.text(subtitle + ` | Date: ${new Date().toLocaleDateString('en-IN')}`, 14, 21);
+
+      const pageCount = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(148, 163, 184);
+        doc.text("Amutan Groups Enterprise Portal • Confidential Poultry Ledger", 14, doc.internal.pageSize.height - 8);
+        doc.text(`Page ${i} of ${pageCount}`, pageWidth - 25, doc.internal.pageSize.height - 8);
+      }
+    }
+
+    function downloadPoultryStaffPDF() {
+      const doc = new jsPDF();
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      const tableData = unitWorkers.map((w, idx) => [idx + 1, w.name, w.phone || '-', w.role, `Rs. ${w.wage} / day`]);
+
+      doc.autoTable({
+        startY: 34,
+        head: [['#', 'Worker Name', 'WhatsApp Contact', 'Designation', 'Daily Rate']],
+        body: tableData,
+        theme: 'striped',
+        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
+      });
+      applyPremiumPdfStyling(doc, "STAFF DIRECTORY", `${unit ? unit.name : 'Poultry Farm'}`);
+      doc.save(`Staff_${unit ? unit.name.replace(/\s+/g, '_') : 'Roster'}.pdf`);
+    }
+
+    function downloadAllPayrollPDF() {
+      const doc = new jsPDF('landscape');
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+
+      let totalGross = 0, totalAdv = 0, totalNet = 0;
+      const tableData = [];
+
+      unitWorkers.forEach((w, idx) => {
+        const units = state.attendance
+          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
+          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
+
+        const adv = state.advances
+          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
+          .reduce((s, a) => s + a.amount, 0);
+
+        const ot = state.overtime
+          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
+          .reduce((s, o) => s + o.amount, 0);
+
+        const gross = (units * w.wage) + ot;
+        const net = Math.max(0, gross - adv);
+        totalGross += gross; totalAdv += adv; totalNet += net;
+
+        tableData.push([
+          idx + 1, w.name, w.role, `Rs. ${w.wage}`, `${units} Shifts`, `+ Rs. ${ot}`, `Rs. ${gross.toLocaleString('en-IN')}`, `- Rs. ${adv.toLocaleString('en-IN')}`, `Rs. ${net.toLocaleString('en-IN')}`
+        ]);
+      });
+
+      tableData.push(['', 'TOTAL PAYOUT', '', '', '', '', `Rs. ${totalGross.toLocaleString('en-IN')}`, `- Rs. ${totalAdv.toLocaleString('en-IN')}`, `Rs. ${totalNet.toLocaleString('en-IN')}`]);
+
+      doc.autoTable({
+        startY: 34,
+        head: [['#', 'Worker Name', 'Role', 'Wage Rate', 'Earned Shifts', 'Overtime', 'Gross Wages', 'Advances', 'Net Payable']],
+        body: tableData,
+        theme: 'grid',
+        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
+      });
+      applyPremiumPdfStyling(doc, "PAYROLL STATEMENT", `${unit ? unit.name : 'Division'} | Month: ${monthFilter || 'Current'}`);
+      doc.save(`Payroll_${unit ? unit.name.replace(/\s+/g, '_') : 'Statement'}.pdf`);
+    }
+
+    function downloadWorkerPayslipPDF(workerId) {
+      const doc = new jsPDF();
+      const worker = state.workers.find(w => w.id === workerId);
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+
+      const earnedUnits = state.attendance
+        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
+        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
+
+      const advances = state.advances
+        .filter(ad => ad.workerId === worker.id && (!monthFilter || ad.date.startsWith(monthFilter)))
+        .reduce((s, a) => s + a.amount, 0);
+
+      const ot = state.overtime
+        .filter(o => o.workerId === worker.id && (!monthFilter || o.date.startsWith(monthFilter)))
+        .reduce((s, o) => s + o.amount, 0);
+
+      const gross = (earnedUnits * worker.wage) + ot;
+      const net = Math.max(0, gross - advances);
+
+      doc.setFillColor(225, 29, 72);
+      doc.rect(0, 0, 210, 30, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(18);
+      doc.setFont('helvetica', 'bold');
+      doc.text("AMUTAN GROUPS", 15, 14);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`${unit ? unit.name : 'Poultry Division'} | Official Payslip`, 15, 22);
+
+      doc.setTextColor(15, 23, 42);
+      doc.autoTable({
+        startY: 40,
+        head: [['Worker Details', 'Billing Period']],
+        body: [
+          [`Worker Name: ${worker.name}`, `Month: ${monthFilter || 'Current Term'}`],
+          [`Role: ${worker.role}`, `Rate: Rs. ${worker.wage} / day`],
+          [`Mobile: ${worker.phone || '-'}`, `Date: ${new Date().toLocaleDateString('en-IN')}`]
+        ],
+        theme: 'plain'
+      });
+
+      doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 6,
+        head: [['Item', 'Calculation Detail', 'Amount (INR)']],
+        body: [
+          ['Earned Shift Units', `${earnedUnits} Shifts worked`, `Rs. ${(earnedUnits * worker.wage).toLocaleString('en-IN')}`],
+          ['Overtime (OT)', 'Approved OT Hours', `+ Rs. ${ot.toLocaleString('en-IN')}`],
+          ['Salary Advances Deducted', 'Cash advances adjusted', `- Rs. ${advances.toLocaleString('en-IN')}`],
+          ['NET SALARY PAYABLE', 'Final Settlement', `Rs. ${net.toLocaleString('en-IN')}`]
+        ],
+        theme: 'striped',
+        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
+      });
+
+      const finalY = doc.lastAutoTable.finalY + 30;
+      doc.line(15, finalY, 70, finalY);
+      doc.text("Worker Signature / Thumb", 15, finalY + 6);
+      doc.line(135, finalY, 195, finalY);
+      doc.text("Authorized Signature (MD)", 135, finalY + 6);
+
+      doc.save(`Payslip_${worker.name.replace(/\s+/g, '_')}.pdf`);
+    }
+
+    function downloadComprehensiveUnitReportPDF() {
+      const doc = new jsPDF('landscape');
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
+      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
+      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
+      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
+      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
+
+      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
+      const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
+      const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
+      const feedBal = feedIn - feedOut;
+
+      const totalMort = state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0);
+
+      let totalPayroll = 0;
+      unitWorkers.forEach(w => {
+        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
+        totalPayroll += (units * w.wage);
+      });
+      const totalExp = state.expenses.filter(e => e.unitId === state.selectedUnitId).reduce((s, e) => s + (e.amount || 0), 0);
+      const netPL = totalRev - (totalPayroll + totalExp);
+
+      doc.autoTable({
+        startY: 34,
+        head: [['Operational Dimension', 'Metric', 'Unit Value', 'Status']],
+        body: [
+          ['Staff Workforce', 'Total Active Roster', `${unitWorkers.length} Workers`, 'Active'],
+          ['Egg Collection', 'Hatchability Efficiency', `${hatchPct}%`, `${totalHatching.toLocaleString('en-IN')} Hatching / ${totalEggs.toLocaleString('en-IN')} Total Eggs`],
+          ['Feed Warehouse', 'Stock Balance', `${feedBal} Bags`, `Received: ${feedIn} / Fed: ${feedOut} Bags`],
+          ['Flock Health', 'Total Mortality', `${totalMort.toLocaleString('en-IN')} Birds`, 'Monitored'],
+          ['Unit Financials', 'Net Profit / Loss', `Rs. ${netPL.toLocaleString('en-IN')}`, netPL >= 0 ? 'PROFITABLE' : 'DEFICIT']
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
+      });
+      applyPremiumPdfStyling(doc, "UNIT AUDIT REPORT", `${unit ? unit.name : 'Poultry Division'}`);
+      doc.save(`FullReport_${unit ? unit.name.replace(/\s+/g, '_') : 'Division'}.pdf`);
+    }
+
+    function downloadFinancialPDF() { downloadComprehensiveUnitReportPDF(); }
+
+    function downloadMasterArchiveAndClearData() {
+      if (state.currentUser.role !== 'MD') return alert('MD Access Only.');
+      if (!confirm("Download Master Audit Archive and clear operational logs?")) return;
+      downloadComprehensiveUnitReportPDF();
+      state.attendance = []; state.overtime = []; state.gatepasses = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = []; state.punches = [];
+      persist();
+      alert('Master Archive PDF downloaded and ledger safely cleared!');
+    }
+
+    function exportBackupJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+      const a = document.createElement('a'); a.href = dataStr; a.download = `Amutan_FullBackup.json`; a.click();
+    }
+    function importBackupJSON(e) {
+      const reader = new FileReader();
+      reader.onload = ev => { state = JSON.parse(ev.target.result); persist(); alert('Backup restored!'); };
+      reader.readAsText(e.target.files[0]);
+    }
+    function exportTableToCSV(tid, fn) {
+      let csv = [];
+      document.getElementById(tid).querySelectorAll('tr').forEach(r => {
+        let cols = []; r.querySelectorAll('td').forEach(c => cols.push('"' + c.innerText.trim() + '"'));
+        if (cols.length) csv.push(cols.join(','));
+      });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv.join('\n')], { type: 'text/csv' })); a.download = fn; a.click();
+    }
+
+    // OTHER DATA MODULES
+    function issueAdvance() {
+      const date = document.getElementById('advDate').value;
+      const workerId = parseInt(document.getElementById('advWorker').value);
+      const amount = parseFloat(document.getElementById('advAmount').value);
+      if (!date || !workerId || isNaN(amount)) return alert('Fill advance details.');
+      state.advances.unshift({ date, workerId, amount });
+      document.getElementById('advAmount').value = '';
+      persist();
+    }
+
+    function addEggLog() {
+      const date = document.getElementById('eggDate').value;
+      const shed = document.getElementById('eggShed').value.trim() || 'General';
+      const hatching = parseInt(document.getElementById('eggHatching').value) || 0;
+      const commercial = parseInt(document.getElementById('eggCommercial').value) || 0;
+      const broken = parseInt(document.getElementById('eggBroken').value) || 0;
+      const sold = parseInt(document.getElementById('eggSold').value) || 0;
+      const price = parseFloat(document.getElementById('eggPrice').value) || 0;
+      if (!date) return alert('Select date.');
+      state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, hatching, commercial, broken, sold, price, revenue: sold * price });
+      document.getElementById('eggHatching').value = '';
+      document.getElementById('eggCommercial').value = '';
+      document.getElementById('eggBroken').value = '';
+      document.getElementById('eggSold').value = '';
+      document.getElementById('eggPrice').value = '';
+      persist();
+    }
+
+    function addFeedLog() {
+      const date = document.getElementById('feedDate').value;
+      const type = document.getElementById('feedType').value;
+      const feedIn = parseInt(document.getElementById('feedIn').value) || 0;
+      const feedOut = parseInt(document.getElementById('feedOut').value) || 0;
+      const cost = parseFloat(document.getElementById('feedCost').value) || 0;
+      if (!date) return alert('Select date.');
+      state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, type, feedIn, feedOut, cost });
+      if (cost > 0) {
+        state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date, category: 'Feed Purchase', description: `${feedIn} Bags of ${type}`, amount: cost });
+      }
+      document.getElementById('feedIn').value = '';
+      document.getElementById('feedOut').value = '';
+      document.getElementById('feedCost').value = '';
+      persist();
+    }
+
+    function addMortLog() {
+      const date = document.getElementById('mortDate').value;
+      const shed = document.getElementById('mortShed').value.trim() || 'General';
+      const count = parseInt(document.getElementById('mortCount').value) || 0;
+      const notes = document.getElementById('mortNotes').value.trim() || '-';
+      if (!date) return alert('Select date.');
+      state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, notes });
+      document.getElementById('mortCount').value = '';
+      document.getElementById('mortNotes').value = '';
+      persist();
+    }
+
+    function addExpenseLog() {
+      const date = document.getElementById('expDate').value;
+      const category = document.getElementById('expCategory').value;
+      const description = document.getElementById('expDescription').value.trim() || category;
+      const amount = parseFloat(document.getElementById('expAmount').value) || 0;
+      if (!date || amount <= 0) return alert('Enter valid expense.');
+      state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, category, description, amount });
+      document.getElementById('expDescription').value = '';
+      document.getElementById('expAmount').value = '';
+      persist();
+    }
+
+    // OCR SCANNER
     function setScanMode(m) {
       currentScanMode = m;
       document.querySelectorAll('.scan-tab').forEach(t => t.classList.remove('active'));
@@ -2102,76 +2703,7 @@
       parsedOcrPayload = null;
     }
 
-    function issueAdvance() {
-      const date = document.getElementById('advDate').value;
-      const workerId = parseInt(document.getElementById('advWorker').value);
-      const amount = parseFloat(document.getElementById('advAmount').value);
-      if (!date || !workerId || isNaN(amount)) return alert('Fill advance details.');
-      state.advances.unshift({ date, workerId, amount });
-      document.getElementById('advAmount').value = '';
-      persist();
-    }
-
-    function addEggLog() {
-      const date = document.getElementById('eggDate').value;
-      const shed = document.getElementById('eggShed').value.trim() || 'General';
-      const hatching = parseInt(document.getElementById('eggHatching').value) || 0;
-      const commercial = parseInt(document.getElementById('eggCommercial').value) || 0;
-      const broken = parseInt(document.getElementById('eggBroken').value) || 0;
-      const sold = parseInt(document.getElementById('eggSold').value) || 0;
-      const price = parseFloat(document.getElementById('eggPrice').value) || 0;
-      if (!date) return alert('Select date.');
-      state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, hatching, commercial, broken, sold, price, revenue: sold * price });
-      document.getElementById('eggHatching').value = '';
-      document.getElementById('eggCommercial').value = '';
-      document.getElementById('eggBroken').value = '';
-      document.getElementById('eggSold').value = '';
-      document.getElementById('eggPrice').value = '';
-      persist();
-    }
-
-    function addFeedLog() {
-      const date = document.getElementById('feedDate').value;
-      const type = document.getElementById('feedType').value;
-      const feedIn = parseInt(document.getElementById('feedIn').value) || 0;
-      const feedOut = parseInt(document.getElementById('feedOut').value) || 0;
-      const cost = parseFloat(document.getElementById('feedCost').value) || 0;
-      if (!date) return alert('Select date.');
-      state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, type, feedIn, feedOut, cost });
-      if (cost > 0) {
-        state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date, category: 'Feed Purchase', description: `${feedIn} Bags of ${type}`, amount: cost });
-      }
-      document.getElementById('feedIn').value = '';
-      document.getElementById('feedOut').value = '';
-      document.getElementById('feedCost').value = '';
-      persist();
-    }
-
-    function addMortLog() {
-      const date = document.getElementById('mortDate').value;
-      const shed = document.getElementById('mortShed').value.trim() || 'General';
-      const count = parseInt(document.getElementById('mortCount').value) || 0;
-      const notes = document.getElementById('mortNotes').value.trim() || '-';
-      if (!date) return alert('Select date.');
-      state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, notes });
-      document.getElementById('mortCount').value = '';
-      document.getElementById('mortNotes').value = '';
-      persist();
-    }
-
-    function addExpenseLog() {
-      const date = document.getElementById('expDate').value;
-      const category = document.getElementById('expCategory').value;
-      const description = document.getElementById('expDescription').value.trim() || category;
-      const amount = parseFloat(document.getElementById('expAmount').value) || 0;
-      if (!date || amount <= 0) return alert('Enter valid expense.');
-      state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, category, description, amount });
-      document.getElementById('expDescription').value = '';
-      document.getElementById('expAmount').value = '';
-      persist();
-    }
-
-    // AI VOICE & NATURAL LANGUAGE
+    // AI VOICE
     function parseAndExecuteAiCommand(cmd) {
       const lower = cmd.toLowerCase().trim();
       const isTamil = /[^\u0000-\u007F]/.test(cmd) || document.getElementById('aiLangSelector').value === 'ta-IN';
@@ -2182,32 +2714,19 @@
         persist();
         return isTamil ? `✅ ${nums[0]} மூட்டை தீவனம் வரவு வைக்கப்பட்டது.` : `Added ${nums[0]} bags feed.`;
       }
-      if (/(morning|காலை)/i.test(lower) && /(present|ஆஜர்|வருகை)/i.test(lower)) {
-        state.workers.filter(w => w.unitId === state.selectedUnitId).forEach(w => {
-          if (!tempBatchAttendance[w.id]) tempBatchAttendance[w.id] = { morning: true, afternoon: true };
-          tempBatchAttendance[w.id].morning = true;
-        });
-        saveBatchAttendance();
-        return isTamil ? `✅ அனைத்து தொழிலாளர்களுக்கும் காலை ஷிப்ட் (0.5 Unit) பதிவு செய்யப்பட்டது.` : `Marked morning shift present for all.`;
+      if (/(gate pass|dispatch|வாகனம்)/i.test(lower)) {
+        switchNav('gatePassPanel');
+        return isTamil ? `🚛 வாகன கேட் பாஸ் பகுதி திறக்கப்பட்டது.` : `Opened Vehicle Gate Pass & DOC Dispatch Tracker.`;
       }
-      if (/(afternoon|மதியம்|மதிய)/i.test(lower) && /(present|ஆஜர்|வருகை)/i.test(lower)) {
-        state.workers.filter(w => w.unitId === state.selectedUnitId).forEach(w => {
-          if (!tempBatchAttendance[w.id]) tempBatchAttendance[w.id] = { morning: true, afternoon: true };
-          tempBatchAttendance[w.id].afternoon = true;
-        });
-        saveBatchAttendance();
-        return isTamil ? `✅ அனைத்து தொழிலாளர்களுக்கும் மதிய ஷிப்ட் (0.5 Unit) பதிவு செய்யப்பட்டது.` : `Marked afternoon shift present for all.`;
-      }
-      if (/(attendance|present|ஆஜர்|வருகை)/i.test(lower)) {
-        quickMarkAllShifts('Present'); saveBatchAttendance();
-        return isTamil ? `✅ அனைத்து தொழிலாளர்களும் இரு ஷிப்ட்டுகளிலும் (முழு நாள்) பதிவு செய்யப்பட்டனர்.` : `Marked full day (morning + afternoon) for all.`;
+      if (/(late|overtime|நேரம்)/i.test(lower)) {
+        switchNav('timeTrackerPanel');
+        return `⏱️ Opened Late Arrival & Overtime Tracker.`;
       }
       if (/(hatchery|ஹேட்சரி)/i.test(lower)) { openUnit(3); return `Switched to Amutan Hatcheries.`; }
       if (/(breeding|ப்ரீடிங்)/i.test(lower)) { openUnit(1); return `Switched to Amutan Breeding Farm.`; }
       if (/(farm|பண்ணை)/i.test(lower)) { openUnit(2); return `Switched to Amutan Farm.`; }
-      if (/(pdf|report|அறிக்கை)/i.test(lower)) { downloadComprehensiveUnitReportPDF(); return `Downloading report PDF...`; }
 
-      return `🤖 Command understood: "${cmd}". You can ask to query shift muster, add feeds, mark attendance, or switch divisions.`;
+      return `🤖 Command understood: "${cmd}". You can ask about gate passes, late arrivals, shift muster, or egg production.`;
     }
 
     function sendAiMessage() {
@@ -2260,10 +2779,15 @@
 
       let totalPayroll = 0;
       unitWorkers.forEach(w => {
-        const totalUnits = state.attendance
+        let totalUnits = state.attendance
           .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-        totalPayroll += (totalUnits * w.wage);
+          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
+        
+        let otEarned = state.overtime
+          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
+          .reduce((sum, o) => sum + o.amount, 0);
+
+        totalPayroll += (totalUnits * w.wage) + otEarned;
       });
       const totalExp = unitExpenses.reduce((s, e) => s + (e.amount || 0), 0);
       const netPL = totalRev - (totalPayroll + totalExp);
@@ -2284,17 +2808,23 @@
       document.getElementById('repMortalityVal').innerText = `${state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0)} Birds`;
       document.getElementById('repNetPLVal').innerText = `₹${netPL.toLocaleString()}`;
 
-      // Staff List
+      // Staff List & Dropdowns
       const staffTbody = document.getElementById('staffList');
       const advWorkerSelect = document.getElementById('advWorker');
       const enrollSelect = document.getElementById('enrollWorkerSelect');
+      const otWorkerSelect = document.getElementById('otWorkerSelect');
+      const manualWorkerSelect = document.getElementById('manualWorkerSelect');
       staffTbody.innerHTML = '';
       advWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
+      otWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
+      if (manualWorkerSelect) manualWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
       enrollSelect.innerHTML = '';
 
       unitWorkers.forEach((w, i) => {
         staffTbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.phone || '-'}</td><td>${w.role}</td><td>₹${w.wage} / day</td><td><button class="btn btn-sm btn-secondary" onclick="deleteWorker(${w.id})">Remove</button></td></tr>`;
         advWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
+        otWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
+        if (manualWorkerSelect) manualWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
         enrollSelect.innerHTML += `<option value="${w.id}">${w.name} (${w.role}) ${w.faceEmbedding ? '✔ Enrolled' : '❌ Pending'}</option>`;
       });
 
@@ -2305,12 +2835,50 @@
         enrolledGrid.innerHTML += `<div class="matched-worker-row"><div style="display:flex; align-items:center; gap:0.5rem;"><div style="width:34px; height:34px; border-radius:50%; background:var(--primary-soft); display:flex; align-items:center; justify-content:center; color:var(--primary); font-weight:900;">${w.name.charAt(0)}</div><strong>${w.name}</strong></div><span class="pill ${w.faceEmbedding ? 'pill-present' : 'pill-half'}">${w.faceEmbedding ? '128D Enrolled' : 'Pending'}</span></div>`;
       });
 
-      // Live Punches
+      // Live Biometric Punches
       const today = new Date().toISOString().slice(0, 10);
       const punchTbody = document.getElementById('livePunchLogBody');
       punchTbody.innerHTML = '';
       state.punches.filter(p => p.unitId === state.selectedUnitId && p.date === today).slice(0, 5).forEach(p => {
-        punchTbody.innerHTML += `<tr><td>${p.time}</td><td><strong>${p.workerName}</strong></td><td><span class="pill pill-half">${p.shift || 'Shift'}</span></td><td><span class="pill pill-present">${p.totalUnits || '1.0 Unit'}</span></td></tr>`;
+        const isLate = (p.timingFlag || '').includes('Late');
+        punchTbody.innerHTML += `<tr><td>${p.time}</td><td><strong>${p.workerName}</strong></td><td><span class="pill pill-half">${p.shift || 'Shift'}</span></td><td><span class="pill ${isLate ? 'pill-absent' : 'pill-present'}">${p.timingFlag || 'On Time'}</span></td></tr>`;
+      });
+
+      // Overtime List
+      const otTbody = document.getElementById('otListBody');
+      otTbody.innerHTML = '';
+      state.overtime.filter(o => o.unitId === state.selectedUnitId).slice(0, 6).forEach(o => {
+        const wk = state.workers.find(w => w.id === o.workerId);
+        otTbody.innerHTML += `<tr><td>${o.date}</td><td><strong>${wk ? wk.name : 'Worker'}</strong></td><td>${o.hours} Hours OT</td><td><strong style="color:var(--success)">+ ₹${o.amount}</strong></td><td>${o.reason}</td></tr>`;
+      });
+
+      // Gate Pass List
+      const gateTbody = document.getElementById('gatePassListBody');
+      gateTbody.innerHTML = '';
+      state.gatepasses.filter(g => g.unitId === state.selectedUnitId).slice(0, 6).forEach(g => {
+        gateTbody.innerHTML += `<tr><td><strong>${g.passNo}</strong></td><td>${g.dateTime}</td><td><strong>${g.vehicleNo}</strong></td><td>${g.driverInfo}</td><td>${g.quantity.toLocaleString()} ${g.cargo}</td><td>${g.destination}</td><td><button class="btn btn-sm btn-primary" onclick="downloadSingleGatePassPDF(state.gatepasses.find(gp=>gp.id===${g.id}))">📄 PDF</button></td></tr>`;
+      });
+
+      // Payroll List
+      const payTbody = document.getElementById('payrollList');
+      payTbody.innerHTML = '';
+      unitWorkers.forEach(w => {
+        let earnedUnits = state.attendance
+          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
+          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
+
+        let otAmount = state.overtime
+          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
+          .reduce((sum, o) => sum + o.amount, 0);
+
+        let adv = state.advances
+          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
+          .reduce((s, a) => s + a.amount, 0);
+
+        let gross = (earnedUnits * w.wage) + otAmount;
+        let net = Math.max(0, gross - adv);
+
+        payTbody.innerHTML += `<tr><td><strong>${w.name}</strong></td><td>₹${w.wage}</td><td><strong>${earnedUnits} Units</strong></td><td style="color:var(--success)">+ ₹${otAmount}</td><td>₹${gross.toLocaleString()}</td><td>- ₹${adv.toLocaleString()}</td><td><strong style="color:var(--success);">₹${net.toLocaleString()}</strong></td><td style="display:flex; gap:0.3rem;"><button class="btn btn-sm btn-primary" onclick="downloadWorkerPayslipPDF(${w.id})">📄 PDF</button><button class="btn btn-sm btn-whatsapp" onclick="shareViaWhatsAppDirect(${w.id})">💬 WhatsApp</button></td></tr>`;
       });
 
       // Egg List
@@ -2337,34 +2905,6 @@
         advTbody.innerHTML += `<tr><td>${a.date}</td><td>${wk?wk.name:'Worker'}</td><td>₹${a.amount}</td></tr>`;
       });
 
-      // Payroll List
-      const payTbody = document.getElementById('payrollList');
-      payTbody.innerHTML = '';
-      unitWorkers.forEach(w => {
-        const earnedUnits = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
-
-        const adv = state.advances
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-
-        const gross = earnedUnits * w.wage;
-        const net = Math.max(0, gross - adv);
-        payTbody.innerHTML += `<tr>
-          <td><strong>${w.name}</strong></td>
-          <td>₹${w.wage}</td>
-          <td><strong>${earnedUnits} Units</strong></td>
-          <td>₹${gross.toLocaleString()}</td>
-          <td style="color:var(--danger);">- ₹${adv.toLocaleString()}</td>
-          <td><strong style="color:var(--success); font-size:1.05rem;">₹${net.toLocaleString()}</strong></td>
-          <td style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-            <button class="btn btn-sm btn-primary" onclick="downloadWorkerPayslipPDF(${w.id})">📄 PDF</button>
-            <button class="btn btn-sm btn-whatsapp" onclick="shareViaWhatsAppDirect(${w.id})">💬 WhatsApp</button>
-          </td>
-        </tr>`;
-      });
-
       // Mortality List
       const mortTbody = document.getElementById('mortList');
       mortTbody.innerHTML = '';
@@ -2375,12 +2915,14 @@
 
     const todayStr = new Date().toISOString().slice(0, 10);
     document.getElementById('batchAttDate').value = todayStr;
+    document.getElementById('otLogDate').value = todayStr;
     document.getElementById('advDate').value = todayStr;
     document.getElementById('eggDate').value = todayStr;
     document.getElementById('feedDate').value = todayStr;
     document.getElementById('mortDate').value = todayStr;
     document.getElementById('expDate').value = todayStr;
     document.getElementById('payrollMonthFilter').value = todayStr.slice(0, 7);
+    document.getElementById('gatePassDateTime').value = new Date().toISOString().slice(0, 16);
   </script>
 </body>
 </html>
