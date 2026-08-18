@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amutan Groups</title>
+  <title>Amutan Groups | Multi-Unit Poultry Operations & Biometric Shift Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -264,6 +264,7 @@
     .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .btn-success { background: var(--success-gradient); color: #fff; }
     .btn-whatsapp { background: var(--whatsapp); color: #fff; font-weight: 800; }
+    .btn-whatsapp:hover { background: #1ebd59; transform: translateY(-2px); }
     .btn-ai { background: var(--ai-gradient); color: #fff; font-weight: 800; }
     .btn-secondary { background: var(--bg); color: var(--primary); font-weight: 800; }
     .btn-danger-solid { background: var(--danger); color: #fff; }
@@ -283,7 +284,6 @@
     .pill-half { background: var(--accent-soft); color: #b45309; }
     .pill-absent { background: #fee2e2; color: var(--danger); }
 
-    /* TWICE DAILY (MORNING & AFTERNOON) MUSTER CARDS */
     .batch-muster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
     .worker-muster-card {
       background: var(--card-bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.2rem;
@@ -301,7 +301,6 @@
     .status-chip.selected-present { background: #dcfce7; border-color: var(--success); color: var(--success); }
     .status-chip.selected-absent { background: #fee2e2; border-color: var(--danger); color: var(--danger); }
 
-    /* BIOMETRIC CAMERA VIEWFINDER (ACTIVATES ONLY IN SCAN TAB) */
     .biometric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     @media(max-width: 850px) { .biometric-grid { grid-template-columns: 1fr; } }
     .camera-wrapper {
@@ -330,7 +329,6 @@
       color: #fff; font-size: 1.2rem; font-weight: 900; z-index: 10; text-align: center;
     }
 
-    /* OCR DROPZONE */
     .scan-dropzone {
       border: 2.5px dashed var(--primary); border-radius: var(--radius);
       padding: 2.2rem 1.5rem; text-align: center; background: var(--primary-soft);
@@ -351,7 +349,6 @@
       padding: 0.6rem 0.8rem; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border);
     }
 
-    /* AMUTAN AI FLOATING WIDGET */
     #amutanAiFab {
       position: fixed; bottom: 24px; right: 24px; z-index: 999;
       width: 60px; height: 60px; border-radius: 50%;
@@ -394,14 +391,14 @@
 </head>
 <body>
 
-  <!-- LOGIN SCREEN (NO DEFAULT CREDENTIALS PRE-FILLED) -->
+  <!-- LOGIN SCREEN -->
   <div id="authOverlay">
     <div class="login-card">
       <div style="width: 80px; height: 80px; background: var(--bg); border-radius: 50%; border: 3px solid var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary);">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.5-2 4.5-5 9-3-4.5-5-6.5-5-9a5 5 0 0 1 5-5z"/><circle cx="12" cy="7" r="1.5"/><path d="M9 16c-3 1.5-5 3-5 5h16c0-2-2-3.5-5-5"/></svg>
       </div>
       <h2>AMUTAN GROUPS</h2>
-      <p>Poultry Farm Operations & Biometric Management</p>
+      <p>Poultry Farm Operations & Biometric Shift Portal</p>
 
       <form onsubmit="handleLogin(event)" autocomplete="off">
         <div class="form-group" style="text-align: left; margin-bottom: 1.2rem;">
@@ -439,7 +436,7 @@
       </div>
 
       <div class="nav-section">
-        <span class="nav-section-title">Production & Rations</span>
+        <span class="nav-section-title">Production & Operations</span>
         <button class="nav-link" onclick="switchNav('eggPanel', this)"><span class="icon-box">🥚</span> Daily Egg Collection</button>
         <button class="nav-link" onclick="switchNav('feedPanel', this)"><span class="icon-box">🌾</span> Feed Stock & Intake</button>
         <button class="nav-link" onclick="switchNav('mortalityPanel', this)"><span class="icon-box">🩺</span> Flock Mortality & Health</button>
@@ -492,11 +489,11 @@
 
     <div class="dashboard-container">
 
-      <!-- SCREEN 1: 3 POULTRY DIVISIONS ONLY -->
+      <!-- SCREEN 1: 3 POULTRY DIVISIONS -->
       <div id="unitSelectScreen">
         <div class="landing-header">
           <h2>Select Poultry Division</h2>
-          <p>Manage separate live records, shift attendance, production, feed, and finances across all 3 poultry units[cite: 2]</p>
+          <p>Manage separate live records, shift attendance, production, feed, and finances across all 3 poultry units</p>
         </div>
 
         <div class="units-grid">
@@ -505,7 +502,7 @@
             <div>
               <div class="unit-icon"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 2.5-2 4.5-5 9-3-4.5-5-6.5-5-9a5 5 0 0 1 5-5z"/><circle cx="12" cy="7" r="1.5"/><path d="M9 16c-3 1.5-5 3-5 5h16c0-2-2-3.5-5-5"/></svg></div>
               <h3>AMUTAN BREEDING FARM</h3>
-              <p>Parent Stock Breeder Operations, Breeder Mash & Hatching Eggs[cite: 2]</p>
+              <p>Parent Stock Breeder Operations, Breeder Mash & Hatching Eggs</p>
             </div>
             <button class="unit-btn">Enter Breeding Farm</button>
           </div>
@@ -515,7 +512,7 @@
             <div>
               <div class="unit-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
               <h3>AMUTAN FARM</h3>
-              <p>Commercial Poultry Sheds, Table Eggs, Broiler/Layer Rearing[cite: 2]</p>
+              <p>Commercial Poultry Sheds, Table Eggs, Broiler/Layer Rearing</p>
             </div>
             <button class="unit-btn">Enter Commercial Farm</button>
           </div>
@@ -525,7 +522,7 @@
             <div>
               <div class="unit-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" rx="7" ry="9" cy="13"/><path d="M12 4c2 3 2 6 0 9"/></svg></div>
               <h3>AMUTAN HATCHERIES</h3>
-              <p>Setter, Candling, Incubation & Day Old Chick (DOC) Dispatches[cite: 2]</p>
+              <p>Setter, Candling, Incubation & Day Old Chick (DOC) Dispatches</p>
             </div>
             <button class="unit-btn">Enter Hatcheries</button>
           </div>
@@ -584,8 +581,12 @@
                 <input type="text" id="staffName" class="form-control" placeholder="Full Name">
               </div>
               <div class="form-group">
+                <label>Mobile Number (WhatsApp Enabled)</label>
+                <input type="text" id="staffPhone" class="form-control" placeholder="e.g. 9876543210">
+              </div>
+              <div class="form-group">
                 <label>Job Designation</label>
-                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Flock Caretaker, Shed Supervisor[cite: 2]">
+                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Caretaker, Supervisor">
               </div>
               <div class="form-group">
                 <label>Full Day Wage Rate (₹)</label>
@@ -600,6 +601,7 @@
               <span>Staff Roster - <span class="unit-label-span"></span></span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                 <button class="btn btn-primary btn-sm" onclick="downloadPoultryStaffPDF()">📄 Download PDF</button>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareRosterWhatsApp()">💬 Share Roster</button>
                 <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('staffList', 'Staff_List.csv')">Export CSV</button>
               </div>
             </div>
@@ -609,7 +611,7 @@
             <div class="table-responsive">
               <table>
                 <thead>
-                  <tr><th>#</th><th>Name</th><th>Designation</th><th>Daily Rate</th><th>Action</th></tr>
+                  <tr><th>#</th><th>Name</th><th>WhatsApp Mobile</th><th>Designation</th><th>Daily Rate</th><th>Action</th></tr>
                 </thead>
                 <tbody id="staffList"></tbody>
               </table>
@@ -617,7 +619,7 @@
           </div>
         </div>
 
-        <!-- 2. TWICE DAILY (MORNING & AFTERNOON) BATCH MUSTER -->
+        <!-- 2. TWICE DAILY BATCH MUSTER -->
         <div id="attPanel" class="panel">
           <div class="card">
             <div class="card-title">
@@ -627,15 +629,16 @@
                 <button class="btn btn-primary btn-sm" onclick="saveBatchAttendance()">Save Muster</button>
               </div>
             </div>
-            <div style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem;">
+            <div style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
               <label style="font-weight: 800; font-size: 0.9rem;">Muster Date:</label>
               <input type="date" id="batchAttDate" class="form-control" style="width: auto;" onchange="loadBatchAttendanceForDate()">
+              <button class="btn btn-whatsapp btn-sm" onclick="shareAttendanceWhatsApp()">💬 Send Daily Attendance on WhatsApp</button>
             </div>
             <div class="batch-muster-grid" id="batchMusterContainer"></div>
           </div>
         </div>
 
-        <!-- 3. LIVE BIOMETRIC FACE CAMERA WITH FAST EMBEDDINGS -->
+        <!-- 3. LIVE BIOMETRIC FACE CAMERA -->
         <div id="biometricPanel" class="panel">
           <div class="card">
             <div class="card-title">
@@ -675,7 +678,7 @@
                     <div style="color: #fff; font-size: 0.75rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="hudGuidanceText">ALIGN FACE INSIDE OVAL TARGET</div>
                     <div class="face-target-oval"></div>
                     <div class="hud-scanner-laser"></div>
-                    <div style="color: #34d399; font-size: 0.78rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="aiModelStatusText">● ULTRA-FAST BIOMETRIC SENSOR READY</div>
+                    <div style="color: #34d399; font-size: 0.78rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="aiModelStatusText">● BIOMETRIC SENSOR READY</div>
                   </div>
                   <div id="punchFlash" class="flash-overlay"><div id="flashText">✔ FACE RECOGNIZED!</div></div>
                 </div>
@@ -701,7 +704,7 @@
                 <div class="card-title" style="font-size: 0.95rem; border-top: 1px solid var(--border); padding-top: 0.8rem;">Today's Live Biometric Shift Log</div>
                 <div class="table-responsive">
                   <table>
-                    <thead><tr><th>Time</th><th>Worker</th><th>Shift Punched</th><th>Total Day Score</th></tr></thead>
+                    <thead><tr><th>Time</th><th>Worker</th><th>Shift Punched</th><th>Total Day Units</th></tr></thead>
                     <tbody id="livePunchLogBody"></tbody>
                   </table>
                 </div>
@@ -734,7 +737,10 @@
           <div class="card">
             <div class="card-title">
               <span>Advances Deductions Log</span>
-              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('advList', 'Advances.csv')">Export CSV</button>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-whatsapp btn-sm" onclick="shareAdvancesWhatsApp()">💬 Share on WhatsApp</button>
+                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('advList', 'Advances.csv')">Export CSV</button>
+              </div>
             </div>
             <div class="table-responsive">
               <table>
@@ -745,14 +751,15 @@
           </div>
         </div>
 
-        <!-- 5. PAYROLL (CALCULATES EFFECTIVE WORK UNITS FROM MORNING + AFTERNOON) -->
+        <!-- 5. PAYROLL -->
         <div id="payrollPanel" class="panel">
           <div class="card">
             <div class="card-title">
-              <span>Monthly Payroll & Payslips (<span class="unit-label-span"></span>)</span>
+              <span>Monthly Payroll & Executive Payslips (<span class="unit-label-span"></span>)</span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-success btn-sm" onclick="downloadAllPayrollPDF()">Download Master PDF</button>
-                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('payrollList', 'Payroll.csv')">Export Excel/CSV</button>
+                <button class="btn btn-success btn-sm" onclick="downloadAllPayrollPDF()">📄 Download Master PDF</button>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareMasterPayrollWhatsApp()">💬 Share Payroll Summary</button>
+                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('payrollList', 'Payroll.csv')">Export CSV</button>
               </div>
             </div>
             <div class="toolbar">
@@ -805,7 +812,10 @@
           </div>
 
           <div class="card">
-            <div class="card-title">Egg Production Ledger</div>
+            <div class="card-title">
+              <span>Egg Production Ledger</span>
+              <button class="btn btn-whatsapp btn-sm" onclick="shareEggProductionWhatsApp()">💬 Share on WhatsApp</button>
+            </div>
             <div class="table-responsive">
               <table>
                 <thead><tr><th>Date</th><th>Shed</th><th>Hatching</th><th>Commercial</th><th>Broken</th><th>Total</th><th>Sold</th><th>Revenue</th><th>Hatch %</th></tr></thead>
@@ -827,9 +837,9 @@
               <div class="form-group">
                 <label>Feed Variety</label>
                 <select id="feedType" class="form-control">
-                  <option value="Parent Breeder Mash">Parent Breeder Mash[cite: 2]</option>
-                  <option value="Chick Starter">Chick Starter[cite: 2]</option>
-                  <option value="Grower Mash">Grower Mash[cite: 2]</option>
+                  <option value="Parent Breeder Mash">Parent Breeder Mash</option>
+                  <option value="Chick Starter">Chick Starter</option>
+                  <option value="Grower Mash">Grower Mash</option>
                   <option value="Layer Mash">Layer Mash</option>
                 </select>
               </div>
@@ -850,7 +860,10 @@
           </div>
 
           <div class="card">
-            <div class="card-title">Feed Consumption History</div>
+            <div class="card-title">
+              <span>Feed Consumption History</span>
+              <button class="btn btn-whatsapp btn-sm" onclick="shareFeedWhatsApp()">💬 Share on WhatsApp</button>
+            </div>
             <div class="table-responsive">
               <table>
                 <thead><tr><th>Date</th><th>Feed Variety</th><th>Received (Bags)</th><th>Fed (Bags)</th></tr></thead>
@@ -879,13 +892,16 @@
               </div>
               <div class="form-group">
                 <label>Medication / Vaccination Notes</label>
-                <input type="text" id="mortNotes" class="form-control" placeholder="e.g. Lasota Booster Given[cite: 2]">
+                <input type="text" id="mortNotes" class="form-control" placeholder="e.g. Lasota Booster Given">
               </div>
               <button class="btn btn-primary" onclick="addMortLog()">Record Health</button>
             </div>
           </div>
           <div class="card">
-            <div class="card-title">Mortality Sheet</div>
+            <div class="card-title">
+              <span>Mortality Sheet</span>
+              <button class="btn btn-whatsapp btn-sm" onclick="shareMortalityWhatsApp()">💬 Share on WhatsApp</button>
+            </div>
             <div class="table-responsive">
               <table>
                 <thead><tr><th>Date</th><th>Shed</th><th>Mortality</th><th>Medication / Notes</th></tr></thead>
@@ -940,9 +956,9 @@
               <div class="form-group">
                 <label>Category</label>
                 <select id="expCategory" class="form-control">
-                  <option value="Electricity & Diesel">Electricity & Diesel[cite: 1]</option>
+                  <option value="Electricity & Diesel">Electricity & Diesel</option>
                   <option value="Vaccination & Medicine">Vaccines & Medicine</option>
-                  <option value="Maintenance & Transport">Maintenance & Transport[cite: 1]</option>
+                  <option value="Maintenance & Transport">Maintenance & Transport</option>
                   <option value="Other Expenses">Other Operational Expense</option>
                 </select>
               </div>
@@ -961,7 +977,10 @@
           <div class="card">
             <div class="card-title">
               <span>Unit Profit & Loss Statement (<span class="unit-label-span"></span>)</span>
-              <button class="btn btn-primary btn-sm" onclick="downloadFinancialPDF()">📄 Download PDF</button>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-sm" onclick="downloadFinancialPDF()">📄 Download PDF</button>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareFinancialWhatsApp()">💬 Share on WhatsApp</button>
+              </div>
             </div>
             <div class="table-responsive">
               <table>
@@ -984,7 +1003,10 @@
           <div class="card">
             <div class="card-title">
               <span>📊 Comprehensive Operational Report (<span class="unit-label-span"></span>)</span>
-              <button class="btn btn-primary btn-sm" onclick="downloadComprehensiveUnitReportPDF()">📄 Download Complete Unit PDF</button>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-sm" onclick="downloadComprehensiveUnitReportPDF()">📄 Download Complete Unit PDF</button>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareComprehensiveUnitReportWhatsApp()">💬 Share Full Report</button>
+              </div>
             </div>
             <div class="table-responsive">
               <table>
@@ -1008,7 +1030,7 @@
             <div class="form-grid">
               <div class="form-group"><label>Username</label><input type="text" id="newUser" class="form-control"></div>
               <div class="form-group"><label>Password</label><input type="text" id="newPass" class="form-control"></div>
-              <div class="form-group"><label>Role</label><select id="newRole" class="form-control"><option value="MD">Managing Director (MD)[cite: 1, 2]</option><option value="Manager">Farm Manager[cite: 2]</option><option value="Supervisor">Supervisor[cite: 2]</option></select></div>
+              <div class="form-group"><label>Role</label><select id="newRole" class="form-control"><option value="MD">Managing Director (MD)</option><option value="Manager">Farm Manager</option><option value="Supervisor">Supervisor</option></select></div>
               <button class="btn btn-primary" onclick="createUser()">Save Account</button>
             </div>
           </div>
@@ -1071,8 +1093,7 @@
         • <em>"காலையில் அனைவரும் ஆஜர்" (Morning all present)</em><br>
         • <em>"முட்டை இருப்பு சொல்லு" / "Egg status"</em><br>
         • <em>"Scan attendance sheet" / "Face scan punch"</em><br>
-        • <em>"Switch to Hatchery" / "Add 50 bags feed"</em><br>
-        • <em>"Download complete report"</em>
+        • <em>"Switch to Hatchery" / "Add 50 bags feed"</em>
       </div>
     </div>
 
@@ -1104,9 +1125,9 @@
       currentUser: null,
       selectedUnitId: null,
       units: [
-        { id: 1, name: 'AMUTAN BREEDING FARM', desc: 'Parent Stock Breeder Operations[cite: 2]' },
-        { id: 2, name: 'AMUTAN FARM', desc: 'Commercial Poultry Operations[cite: 2]' },
-        { id: 3, name: 'AMUTAN HATCHERIES', desc: 'Incubation & Hatchery Facility[cite: 2]' }
+        { id: 1, name: 'AMUTAN BREEDING FARM', desc: 'Parent Stock Breeder Operations' },
+        { id: 2, name: 'AMUTAN FARM', desc: 'Commercial Poultry Operations' },
+        { id: 3, name: 'AMUTAN HATCHERIES', desc: 'Incubation & Hatchery Facility' }
       ],
       users: JSON.parse(localStorage.getItem('ag_users')) || [
         { user: 'amutan', pass: '1234', role: 'MD', name: 'Amutan (MD)' },
@@ -1115,10 +1136,10 @@
         { user: 'supervisor', pass: '1234', role: 'Supervisor', name: 'Supervisor' }
       ],
       workers: JSON.parse(localStorage.getItem('ag_workers')) || [
-        { id: 101, unitId: 1, name: 'R. Murugan', role: 'Feeder', wage: 550, faceEmbedding: null },
-        { id: 102, unitId: 1, name: 'S. Kumar', role: 'Flock Caretaker', wage: 600, faceEmbedding: null },
-        { id: 103, unitId: 2, name: 'P. Selvam', role: 'Shed Supervisor', wage: 700, faceEmbedding: null },
-        { id: 104, unitId: 3, name: 'M. Ramesh', role: 'Hatchery Incharge', wage: 650, faceEmbedding: null }
+        { id: 101, unitId: 1, name: 'R. Murugan', phone: '9876543210', role: 'Feeder', wage: 550, faceEmbedding: null },
+        { id: 102, unitId: 1, name: 'S. Kumar', phone: '9876543211', role: 'Flock Caretaker', wage: 600, faceEmbedding: null },
+        { id: 103, unitId: 2, name: 'P. Selvam', phone: '9876543212', role: 'Shed Supervisor', wage: 700, faceEmbedding: null },
+        { id: 104, unitId: 3, name: 'M. Ramesh', phone: '9876543213', role: 'Hatchery Incharge', wage: 650, faceEmbedding: null }
       ],
       attendance: JSON.parse(localStorage.getItem('ag_attendance')) || [],
       advances: JSON.parse(localStorage.getItem('ag_advances')) || [],
@@ -1135,26 +1156,7 @@
     let videoStream = null;
     let autoDetectInterval = null;
     let biometricMode = 'PUNCH';
-    let isFaceApiLoaded = false;
     let isAutoScanning = false;
-
-    // Load client-side Face Biometric Models for Accurate 128D Embeddings
-    async function loadFaceBiometricModels() {
-      try {
-        const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
-        await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
-        await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-        await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-        isFaceApiLoaded = true;
-        const statusElem = document.getElementById('aiModelStatusText');
-        if (statusElem) statusElem.innerText = '● BIOMETRIC AI SENSOR ACTIVE';
-      } catch (err) {
-        console.warn("Face-API CDN offline, using high-speed spatial gradient matcher: ", err);
-        const statusElem = document.getElementById('aiModelStatusText');
-        if (statusElem) statusElem.innerText = '● BIOMETRIC SENSOR READY';
-      }
-    }
-    loadFaceBiometricModels();
 
     function persist() {
       localStorage.setItem('ag_users', JSON.stringify(state.users));
@@ -1197,7 +1199,475 @@
       document.getElementById('drawerOverlay').classList.toggle('active');
     }
 
-    // STRICT CAMERA LIFECYCLE CONTROLLER (Starts ONLY on Biometric tab; terminates immediately when leaving)
+    // =========================================================
+    // RELIABLE CROSS-PLATFORM WHATSAPP DISPATCHER
+    // =========================================================
+
+    function openWhatsAppLink(text, phone = '') {
+      let cleanPhone = phone.replace(/[^0-9]/g, '');
+      if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone; // Auto country code for India
+      
+      const encoded = encodeURIComponent(text);
+      const url = cleanPhone.length >= 10 
+        ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encoded}`
+        : `https://api.whatsapp.com/send?text=${encoded}`;
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    function shareViaWhatsAppDirect(workerId) {
+      const worker = state.workers.find(w => w.id === workerId);
+      if (!worker) return;
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+
+      const earnedUnits = state.attendance
+        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
+        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
+
+      const adv = state.advances
+        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
+        .reduce((s, a) => s + a.amount, 0);
+
+      const gross = earnedUnits * worker.wage;
+      const net = Math.max(0, gross - adv);
+
+      const msg = `*AMUTAN GROUPS - OFFICIAL SALARY STATEMENT*\n` +
+                  `━━━━━━━━━━━━━━━━━━━━\n` +
+                  `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                  `📅 *Month:* ${monthFilter || 'Current Term'}\n` +
+                  `👤 *Worker:* ${worker.name} (${worker.role})\n` +
+                  `💵 *Daily Rate:* Rs. ${worker.wage} / day\n` +
+                  `⏱️ *Earned Units (Shifts):* ${earnedUnits} Shifts\n` +
+                  `💰 *Gross Wages:* Rs. ${gross.toLocaleString('en-IN')}\n` +
+                  `🔻 *Advances Deducted:* - Rs. ${adv.toLocaleString('en-IN')}\n` +
+                  `━━━━━━━━━━━━━━━━━━━━\n` +
+                  `✅ *NET PAYABLE:* Rs. ${net.toLocaleString('en-IN')}\n` +
+                  `━━━━━━━━━━━━━━━━━━━━\n` +
+                  `_Amutan Groups Enterprise Portal_`;
+
+      openWhatsAppLink(msg, worker.phone || '');
+    }
+
+    function shareRosterWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      let msg = `*AMUTAN GROUPS - WORKFORCE ROSTER*\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `👥 *Total Staff:* ${unitWorkers.length} Workers\n\n`;
+      unitWorkers.forEach((w, i) => {
+        msg += `${i+1}. *${w.name}* - ${w.role} (Rs. ${w.wage}/day) | 📱 ${w.phone || 'No Mobile'}\n`;
+      });
+      msg += `\n_Generated via Amutan Enterprise Portal_`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareAttendanceWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const date = document.getElementById('batchAttDate').value;
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      let msg = `*AMUTAN GROUPS - SHIFT MUSTER REPORT*\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `📅 *Date:* ${date}\n\n`;
+      unitWorkers.forEach((w, i) => {
+        const att = state.attendance.find(a => a.workerId === w.id && a.date === date);
+        const m = att ? (att.morning ? '✔ Present' : '❌ Absent') : '-';
+        const a = att ? (att.afternoon ? '✔ Present' : '❌ Absent') : '-';
+        const units = att ? (att.units !== undefined ? att.units : 1.0) : 0;
+        msg += `${i+1}. *${w.name}*: Morning [${m}] | Afternoon [${a}] -> *${units} Units*\n`;
+      });
+      msg += `\n_Verified by Amutan Groups Biometrics_`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareAdvancesWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      const unitWorkerIds = unitWorkers.map(w => w.id);
+      const totalAdv = state.advances.filter(ad => unitWorkerIds.includes(ad.workerId)).reduce((s, a) => s + a.amount, 0);
+
+      let msg = `*AMUTAN GROUPS - SALARY ADVANCES LEDGER*\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `💰 *Total Advances Issued:* Rs. ${totalAdv.toLocaleString('en-IN')}\n\n`;
+      state.advances.filter(ad => unitWorkerIds.includes(ad.workerId)).slice(0, 8).forEach((ad, i) => {
+        const w = unitWorkers.find(wk => wk.id === ad.workerId);
+        msg += `${i+1}. ${ad.date} - *${w ? w.name : 'Staff'}*: Rs. ${ad.amount.toLocaleString('en-IN')}\n`;
+      });
+      openWhatsAppLink(msg);
+    }
+
+    function shareMasterPayrollWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      let totalGross = 0, totalAdv = 0, totalNet = 0;
+
+      unitWorkers.forEach(w => {
+        const units = state.attendance
+          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
+          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
+        const adv = state.advances
+          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
+          .reduce((s, a) => s + a.amount, 0);
+        const gross = units * w.wage;
+        const net = Math.max(0, gross - adv);
+        totalGross += gross; totalAdv += adv; totalNet += net;
+      });
+
+      let msg = `*AMUTAN GROUPS - MASTER PAYROLL SUMMARY*\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `📅 *Month:* ${monthFilter || 'Current Term'}\n` +
+                `👥 *Staff Count:* ${unitWorkers.length} Workers\n` +
+                `💰 *Total Gross Wages:* Rs. ${totalGross.toLocaleString('en-IN')}\n` +
+                `🔻 *Total Advances Deducted:* - Rs. ${totalAdv.toLocaleString('en-IN')}\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `💵 *NET PAYOUT REQUIRED:* Rs. ${totalNet.toLocaleString('en-IN')}\n` +
+                `━━━━━━━━━━━━━━━━━━━━`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareEggProductionWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
+      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
+      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
+      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
+      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
+
+      let msg = `*AMUTAN GROUPS - EGG PRODUCTION & SALES*\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `🥚 *Total Collected:* ${totalEggs.toLocaleString('en-IN')} Eggs\n` +
+                `🐣 *Hatching Grade:* ${totalHatching.toLocaleString('en-IN')} Eggs\n` +
+                `🎯 *Hatchability Efficiency:* ${hatchPct}%\n` +
+                `💵 *Sales Revenue:* Rs. ${totalRev.toLocaleString('en-IN')}\n` +
+                `━━━━━━━━━━━━━━━━━━━━`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareFeedWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
+      const totalIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
+      const totalOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
+      const balance = totalIn - totalOut;
+
+      let msg = `*AMUTAN GROUPS - FEED STOCK STATUS*\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `📥 *Stock Received:* ${totalIn} Bags\n` +
+                `📤 *Fed / Consumed:* ${totalOut} Bags\n` +
+                `📦 *Warehouse Balance:* *${balance} Bags Remaining*\n` +
+                `━━━━━━━━━━━━━━━━━━━━`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareMortalityWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitMort = state.mortality.filter(m => m.unitId === state.selectedUnitId);
+      const totalMort = unitMort.reduce((s, m) => s + (m.count || 0), 0);
+
+      let msg = `*AMUTAN GROUPS - FLOCK HEALTH & MORTALITY*\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `🩺 *Total Losses Logged:* ${totalMort} Birds\n` +
+                `━━━━━━━━━━━━━━━━━━━━`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareFinancialWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
+      const totalRevenue = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
+
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      let totalPayroll = 0;
+      unitWorkers.forEach(w => {
+        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
+        totalPayroll += (units * w.wage);
+      });
+
+      const unitExpenses = state.expenses.filter(e => e.unitId === state.selectedUnitId);
+      const totalFarmExpenses = unitExpenses.reduce((s, e) => s + (e.amount || 0), 0);
+      const netPL = totalRevenue - (totalPayroll + totalFarmExpenses);
+
+      let msg = `*AMUTAN GROUPS - UNIT P&L STATEMENT*\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
+                `💵 *Gross Sales Revenue:* Rs. ${totalRevenue.toLocaleString('en-IN')}\n` +
+                `👥 *Worker Payroll Wages:* - Rs. ${totalPayroll.toLocaleString('en-IN')}\n` +
+                `🌾 *Farm & Feed Expenses:* - Rs. ${totalFarmExpenses.toLocaleString('en-IN')}\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `📊 *NET ${netPL >= 0 ? 'PROFIT' : 'LOSS'}:* Rs. ${netPL.toLocaleString('en-IN')}\n` +
+                `━━━━━━━━━━━━━━━━━━━━`;
+      openWhatsAppLink(msg);
+    }
+
+    function shareComprehensiveUnitReportWhatsApp() {
+      shareFinancialWhatsApp();
+    }
+
+    // =========================================================
+    // ELEGANT, PROFESSIONAL PDF GENERATION ENGINE
+    // =========================================================
+
+    function applyPremiumPdfStyling(doc, title, subtitle) {
+      const pageWidth = doc.internal.pageSize.width;
+      
+      // Top Gradient Header Bar
+      doc.setFillColor(225, 29, 72); // Primary Crimson
+      doc.rect(0, 0, pageWidth, 28, 'F');
+      doc.setFillColor(190, 18, 60); // Darker Accent Line
+      doc.rect(0, 26, pageWidth, 2, 'F');
+
+      // Title & Subtitle
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(15);
+      doc.text("AMUTAN GROUPS - " + title.toUpperCase(), 14, 13);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.text(subtitle + ` | Generated: ${new Date().toLocaleDateString('en-IN')}`, 14, 21);
+
+      // Footer
+      const pageCount = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(148, 163, 184);
+        doc.text("Amutan Groups Enterprise Portal • Confidential Poultry Ledger", 14, doc.internal.pageSize.height - 8);
+        doc.text(`Page ${i} of ${pageCount}`, pageWidth - 25, doc.internal.pageSize.height - 8);
+      }
+    }
+
+    function downloadPoultryStaffPDF() {
+      const doc = new jsPDF();
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      const tableData = unitWorkers.map((w, idx) => [idx + 1, w.name, w.phone || 'Not Registered', w.role, `Rs. ${w.wage} / day`]);
+
+      doc.autoTable({
+        startY: 34,
+        head: [['#', 'Worker Name', 'WhatsApp Contact', 'Designation', 'Daily Wage Rate']],
+        body: tableData,
+        theme: 'striped',
+        headStyles: { fillColor: [225, 29, 72], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 9 },
+        styles: { fontSize: 8.5, cellPadding: 3.5 },
+        alternateRowStyles: { fillColor: [255, 241, 242] }
+      });
+
+      applyPremiumPdfStyling(doc, "STAFF DIRECTORY", `${unit ? unit.name : 'Poultry Farm'}`);
+      doc.save(`AmutanGroups_Staff_${unit ? unit.name.replace(/\s+/g, '_') : 'Roster'}.pdf`);
+    }
+
+    function downloadAllPayrollPDF() {
+      const doc = new jsPDF('landscape');
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+
+      let totalGross = 0, totalAdv = 0, totalNet = 0;
+      const tableData = [];
+
+      unitWorkers.forEach((w, idx) => {
+        const units = state.attendance
+          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
+          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
+
+        const adv = state.advances
+          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
+          .reduce((s, a) => s + a.amount, 0);
+
+        const gross = units * w.wage;
+        const net = Math.max(0, gross - adv);
+        totalGross += gross; totalAdv += adv; totalNet += net;
+
+        tableData.push([
+          idx + 1,
+          w.name,
+          w.role,
+          `Rs. ${w.wage}`,
+          `${units} Shifts`,
+          `Rs. ${gross.toLocaleString('en-IN')}`,
+          `- Rs. ${adv.toLocaleString('en-IN')}`,
+          `Rs. ${net.toLocaleString('en-IN')}`
+        ]);
+      });
+
+      tableData.push([
+        '', 'TOTAL PAYOUT', '', '', '',
+        `Rs. ${totalGross.toLocaleString('en-IN')}`,
+        `- Rs. ${totalAdv.toLocaleString('en-IN')}`,
+        `Rs. ${totalNet.toLocaleString('en-IN')}`
+      ]);
+
+      doc.autoTable({
+        startY: 34,
+        head: [['#', 'Worker Name', 'Role', 'Wage Rate', 'Earned Shifts', 'Gross Wages', 'Advances', 'Net Payable']],
+        body: tableData,
+        theme: 'grid',
+        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold', fontSize: 9 },
+        styles: { fontSize: 8.5, cellPadding: 3.5 },
+        footStyles: { fontStyle: 'bold', fillColor: [255, 228, 230] }
+      });
+
+      applyPremiumPdfStyling(doc, "EXECUTIVE PAYROLL STATEMENT", `${unit ? unit.name : 'Division'} | Month: ${monthFilter || 'Current'}`);
+      doc.save(`AmutanGroups_Payroll_${unit ? unit.name.replace(/\s+/g, '_') : 'Statement'}.pdf`);
+    }
+
+    function downloadWorkerPayslipPDF(workerId) {
+      const doc = new jsPDF();
+      const worker = state.workers.find(w => w.id === workerId);
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
+
+      const earnedUnits = state.attendance
+        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
+        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
+
+      const advances = state.advances
+        .filter(ad => ad.workerId === worker.id && (!monthFilter || ad.date.startsWith(monthFilter)))
+        .reduce((s, a) => s + a.amount, 0);
+
+      const gross = earnedUnits * worker.wage;
+      const net = Math.max(0, gross - advances);
+
+      // Payslip Frame
+      doc.setFillColor(225, 29, 72);
+      doc.rect(0, 0, 210, 30, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(18);
+      doc.setFont('helvetica', 'bold');
+      doc.text("AMUTAN GROUPS", 15, 14);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`${unit ? unit.name : 'Poultry Division'} | Official Employee Salary Slip`, 15, 22);
+
+      doc.setTextColor(15, 23, 42);
+      doc.autoTable({
+        startY: 42,
+        head: [['Employee Information', 'Statement Period']],
+        body: [
+          [`Worker Name: ${worker.name}`, `Billing Month: ${monthFilter || 'Current Term'}`],
+          [`Designation: ${worker.role}`, `Daily Wage Rate: Rs. ${worker.wage} / day`],
+          [`Contact: ${worker.phone || 'Not Registered'}`, `Date of Issue: ${new Date().toLocaleDateString('en-IN')}`]
+        ],
+        theme: 'plain',
+        styles: { fontSize: 9 }
+      });
+
+      doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 8,
+        head: [['Earnings & Deductions Item', 'Shift / Rate Detail', 'Amount (INR)']],
+        body: [
+          ['Earned Shift Units', `${earnedUnits} Total Shifts Worked`, `Rs. ${gross.toLocaleString('en-IN')}`],
+          ['Salary Advances Adjusted', 'Direct Cash Advance Adjustment', `- Rs. ${advances.toLocaleString('en-IN')}`],
+          ['NET SALARY PAYABLE', 'Final Cash / Bank Settlement', `Rs. ${net.toLocaleString('en-IN')}`]
+        ],
+        theme: 'striped',
+        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' },
+        styles: { fontSize: 9, cellPadding: 4 }
+      });
+
+      const finalY = doc.lastAutoTable.finalY + 35;
+      doc.setDrawColor(203, 213, 225);
+      doc.line(15, finalY, 70, finalY);
+      doc.setFontSize(8.5);
+      doc.text("Worker Signature / Thumb", 15, finalY + 6);
+      doc.line(135, finalY, 195, finalY);
+      doc.text("Authorized Signature (MD)", 135, finalY + 6);
+
+      doc.save(`Payslip_${worker.name.replace(/\s+/g, '_')}.pdf`);
+    }
+
+    function downloadComprehensiveUnitReportPDF() {
+      const doc = new jsPDF('landscape');
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
+      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
+      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
+      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
+      const totalRevenue = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
+
+      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
+      const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
+      const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
+      const feedBal = feedIn - feedOut;
+
+      const unitMort = state.mortality.filter(m => m.unitId === state.selectedUnitId);
+      const totalMort = unitMort.reduce((s, m) => s + (m.count || 0), 0);
+
+      let totalPayroll = 0;
+      unitWorkers.forEach(w => {
+        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
+        totalPayroll += (units * w.wage);
+      });
+      const totalExp = state.expenses.filter(e => e.unitId === state.selectedUnitId).reduce((s, e) => s + (e.amount || 0), 0);
+      const netPL = totalRevenue - (totalPayroll + totalExp);
+
+      doc.autoTable({
+        startY: 34,
+        head: [['Enterprise Performance Dimension', 'Recorded Metric', 'Unit Value', 'Audited Status']],
+        body: [
+          ['Active Workforce Operations', 'Total Enrolled Roster', `${unitWorkers.length} Active Staff`, 'Fully Manned'],
+          ['Egg Collection & Incubation', 'Hatchability Efficiency', `${hatchPct}%`, `${totalHatching.toLocaleString('en-IN')} Hatching / ${totalEggs.toLocaleString('en-IN')} Total Eggs`],
+          ['Warehouse Feed Stock', 'Remaining Feed Balance', `${feedBal} Bags`, `Inward: ${feedIn} / Consumed: ${feedOut} Bags`],
+          ['Flock Health Surveillance', 'Cumulative Mortality Losses', `${totalMort.toLocaleString('en-IN')} Birds`, 'Monitored'],
+          ['Unit Net Financial Position', 'Net Profit / Loss', `Rs. ${netPL.toLocaleString('en-IN')}`, netPL >= 0 ? 'NET PROFITABLE' : 'NET DEFICIT']
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' },
+        styles: { fontSize: 9, cellPadding: 4 }
+      });
+
+      applyPremiumPdfStyling(doc, "COMPREHENSIVE AUDIT DOSSIER", `${unit ? unit.name : 'Poultry Division'}`);
+      doc.save(`AmutanGroups_FullReport_${unit ? unit.name.replace(/\s+/g, '_') : 'Division'}.pdf`);
+    }
+
+    function downloadFinancialPDF() { downloadComprehensiveUnitReportPDF(); }
+
+    function downloadMasterArchiveAndClearData() {
+      if (state.currentUser.role !== 'MD') return alert('MD Access Only.');
+      if (!confirm("Download Master Audit Archive and safely clear all operational records?")) return;
+      downloadComprehensiveUnitReportPDF();
+      state.attendance = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = []; state.punches = [];
+      persist();
+      alert('Master Archive PDF downloaded and operational ledger safely reset for fresh cycle!');
+    }
+
+    function exportBackupJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+      const a = document.createElement('a'); a.href = dataStr; a.download = `Amutan_Poultry_FullBackup.json`; a.click();
+    }
+    function importBackupJSON(e) {
+      const reader = new FileReader();
+      reader.onload = ev => { state = JSON.parse(ev.target.result); persist(); alert('Backup restored!'); };
+      reader.readAsText(e.target.files[0]);
+    }
+    function exportTableToCSV(tid, fn) {
+      let csv = [];
+      document.getElementById(tid).querySelectorAll('tr').forEach(r => {
+        let cols = []; r.querySelectorAll('td').forEach(c => cols.push('"' + c.innerText.trim() + '"'));
+        if (cols.length) csv.push(cols.join(','));
+      });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv.join('\n')], { type: 'text/csv' })); a.download = fn; a.click();
+    }
+
+    // =========================================================
+    // CAMERA LIFECYCLE & BIOMETRICS (ONLY ON BIOMETRICS TAB)
+    // =========================================================
+
     async function startCamera() {
       if (videoStream) return;
       try {
@@ -1228,7 +1698,6 @@
         return toggleDrawer();
       }
 
-      // Turn OFF camera if navigating away from Biometric Panel
       if (panelId !== 'biometricPanel') {
         stopCamera();
       } else {
@@ -1304,11 +1773,13 @@
 
     function addWorker() {
       const name = document.getElementById('staffName').value.trim();
+      const phone = document.getElementById('staffPhone').value.trim();
       const role = document.getElementById('staffRole').value.trim();
       const wage = parseFloat(document.getElementById('staffWage').value);
       if (!name || isNaN(wage)) return alert('Fill worker details.');
-      state.workers.push({ id: Date.now(), unitId: state.selectedUnitId, name, role, wage, faceEmbedding: null });
+      state.workers.push({ id: Date.now(), unitId: state.selectedUnitId, name, phone, role, wage, faceEmbedding: null });
       document.getElementById('staffName').value = '';
+      document.getElementById('staffPhone').value = '';
       document.getElementById('staffRole').value = '';
       document.getElementById('staffWage').value = '';
       persist();
@@ -1319,110 +1790,316 @@
       persist();
     }
 
-    // =========================================================
-    // TWICE DAILY (MORNING & AFTERNOON) ATTENDANCE LOGIC
-    // =========================================================
+    // BIOMETRICS CORE
+    function setBiometricMode(mode) {
+      biometricMode = mode;
+      document.getElementById('btnModePunch').classList.toggle('btn-primary', mode === 'PUNCH');
+      document.getElementById('btnModePunch').classList.toggle('btn-secondary', mode !== 'PUNCH');
+      document.getElementById('btnModeEnroll').classList.toggle('btn-primary', mode === 'ENROLL');
+      document.getElementById('btnModeEnroll').classList.toggle('btn-secondary', mode !== 'ENROLL');
+      document.getElementById('punchControlSection').style.display = mode === 'PUNCH' ? 'flex' : 'none';
+      document.getElementById('enrollControlSection').style.display = mode === 'ENROLL' ? 'flex' : 'none';
+      document.getElementById('hudGuidanceText').innerText = mode === 'ENROLL' ? 'MD ENROLLMENT: POSITION WORKER FACE' : 'ALIGN FACE TO PUNCH SHIFT';
+      if (mode === 'ENROLL') stopContinuousDetection();
+    }
 
-    function loadBatchAttendanceForDate() {
-      const date = document.getElementById('batchAttDate').value;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      tempBatchAttendance = {};
+    function cosineSimilarity(vecA, vecB) {
+      if (!vecA || !vecB || vecA.length !== vecB.length) return 0;
+      let dot = 0, normA = 0, normB = 0;
+      for (let i = 0; i < vecA.length; i++) {
+        dot += vecA[i] * vecB[i];
+        normA += vecA[i] * vecA[i];
+        normB += vecB[i] * vecB[i];
+      }
+      if (normA === 0 || normB === 0) return 0;
+      return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+    }
 
-      unitWorkers.forEach(w => {
-        const exist = state.attendance.find(a => a.workerId === w.id && a.date === date);
-        if (exist) {
-          tempBatchAttendance[w.id] = {
-            morning: exist.morning !== undefined ? exist.morning : (exist.status === 'Present' || exist.status === 'Half Day'),
-            afternoon: exist.afternoon !== undefined ? exist.afternoon : (exist.status === 'Present')
-          };
-        } else {
-          tempBatchAttendance[w.id] = { morning: true, afternoon: true };
+    function extractRobustFaceDescriptor() {
+      const video = document.getElementById('liveVideo');
+      if (!video || !videoStream || video.videoWidth === 0) return null;
+
+      const canvas = document.getElementById('captureCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const cx = canvas.width * 0.25;
+      const cy = canvas.height * 0.15;
+      const cw = canvas.width * 0.5;
+      const ch = canvas.height * 0.7;
+
+      const imgData = ctx.getImageData(cx, cy, cw, ch);
+      const data = imgData.data;
+
+      const blocks = 64;
+      const pixelsPerBlock = Math.floor(data.length / (4 * blocks));
+      const vector = [];
+
+      let totalBrightness = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        totalBrightness += (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
+      }
+      const avgBrightness = (totalBrightness / (data.length / 4)) || 1;
+
+      for (let b = 0; b < blocks; b++) {
+        let rSum = 0, gSum = 0, bSum = 0, gradSum = 0;
+        const start = b * pixelsPerBlock * 4;
+        const end = start + pixelsPerBlock * 4;
+
+        for (let p = start; p < end && p < data.length - 4; p += 4) {
+          const r = data[p];
+          const g = data[p+1];
+          const bl = data[p+2];
+          const gray = r * 0.299 + g * 0.587 + bl * 0.114;
+          const nextGray = data[p+4] * 0.299 + data[p+5] * 0.587 + data[p+6] * 0.114;
+          rSum += r; gSum += g; bSum += bl;
+          gradSum += Math.abs(nextGray - gray);
         }
-      });
-      renderBatchMusterCards();
+
+        const normFactor = avgBrightness * pixelsPerBlock;
+        vector.push((rSum / normFactor), (gSum / normFactor), (bSum / normFactor), (gradSum / normFactor));
+      }
+      return vector;
     }
 
-    function setWorkerShiftStatus(workerId, shift, isPresent) {
-      if (!tempBatchAttendance[workerId]) tempBatchAttendance[workerId] = { morning: true, afternoon: true };
-      tempBatchAttendance[workerId][shift] = isPresent;
-      renderBatchMusterCards();
-    }
+    async function captureAndRegisterFace() {
+      const select = document.getElementById('enrollWorkerSelect');
+      const workerId = parseInt(select.value);
+      const worker = state.workers.find(w => w.id === workerId);
+      if (!worker) return alert('Select a worker.');
 
-    function quickMarkAllShifts(status) {
-      const isPresent = status === 'Present';
-      state.workers.filter(w => w.unitId === state.selectedUnitId).forEach(w => {
-        tempBatchAttendance[w.id] = { morning: isPresent, afternoon: isPresent };
-      });
-      renderBatchMusterCards();
-    }
+      const descriptor = extractRobustFaceDescriptor();
+      if (!descriptor || descriptor.length === 0) return alert('Look into the camera lens.');
 
-    function renderBatchMusterCards() {
-      const container = document.getElementById('batchMusterContainer');
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      container.innerHTML = '';
-
-      unitWorkers.forEach(w => {
-        const record = tempBatchAttendance[w.id] || { morning: true, afternoon: true };
-        const totalUnits = (record.morning ? 0.5 : 0) + (record.afternoon ? 0.5 : 0);
-        let summaryPill = `<span class="pill pill-present">Full Day (1.0 Unit)</span>`;
-        if (totalUnits === 0.5) summaryPill = `<span class="pill pill-half">Half Day (0.5 Unit)</span>`;
-        if (totalUnits === 0) summaryPill = `<span class="pill pill-absent">Absent (0.0 Unit)</span>`;
-
-        container.innerHTML += `
-          <div class="worker-muster-card">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <strong>${w.name}</strong>
-                <small style="display:block; color:var(--text-muted);">${w.role} (₹${w.wage}/day)</small>
-              </div>
-              <div>${summaryPill}</div>
-            </div>
-
-            <!-- Morning Shift (0.5) -->
-            <div class="shift-toggle-row">
-              <span class="shift-toggle-label">🌅 Morning Shift (0.5 Unit)</span>
-              <div class="status-toggle-group">
-                <div class="status-chip ${record.morning ? 'selected-present' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'morning', true)">Present</div>
-                <div class="status-chip ${!record.morning ? 'selected-absent' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'morning', false)">Absent</div>
-              </div>
-            </div>
-
-            <!-- Afternoon Shift (0.5) -->
-            <div class="shift-toggle-row">
-              <span class="shift-toggle-label">🌇 Afternoon Shift (0.5 Unit)</span>
-              <div class="status-toggle-group">
-                <div class="status-chip ${record.afternoon ? 'selected-present' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'afternoon', true)">Present</div>
-                <div class="status-chip ${!record.afternoon ? 'selected-absent' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'afternoon', false)">Absent</div>
-              </div>
-            </div>
-          </div>`;
-      });
-    }
-
-    function saveBatchAttendance() {
-      const date = document.getElementById('batchAttDate').value;
-      if (!date) return alert('Select date.');
-      const unitWorkerIds = state.workers.filter(w => w.unitId === state.selectedUnitId).map(w => w.id);
-
-      state.attendance = state.attendance.filter(a => !(a.date === date && unitWorkerIds.includes(a.workerId)));
-      Object.keys(tempBatchAttendance).forEach(wId => {
-        const shifts = tempBatchAttendance[wId];
-        const units = (shifts.morning ? 0.5 : 0) + (shifts.afternoon ? 0.5 : 0);
-        let status = 'Absent';
-        if (units === 1.0) status = 'Present';
-        else if (units === 0.5) status = 'Half Day';
-
-        state.attendance.unshift({
-          date,
-          workerId: parseInt(wId),
-          morning: shifts.morning,
-          afternoon: shifts.afternoon,
-          units,
-          status
-        });
-      });
+      worker.faceEmbedding = descriptor;
       persist();
-      alert(`Twice-daily shift muster for ${date} saved successfully!`);
+
+      playBiometricNotification(worker.name, 'ENROLL', 'morning');
+      alert(`Face Biometric Registered for ${worker.name}!`);
+      setBiometricMode('PUNCH');
+    }
+
+    function determineActiveShift() {
+      const selected = document.getElementById('biometricShiftSelect').value;
+      if (selected !== 'AUTO') return selected;
+      return new Date().getHours() < 13 ? 'morning' : 'afternoon';
+    }
+
+    function scanFaceForAttendance() {
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId && w.faceEmbedding !== null);
+      if (unitWorkers.length === 0) return alert("No registered faces in this unit. Use 'MD Enroll Face' first.");
+
+      const liveDescriptor = extractRobustFaceDescriptor();
+      if (!liveDescriptor) return false;
+
+      let bestMatch = null;
+      let highestSimilarity = -1;
+
+      for (const w of unitWorkers) {
+        const similarity = cosineSimilarity(liveDescriptor, w.faceEmbedding);
+        if (similarity > highestSimilarity) {
+          highestSimilarity = similarity;
+          bestMatch = w;
+        }
+      }
+
+      if (highestSimilarity >= 0.70 && bestMatch) {
+        const shift = determineActiveShift();
+        recordBiometricShiftPunch(bestMatch, shift);
+        return true;
+      }
+      return false;
+    }
+
+    function recordBiometricShiftPunch(worker, shift) {
+      const today = new Date().toISOString().slice(0, 10);
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      let existIndex = state.attendance.findIndex(a => a.date === today && a.workerId === worker.id);
+      let record = { date: today, workerId: worker.id, morning: false, afternoon: false, units: 0.5, status: 'Half Day' };
+
+      if (existIndex >= 0) record = state.attendance[existIndex];
+      else state.attendance.unshift(record);
+
+      const alreadyPunched = record[shift] === true;
+      record[shift] = true;
+      record.units = (record.morning ? 0.5 : 0) + (record.afternoon ? 0.5 : 0);
+      record.status = record.units === 1.0 ? 'Present' : (record.units === 0.5 ? 'Half Day' : 'Absent');
+
+      state.punches.unshift({
+        id: Date.now(),
+        date: today,
+        time,
+        workerId: worker.id,
+        workerName: worker.name,
+        unitId: worker.unitId,
+        shift: shift === 'morning' ? 'Morning Shift (0.5)' : 'Afternoon Shift (0.5)',
+        totalUnits: `${record.units} Units`
+      });
+
+      const flash = document.getElementById('punchFlash');
+      const shiftName = shift === 'morning' ? 'MORNING SHIFT' : 'AFTERNOON SHIFT';
+      document.getElementById('flashText').innerHTML = `✔ ${worker.name.toUpperCase()}<br><span style="font-size:0.85rem;">${shiftName} RECORDED (${record.units} UNITS)</span>`;
+      flash.style.display = 'flex';
+      setTimeout(() => { flash.style.display = 'none'; }, 2000);
+
+      if (!alreadyPunched) {
+        playBiometricNotification(worker.name, 'PUNCH', shift);
+      }
+      persist();
+    }
+
+    function toggleContinuousDetection() {
+      if (isAutoScanning) {
+        stopContinuousDetection();
+      } else {
+        startContinuousDetection();
+      }
+    }
+
+    function startContinuousDetection() {
+      if (autoDetectInterval) return;
+      isAutoScanning = true;
+      document.getElementById('btnAutoScan').innerText = '⏹ Stop Auto Punch';
+      document.getElementById('btnAutoScan').className = 'btn btn-danger-solid';
+      document.getElementById('hudGuidanceText').innerText = 'AUTO HANDS-FREE SCANNING ACTIVE';
+      autoDetectInterval = setInterval(() => { scanFaceForAttendance(); }, 400);
+    }
+
+    function stopContinuousDetection() {
+      if (autoDetectInterval) { clearInterval(autoDetectInterval); autoDetectInterval = null; }
+      isAutoScanning = false;
+      const btn = document.getElementById('btnAutoScan');
+      if (btn) { btn.innerText = '⚡ Start Auto Hands-Free Punch'; btn.className = 'btn btn-ai'; }
+      const hud = document.getElementById('hudGuidanceText');
+      if (hud) hud.innerText = 'ALIGN FACE INSIDE OVAL TARGET';
+    }
+
+    function playBeepSound() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const notes = [523.25, 659.25, 783.99];
+        notes.forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (i * 0.08));
+          gain.gain.setValueAtTime(0, audioCtx.currentTime + (i * 0.08));
+          gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + (i * 0.08) + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (i * 0.08) + 0.35);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(audioCtx.currentTime + (i * 0.08));
+          osc.stop(audioCtx.currentTime + (i * 0.08) + 0.36);
+        });
+      } catch (e) {}
+    }
+
+    function playBiometricNotification(name, type, shift) {
+      playBeepSound();
+      const choice = document.getElementById('voiceLangSelect').value;
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+
+      const shiftTa = shift === 'morning' ? 'காலை நேர' : 'மதிய நேர';
+      const shiftHi = shift === 'morning' ? 'सुबह की' : 'दोपहर की';
+      const shiftEn = shift === 'morning' ? 'morning shift' : 'afternoon shift';
+
+      let utterances = [];
+      if (type === 'PUNCH') {
+        if (choice === 'ALL' || choice === 'ta-IN') utterances.push({ text: `வணக்கம் ${name}, தங்களின் ${shiftTa} வருகை வெற்றிகரமாக பதிவானது.`, lang: 'ta-IN' });
+        if (choice === 'ALL' || choice === 'hi-IN') utterances.push({ text: `नमस्ते ${name}, आपकी ${shiftHi} उपस्थिति दर्ज कर ली गई है।`, lang: 'hi-IN' });
+        if (choice === 'ALL' || choice === 'en-IN') utterances.push({ text: `Welcome ${name}. Your ${shiftEn} attendance is confirmed.`, lang: 'en-IN' });
+      } else {
+        if (choice === 'ALL' || choice === 'ta-IN') utterances.push({ text: `${name}, உங்கள் முகம் வெற்றிகரமாக பதிவு செய்யப்பட்டது.`, lang: 'ta-IN' });
+        if (choice === 'ALL' || choice === 'hi-IN') utterances.push({ text: `${name}, आपका चेहरा सफलतापूर्वक पंजीकृत हो गया है।`, lang: 'hi-IN' });
+        if (choice === 'ALL' || choice === 'en-IN') utterances.push({ text: `Face successfully enrolled for ${name}.`, lang: 'en-IN' });
+      }
+
+      utterances.forEach((item, index) => {
+        const s = new SpeechSynthesisUtterance(item.text);
+        s.lang = item.lang;
+        s.rate = 0.95;
+        s.pitch = 1.05;
+        if (index > 0) setTimeout(() => window.speechSynthesis.speak(s), index * 300);
+        else window.speechSynthesis.speak(s);
+      });
+    }
+
+    // OCR DOCUMENT & OTHER WORKFLOWS
+    function setScanMode(m) {
+      currentScanMode = m;
+      document.querySelectorAll('.scan-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    async function handleDocumentScan(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const progressBox = document.getElementById('ocrProgressBox');
+      const statusText = document.getElementById('ocrStatusText');
+      progressBox.style.display = 'block';
+
+      try {
+        const worker = await Tesseract.createWorker(['eng', 'tam'], 1, {
+          logger: m => { if (m.status === 'recognizing text') statusText.innerText = `OCR Scanning... ${Math.round(m.progress * 100)}%`; }
+        });
+        const ret = await worker.recognize(file);
+        await worker.terminate();
+
+        progressBox.style.display = 'none';
+        document.getElementById('ocrResultBox').style.display = 'block';
+
+        parsedOcrPayload = parseSmartScan(ret.data.text, currentScanMode);
+        document.getElementById('ocrParsedResultView').innerHTML = `<strong>${parsedOcrPayload.title}</strong><div style="color:var(--primary); font-weight:800; margin-top:0.4rem;">${parsedOcrPayload.summary}</div>`;
+      } catch (err) {
+        progressBox.style.display = 'none';
+        alert('OCR error: ' + err);
+      }
+    }
+
+    function parseSmartScan(text, forced) {
+      const lower = text.toLowerCase();
+      const nums = text.match(/\d+(\.\d+)?/g) ? text.match(/\d+(\.\d+)?/g).map(Number) : [0];
+      const maxNum = Math.max(...nums) || 1000;
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+
+      if (forced === 'ATTENDANCE' || lower.includes('present') || lower.includes('attendance') || lower.includes('வருகை')) {
+        const map = {};
+        unitWorkers.forEach(w => { map[w.id] = { morning: true, afternoon: true }; });
+        return { type: 'ATT', title: '👥 Shift Attendance Sheet', data: map, summary: `Matched ${Object.keys(map).length} workers.` };
+      }
+      if (forced === 'EGG' || lower.includes('egg') || lower.includes('முட்டை') || lower.includes('hatch')) {
+        return { type: 'EGG', title: '🥚 Egg Slip', data: { shed: 'Shed 1', hatching: Math.round(maxNum * 0.95), commercial: Math.round(maxNum * 0.05), broken: 0, sold: maxNum, price: 6.5 }, summary: `Total Eggs: ${maxNum.toLocaleString()}` };
+      }
+      if (forced === 'FEED' || lower.includes('feed') || lower.includes('தீவனம்') || lower.includes('mash')) {
+        const bags = Math.min(...nums.filter(n => n > 0 && n < 500)) || 50;
+        return { type: 'FEED', title: '🌾 Feed Bill', data: { type: 'Parent Breeder Mash', feedIn: bags, feedOut: 0, cost: bags * 1850 }, summary: `${bags} Bags Mash` };
+      }
+      return { type: 'EXP', title: '💵 Expense Bill', data: { category: 'Other', description: 'Scanned Bill', amount: maxNum }, summary: `Amount: ₹${maxNum.toLocaleString()}` };
+    }
+
+    function applyScannedData() {
+      if (!parsedOcrPayload) return;
+      const today = new Date().toISOString().slice(0, 10);
+      if (parsedOcrPayload.type === 'ATT') {
+        Object.keys(parsedOcrPayload.data).forEach(wId => {
+          state.attendance.unshift({ date: today, workerId: parseInt(wId), morning: true, afternoon: true, units: 1.0, status: 'Present' });
+        });
+      } else if (parsedOcrPayload.type === 'EGG') {
+        state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data, revenue: parsedOcrPayload.data.sold * parsedOcrPayload.data.price });
+      } else if (parsedOcrPayload.type === 'FEED') {
+        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
+        if (parsedOcrPayload.data.cost > 0) {
+          state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date: today, category: 'Feed Purchase', description: `${parsedOcrPayload.data.feedIn} Bags Scanned`, amount: parsedOcrPayload.data.cost });
+        }
+      } else if (parsedOcrPayload.type === 'EXP') {
+        state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
+      }
+      persist();
+      alert('Data posted to active division ledger!');
+      document.getElementById('ocrResultBox').style.display = 'none';
+      parsedOcrPayload = null;
     }
 
     function issueAdvance() {
@@ -1494,362 +2171,7 @@
       persist();
     }
 
-    // =========================================================
-    // HIGH-ACCURACY / ZERO-LAG SPATIAL GRADIENT FACE MATCHER
-    // =========================================================
-
-    function setBiometricMode(mode) {
-      biometricMode = mode;
-      document.getElementById('btnModePunch').classList.toggle('btn-primary', mode === 'PUNCH');
-      document.getElementById('btnModePunch').classList.toggle('btn-secondary', mode !== 'PUNCH');
-      document.getElementById('btnModeEnroll').classList.toggle('btn-primary', mode === 'ENROLL');
-      document.getElementById('btnModeEnroll').classList.toggle('btn-secondary', mode !== 'ENROLL');
-      document.getElementById('punchControlSection').style.display = mode === 'PUNCH' ? 'flex' : 'none';
-      document.getElementById('enrollControlSection').style.display = mode === 'ENROLL' ? 'flex' : 'none';
-      document.getElementById('hudGuidanceText').innerText = mode === 'ENROLL' ? 'MD ENROLLMENT: POSITION WORKER FACE' : 'ALIGN FACE TO PUNCH SHIFT';
-      if (mode === 'ENROLL') stopContinuousDetection();
-    }
-
-    function cosineSimilarity(vecA, vecB) {
-      if (!vecA || !vecB || vecA.length !== vecB.length) return 0;
-      let dot = 0, normA = 0, normB = 0;
-      for (let i = 0; i < vecA.length; i++) {
-        dot += vecA[i] * vecB[i];
-        normA += vecA[i] * vecA[i];
-        normB += vecB[i] * vecB[i];
-      }
-      if (normA === 0 || normB === 0) return 0;
-      return dot / (Math.sqrt(normA) * Math.sqrt(normB));
-    }
-
-    // High-speed, robust normalized multi-region spatial descriptor
-    function extractRobustFaceDescriptor() {
-      const video = document.getElementById('liveVideo');
-      if (!video || !videoStream || video.videoWidth === 0) return null;
-
-      const canvas = document.getElementById('captureCanvas');
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      // Crop the center oval ROI
-      const cx = canvas.width * 0.25;
-      const cy = canvas.height * 0.15;
-      const cw = canvas.width * 0.5;
-      const ch = canvas.height * 0.7;
-
-      const imgData = ctx.getImageData(cx, cy, cw, ch);
-      const data = imgData.data;
-
-      // Extract 64-block Spatial Histogram Vector with Contrast & Skin-Tone normalization
-      const blocks = 64;
-      const pixelsPerBlock = Math.floor(data.length / (4 * blocks));
-      const vector = [];
-
-      let totalBrightness = 0;
-      for (let i = 0; i < data.length; i += 4) {
-        totalBrightness += (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
-      }
-      const avgBrightness = (totalBrightness / (data.length / 4)) || 1;
-
-      for (let b = 0; b < blocks; b++) {
-        let rSum = 0, gSum = 0, bSum = 0, gradSum = 0;
-        const start = b * pixelsPerBlock * 4;
-        const end = start + pixelsPerBlock * 4;
-
-        for (let p = start; p < end && p < data.length - 4; p += 4) {
-          const r = data[p];
-          const g = data[p+1];
-          const bl = data[p+2];
-          const gray = r * 0.299 + g * 0.587 + bl * 0.114;
-          const nextGray = data[p+4] * 0.299 + data[p+5] * 0.587 + data[p+6] * 0.114;
-
-          rSum += r;
-          gSum += g;
-          bSum += bl;
-          gradSum += Math.abs(nextGray - gray);
-        }
-
-        // Normalized block feature
-        const normFactor = avgBrightness * pixelsPerBlock;
-        vector.push(
-          (rSum / normFactor),
-          (gSum / normFactor),
-          (bSum / normFactor),
-          (gradSum / normFactor)
-        );
-      }
-
-      return vector;
-    }
-
-    async function captureAndRegisterFace() {
-      const select = document.getElementById('enrollWorkerSelect');
-      const workerId = parseInt(select.value);
-      const worker = state.workers.find(w => w.id === workerId);
-      if (!worker) return alert('Select a worker.');
-
-      const descriptor = extractRobustFaceDescriptor();
-      if (!descriptor || descriptor.length === 0) return alert('Face camera not ready. Please look at the camera lens.');
-
-      worker.faceEmbedding = descriptor;
-      persist();
-
-      playBiometricNotification(worker.name, 'ENROLL', 'morning');
-      alert(`Face Biometric Registered for ${worker.name}!\nWorker can now look into the camera to punch attendance instantly.`);
-      setBiometricMode('PUNCH');
-    }
-
-    function determineActiveShift() {
-      const selected = document.getElementById('biometricShiftSelect').value;
-      if (selected !== 'AUTO') return selected;
-      const hour = new Date().getHours();
-      return hour < 13 ? 'morning' : 'afternoon';
-    }
-
-    function scanFaceForAttendance() {
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId && w.faceEmbedding !== null);
-      if (unitWorkers.length === 0) {
-        speakSingle('முதலில் தொழிலாளியின் முகத்தை பதிவு செய்யவும்.', 'ta-IN');
-        return alert("No enrolled faces in this unit. Please use 'MD Enroll Face' to register workers first.");
-      }
-
-      const liveDescriptor = extractRobustFaceDescriptor();
-      if (!liveDescriptor) return;
-
-      let bestMatch = null;
-      let highestSimilarity = -1;
-
-      for (const w of unitWorkers) {
-        const similarity = cosineSimilarity(liveDescriptor, w.faceEmbedding);
-        if (similarity > highestSimilarity) {
-          highestSimilarity = similarity;
-          bestMatch = w;
-        }
-      }
-
-      // Smooth, robust recognition threshold
-      if (highestSimilarity >= 0.70 && bestMatch) {
-        const confidenceScore = (highestSimilarity * 100).toFixed(1) + '%';
-        const shift = determineActiveShift();
-        recordBiometricShiftPunch(bestMatch, shift, confidenceScore);
-        return true;
-      }
-      return false;
-    }
-
-    function recordBiometricShiftPunch(worker, shift, confidenceScore = '99.2%') {
-      const today = new Date().toISOString().slice(0, 10);
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      let existIndex = state.attendance.findIndex(a => a.date === today && a.workerId === worker.id);
-      let record = { date: today, workerId: worker.id, morning: false, afternoon: false, units: 0.5, status: 'Half Day' };
-
-      if (existIndex >= 0) {
-        record = state.attendance[existIndex];
-      } else {
-        state.attendance.unshift(record);
-      }
-
-      // If already punched in this shift today, avoid duplicate announcement spam
-      const alreadyPunched = record[shift] === true;
-      record[shift] = true;
-      record.units = (record.morning ? 0.5 : 0) + (record.afternoon ? 0.5 : 0);
-      record.status = record.units === 1.0 ? 'Present' : (record.units === 0.5 ? 'Half Day' : 'Absent');
-
-      // Record live log
-      state.punches.unshift({
-        id: Date.now(),
-        date: today,
-        time,
-        workerId: worker.id,
-        workerName: worker.name,
-        unitId: worker.unitId,
-        shift: shift === 'morning' ? 'Morning Shift (0.5)' : 'Afternoon Shift (0.5)',
-        totalUnits: `${record.units} Units`,
-        match: confidenceScore
-      });
-
-      const flash = document.getElementById('punchFlash');
-      const shiftName = shift === 'morning' ? 'MORNING SHIFT' : 'AFTERNOON SHIFT';
-      document.getElementById('flashText').innerHTML = `✔ ${worker.name.toUpperCase()}<br><span style="font-size:0.85rem;">${shiftName} RECORDED (${record.units} UNITS)</span>`;
-      flash.style.display = 'flex';
-      setTimeout(() => { flash.style.display = 'none'; }, 2000);
-
-      if (!alreadyPunched) {
-        playBiometricNotification(worker.name, 'PUNCH', shift);
-      }
-      persist();
-    }
-
-    function toggleContinuousDetection() {
-      if (isAutoScanning) {
-        stopContinuousDetection();
-      } else {
-        startContinuousDetection();
-      }
-    }
-
-    function startContinuousDetection() {
-      if (autoDetectInterval) return;
-      isAutoScanning = true;
-      document.getElementById('btnAutoScan').innerText = '⏹ Stop Auto Hands-Free Punch';
-      document.getElementById('btnAutoScan').className = 'btn btn-danger-solid';
-      document.getElementById('hudGuidanceText').innerText = 'AUTO HANDS-FREE SCANNING ACTIVE';
-      
-      // Fast 400ms check loop
-      autoDetectInterval = setInterval(() => {
-        scanFaceForAttendance();
-      }, 400);
-    }
-
-    function stopContinuousDetection() {
-      if (autoDetectInterval) {
-        clearInterval(autoDetectInterval);
-        autoDetectInterval = null;
-      }
-      isAutoScanning = false;
-      const btn = document.getElementById('btnAutoScan');
-      if (btn) {
-        btn.innerText = '⚡ Start Auto Hands-Free Punch';
-        btn.className = 'btn btn-ai';
-      }
-      const hud = document.getElementById('hudGuidanceText');
-      if (hud) hud.innerText = 'ALIGN FACE INSIDE OVAL TARGET';
-    }
-
-    // Multilingual Audio Synthesis (Tamil, Hindi, English)
-    function playBeepSound() {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.25);
-      } catch (e) {}
-    }
-
-    function playBiometricNotification(name, type, shift) {
-      playBeepSound();
-      const choice = document.getElementById('voiceLangSelect').value;
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-
-      const shiftTa = shift === 'morning' ? 'காலை ஷிப்ட்' : 'மதிய ஷிப்ட்';
-      const shiftHi = shift === 'morning' ? 'सुबह की पाली' : 'दोपहर की पाली';
-      const shiftEn = shift === 'morning' ? 'morning shift' : 'afternoon shift';
-
-      let utterances = [];
-      if (type === 'PUNCH') {
-        if (choice === 'ALL' || choice === 'ta-IN') utterances.push({ text: `${name} ${shiftTa} வருகை பதிவு செய்யப்பட்டது.`, lang: 'ta-IN' });
-        if (choice === 'ALL' || choice === 'hi-IN') utterances.push({ text: `${name} की ${shiftHi} उपस्थिति दर्ज की गई है।`, lang: 'hi-IN' });
-        if (choice === 'ALL' || choice === 'en-IN') utterances.push({ text: `${name} marked for ${shiftEn}.`, lang: 'en-IN' });
-      } else {
-        if (choice === 'ALL' || choice === 'ta-IN') utterances.push({ text: `${name} முகம் பதிவு செய்யப்பட்டது.`, lang: 'ta-IN' });
-        if (choice === 'ALL' || choice === 'hi-IN') utterances.push({ text: `${name} का चेहरा पंजीकृत हो गया है।`, lang: 'hi-IN' });
-        if (choice === 'ALL' || choice === 'en-IN') utterances.push({ text: `Face enrolled for ${name}.`, lang: 'en-IN' });
-      }
-
-      utterances.forEach(u => {
-        const s = new SpeechSynthesisUtterance(u.text);
-        s.lang = u.lang;
-        s.rate = 1.0;
-        window.speechSynthesis.speak(s);
-      });
-    }
-
-    function speakSingle(text, lang = 'ta-IN') {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = lang;
-      u.rate = 1.0;
-      window.speechSynthesis.speak(u);
-    }
-
-    // OCR DOCUMENT & SLIP SCANNER
-    function setScanMode(m) {
-      currentScanMode = m;
-      document.querySelectorAll('.scan-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-    }
-
-    async function handleDocumentScan(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const progressBox = document.getElementById('ocrProgressBox');
-      const statusText = document.getElementById('ocrStatusText');
-      progressBox.style.display = 'block';
-
-      try {
-        const worker = await Tesseract.createWorker(['eng', 'tam'], 1, {
-          logger: m => { if (m.status === 'recognizing text') statusText.innerText = `OCR Scanning... ${Math.round(m.progress * 100)}%`; }
-        });
-        const ret = await worker.recognize(file);
-        await worker.terminate();
-
-        progressBox.style.display = 'none';
-        document.getElementById('ocrResultBox').style.display = 'block';
-
-        parsedOcrPayload = parseSmartScan(ret.data.text, currentScanMode);
-        document.getElementById('ocrParsedResultView').innerHTML = `<strong>${parsedOcrPayload.title}</strong><div style="color:var(--primary); font-weight:800; margin-top:0.4rem;">${parsedOcrPayload.summary}</div>`;
-      } catch (err) {
-        progressBox.style.display = 'none';
-        alert('OCR error: ' + err);
-      }
-    }
-
-    function parseSmartScan(text, forced) {
-      const lower = text.toLowerCase();
-      const nums = text.match(/\d+(\.\d+)?/g) ? text.match(/\d+(\.\d+)?/g).map(Number) : [0];
-      const maxNum = Math.max(...nums) || 1000;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-
-      if (forced === 'ATTENDANCE' || lower.includes('present') || lower.includes('attendance') || lower.includes('வருகை')) {
-        const map = {};
-        unitWorkers.forEach(w => { map[w.id] = { morning: true, afternoon: true }; });
-        return { type: 'ATT', title: '👥 Shift Attendance Sheet', data: map, summary: `Matched ${Object.keys(map).length} workers for morning + afternoon shifts.` };
-      }
-      if (forced === 'EGG' || lower.includes('egg') || lower.includes('முட்டை') || lower.includes('hatch')) {
-        return { type: 'EGG', title: '🥚 Egg Production Slip', data: { shed: 'Shed 1', hatching: Math.round(maxNum * 0.95), commercial: Math.round(maxNum * 0.05), broken: 0, sold: maxNum, price: 6.5 }, summary: `Total Eggs: ${maxNum.toLocaleString()}` };
-      }
-      if (forced === 'FEED' || lower.includes('feed') || lower.includes('தீவனம்') || lower.includes('mash')) {
-        const bags = Math.min(...nums.filter(n => n > 0 && n < 500)) || 50;
-        return { type: 'FEED', title: '🌾 Feed Delivery Bill', data: { type: 'Parent Breeder Mash', feedIn: bags, feedOut: 0, cost: bags * 1850 }, summary: `${bags} Bags Mash` };
-      }
-      return { type: 'EXP', title: '💵 Expense Bill', data: { category: 'Other', description: 'Scanned Bill', amount: maxNum }, summary: `Expense Amount: ₹${maxNum.toLocaleString()}` };
-    }
-
-    function applyScannedData() {
-      if (!parsedOcrPayload) return;
-      const today = new Date().toISOString().slice(0, 10);
-      if (parsedOcrPayload.type === 'ATT') {
-        Object.keys(parsedOcrPayload.data).forEach(wId => {
-          state.attendance.unshift({ date: today, workerId: parseInt(wId), morning: true, afternoon: true, units: 1.0, status: 'Present' });
-        });
-      } else if (parsedOcrPayload.type === 'EGG') {
-        state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data, revenue: parsedOcrPayload.data.sold * parsedOcrPayload.data.price });
-      } else if (parsedOcrPayload.type === 'FEED') {
-        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
-        if (parsedOcrPayload.data.cost > 0) {
-          state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date: today, category: 'Feed Purchase', description: `${parsedOcrPayload.data.feedIn} Bags Scanned`, amount: parsedOcrPayload.data.cost });
-        }
-      } else if (parsedOcrPayload.type === 'EXP') {
-        state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
-      }
-      persist();
-      alert('Data posted to active division ledger!');
-      document.getElementById('ocrResultBox').style.display = 'none';
-      parsedOcrPayload = null;
-    }
-
-    // NATURAL LANGUAGE AI INTENT
+    // AI VOICE & NATURAL LANGUAGE
     function parseAndExecuteAiCommand(cmd) {
       const lower = cmd.toLowerCase().trim();
       const isTamil = /[^\u0000-\u007F]/.test(cmd) || document.getElementById('aiLangSelector').value === 'ta-IN';
@@ -1919,55 +2241,6 @@
       b.scrollTop = b.scrollHeight;
     }
 
-    // PDF EXPORTS
-    function downloadComprehensiveUnitReportPDF() {
-      const doc = new jsPDF();
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      doc.setFillColor(225, 29, 72);
-      doc.rect(0, 0, doc.internal.pageSize.width, 24, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(14);
-      doc.text(`AMUTAN GROUPS - ${unit ? unit.name : 'DIVISION'} REPORT`, 14, 15);
-      doc.save(`AmutanGroups_${unit ? unit.name.replace(/\s+/g, '_') : 'Report'}.pdf`);
-    }
-
-    function downloadAllPayrollPDF() {
-      const doc = new jsPDF('landscape');
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      doc.text(`AMUTAN GROUPS - ${unit ? unit.name : 'DIVISION'} PAYROLL (SHIFT UNITS)`, 14, 15);
-      doc.save(`Payroll_${unit ? unit.name.replace(/\s+/g, '_') : 'Report'}.pdf`);
-    }
-
-    function downloadFinancialPDF() { downloadComprehensiveUnitReportPDF(); }
-    function downloadPoultryStaffPDF() { downloadComprehensiveUnitReportPDF(); }
-
-    function downloadMasterArchiveAndClearData() {
-      if (state.currentUser.role !== 'MD') return alert('MD Access Only.');
-      if (!confirm("Download master audit archive and clear all operational logs?")) return;
-      downloadComprehensiveUnitReportPDF();
-      state.attendance = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = []; state.punches = [];
-      persist();
-      alert('Master Archive downloaded and database reset for fresh cycle!');
-    }
-
-    function exportBackupJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-      const a = document.createElement('a'); a.href = dataStr; a.download = `Amutan_Poultry_FullBackup.json`; a.click();
-    }
-    function importBackupJSON(e) {
-      const reader = new FileReader();
-      reader.onload = ev => { state = JSON.parse(ev.target.result); persist(); alert('Backup restored!'); };
-      reader.readAsText(e.target.files[0]);
-    }
-    function exportTableToCSV(tid, fn) {
-      let csv = [];
-      document.getElementById(tid).querySelectorAll('tr').forEach(r => {
-        let cols = []; r.querySelectorAll('td').forEach(c => cols.push('"' + c.innerText.trim() + '"'));
-        if (cols.length) csv.push(cols.join(','));
-      });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv.join('\n')], { type: 'text/csv' })); a.download = fn; a.click();
-    }
-
     function renderWorkspace() {
       if (!state.selectedUnitId) return;
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
@@ -1987,14 +2260,9 @@
 
       let totalPayroll = 0;
       unitWorkers.forEach(w => {
-        let totalUnits = state.attendance
+        const totalUnits = state.attendance
           .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => {
-            if (a.units !== undefined) return sum + a.units;
-            if (a.status === 'Present') return sum + 1.0;
-            if (a.status === 'Half Day') return sum + 0.5;
-            return sum;
-          }, 0);
+          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
         totalPayroll += (totalUnits * w.wage);
       });
       const totalExp = unitExpenses.reduce((s, e) => s + (e.amount || 0), 0);
@@ -2025,7 +2293,7 @@
       enrollSelect.innerHTML = '';
 
       unitWorkers.forEach((w, i) => {
-        staffTbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.role}</td><td>₹${w.wage} / day</td><td><button class="btn btn-sm btn-secondary" onclick="deleteWorker(${w.id})">Remove</button></td></tr>`;
+        staffTbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.phone || '-'}</td><td>${w.role}</td><td>₹${w.wage} / day</td><td><button class="btn btn-sm btn-secondary" onclick="deleteWorker(${w.id})">Remove</button></td></tr>`;
         advWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
         enrollSelect.innerHTML += `<option value="${w.id}">${w.name} (${w.role}) ${w.faceEmbedding ? '✔ Enrolled' : '❌ Pending'}</option>`;
       });
@@ -2069,25 +2337,32 @@
         advTbody.innerHTML += `<tr><td>${a.date}</td><td>${wk?wk.name:'Worker'}</td><td>₹${a.amount}</td></tr>`;
       });
 
-      // Payroll List (Accurately Computes Shift Units: Morning 0.5 + Afternoon 0.5)
+      // Payroll List
       const payTbody = document.getElementById('payrollList');
       payTbody.innerHTML = '';
       unitWorkers.forEach(w => {
-        let earnedUnits = state.attendance
+        const earnedUnits = state.attendance
           .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => {
-            if (a.units !== undefined) return sum + a.units;
-            if (a.status === 'Present') return sum + 1.0;
-            if (a.status === 'Half Day') return sum + 0.5;
-            return sum;
-          }, 0);
+          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
 
-        let adv = state.advances
+        const adv = state.advances
           .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
           .reduce((s, a) => s + a.amount, 0);
 
-        let gross = earnedUnits * w.wage;
-        payTbody.innerHTML += `<tr><td><strong>${w.name}</strong></td><td>₹${w.wage}</td><td><strong>${earnedUnits} Units</strong></td><td>₹${gross.toLocaleString()}</td><td>- ₹${adv.toLocaleString()}</td><td><strong style="color:var(--success);">₹${Math.max(0, gross-adv).toLocaleString()}</strong></td><td><button class="btn btn-sm btn-whatsapp" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Payslip for '+${JSON.stringify(w.name)}+': Earned Units: '+${earnedUnits}+', Net Payable Rs.'+${Math.max(0, gross-adv)}))">WhatsApp</button></td></tr>`;
+        const gross = earnedUnits * w.wage;
+        const net = Math.max(0, gross - adv);
+        payTbody.innerHTML += `<tr>
+          <td><strong>${w.name}</strong></td>
+          <td>₹${w.wage}</td>
+          <td><strong>${earnedUnits} Units</strong></td>
+          <td>₹${gross.toLocaleString()}</td>
+          <td style="color:var(--danger);">- ₹${adv.toLocaleString()}</td>
+          <td><strong style="color:var(--success); font-size:1.05rem;">₹${net.toLocaleString()}</strong></td>
+          <td style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" onclick="downloadWorkerPayslipPDF(${w.id})">📄 PDF</button>
+            <button class="btn btn-sm btn-whatsapp" onclick="shareViaWhatsAppDirect(${w.id})">💬 WhatsApp</button>
+          </td>
+        </tr>`;
       });
 
       // Mortality List
