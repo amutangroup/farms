@@ -2,19 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amutan Groups </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Amutan Groups | Poultry Operations & Enterprise Management Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- PDF & OCR Libraries -->
+  <!-- PDF Generation Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-
-  <!-- Deep Learning Face-API AI Neural Network Engine -->
-  <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
 
   <!-- Firebase Realtime Database SDKs -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -59,62 +55,137 @@
       --shadow-lg: 0 22px 48px rgba(0, 0, 0, 0.6);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Nunito', 'Plus Jakarta Sans', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Nunito', 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background 0.3s ease, color 0.3s ease; }
 
+    /* =========================================================
+       ULTRA-ATTRACTIVE MODERN GLASSMORPHISM LOGIN PAGE
+       ========================================================= */
     #authOverlay {
       position: fixed; inset: 0;
-      background: radial-gradient(circle at 20% 20%, #ffe4e6 0%, #fecdd3 60%, #fda4af 100%);
-      display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1.5rem;
+      background: radial-gradient(circle at 10% 20%, #ffe4e6 0%, #fecdd3 35%, #fda4af 75%, #fb7185 100%);
+      display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1.2rem;
+      overflow-y: auto;
     }
-    .login-card {
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(20px);
-      width: 100%; max-width: 430px;
-      padding: 3rem 2.2rem; border-radius: 32px;
-      box-shadow: var(--shadow-lg);
-      border: 3px solid #ffffff;
-      text-align: center;
-    }
-    .login-card h2 { font-size: 1.7rem; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
-    .login-card p { font-size: 0.9rem; color: var(--text-muted); font-weight: 700; margin-bottom: 1.8rem; }
 
+    /* Ambient animated blurred orbs in login background */
+    .login-orb-1, .login-orb-2 {
+      position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; opacity: 0.6;
+    }
+    .login-orb-1 { width: 340px; height: 340px; background: #f43f5e; top: -50px; left: -50px; animation: floatOrb 8s infinite alternate ease-in-out; }
+    .login-orb-2 { width: 380px; height: 380px; background: #fbbf24; bottom: -60px; right: -60px; animation: floatOrb 10s infinite alternate-reverse ease-in-out; }
+    @keyframes floatOrb { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(35px) scale(1.08); } }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      width: 100%; max-width: 440px;
+      padding: 2.6rem 2.2rem; border-radius: 36px;
+      box-shadow: 0 25px 60px rgba(190, 18, 60, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      text-align: center; position: relative; z-index: 10;
+      animation: loginPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes loginPop { from { opacity: 0; transform: scale(0.92) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+    .login-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.9rem;
+      border-radius: 20px; background: var(--primary-soft); color: var(--primary);
+      font-size: 0.76rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 1.2rem; border: 1.5px solid #fecdd3;
+    }
+
+    .login-icon-wrap {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+      border-radius: 26px; border: 2.5px solid #fda4af;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem; color: var(--primary);
+      box-shadow: 0 12px 24px rgba(225, 29, 72, 0.15);
+    }
+    .login-icon-wrap svg { width: 42px; height: 42px; }
+
+    .login-card h2 {
+      font-size: 1.85rem; font-weight: 900; color: var(--primary); letter-spacing: -0.8px; line-height: 1.15;
+    }
+    .login-card p {
+      font-size: 0.9rem; color: var(--text-muted); font-weight: 700; margin-top: 0.35rem; margin-bottom: 2rem;
+    }
+
+    .login-input-group {
+      position: relative; margin-bottom: 1.2rem; text-align: left;
+    }
+    .login-input-group label {
+      display: block; font-size: 0.82rem; font-weight: 800; color: var(--text); margin-bottom: 0.4rem;
+    }
+    .login-input-wrapper {
+      position: relative; display: flex; align-items: center;
+    }
+    .login-input-icon {
+      position: absolute; left: 14px; font-size: 1.1rem; color: var(--primary); pointer-events: none;
+    }
+    .login-input-control {
+      width: 100%; padding: 0.88rem 1rem 0.88rem 2.8rem;
+      border: 2px solid #e2e8f0; border-radius: 16px;
+      font-size: 0.92rem; font-weight: 700; outline: none;
+      background: #ffffff; color: var(--text); transition: all 0.25s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+    .login-input-control:focus {
+      border-color: var(--primary); box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.12);
+    }
+
+    .login-submit-btn {
+      width: 100%; padding: 0.95rem; margin-top: 0.8rem;
+      border: none; border-radius: 18px;
+      background: var(--primary-gradient); color: #ffffff;
+      font-size: 1rem; font-weight: 900; letter-spacing: 0.3px;
+      cursor: pointer; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    }
+    .login-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(225, 29, 72, 0.45); }
+    .login-submit-btn:active { transform: scale(0.98); }
+
+    /* =========================================================
+       APP HEADER & DRAWER STYLES
+       ========================================================= */
     header {
       background: var(--card-bg);
       backdrop-filter: blur(14px);
-      padding: 0.9rem 1.8rem;
+      padding: 0.85rem 1.4rem;
       position: sticky; top: 0; z-index: 90;
       display: flex; justify-content: space-between; align-items: center;
       border-bottom: 2px solid var(--border);
       box-shadow: var(--shadow-sm);
     }
-    .header-left { display: flex; align-items: center; gap: 1.2rem; }
+    .header-left { display: flex; align-items: center; gap: 1rem; }
     
     .menu-trigger {
-      background: var(--card-bg); border: 2px solid var(--border); width: 46px; height: 46px;
-      border-radius: 16px; display: flex; flex-direction: column; justify-content: center;
+      background: var(--card-bg); border: 2px solid var(--border); width: 44px; height: 44px;
+      border-radius: 14px; display: flex; flex-direction: column; justify-content: center;
       align-items: center; gap: 5px; cursor: pointer; transition: all 0.25s ease;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-sm); flex-shrink: 0;
     }
     .menu-trigger:hover { transform: scale(1.06); border-color: var(--primary); box-shadow: var(--glow); }
-    .menu-trigger span { width: 22px; height: 3px; background: var(--primary); border-radius: 4px; }
+    .menu-trigger span { width: 20px; height: 3px; background: var(--primary); border-radius: 4px; }
     
-    .brand-wrap { display: flex; align-items: center; gap: 0.8rem; }
-    .brand-text h1 { font-size: 1.25rem; font-weight: 900; color: var(--primary); line-height: 1.1; }
-    .brand-text small { color: var(--text-muted); font-size: 0.75rem; font-weight: 700; }
+    .brand-wrap { display: flex; align-items: center; gap: 0.6rem; }
+    .brand-text h1 { font-size: 1.15rem; font-weight: 900; color: var(--primary); line-height: 1.1; }
+    .brand-text small { color: var(--text-muted); font-size: 0.72rem; font-weight: 700; display: block; }
 
-    .header-right { display: flex; align-items: center; gap: 0.8rem; }
+    .header-right { display: flex; align-items: center; gap: 0.6rem; }
     .theme-toggle-btn {
-      background: var(--card-bg); border: 2px solid var(--border); padding: 0.5rem 0.8rem;
-      border-radius: 20px; font-weight: 800; font-size: 0.82rem; cursor: pointer; color: var(--text);
+      background: var(--card-bg); border: 2px solid var(--border); padding: 0.45rem 0.75rem;
+      border-radius: 18px; font-weight: 800; font-size: 0.8rem; cursor: pointer; color: var(--text);
     }
     .user-pill {
-      display: flex; align-items: center; gap: 0.8rem; background: var(--card-bg);
-      padding: 0.4rem 0.9rem; border-radius: 30px; border: 2px solid var(--border); box-shadow: var(--shadow-sm);
+      display: flex; align-items: center; gap: 0.6rem; background: var(--card-bg);
+      padding: 0.35rem 0.8rem; border-radius: 30px; border: 2px solid var(--border); box-shadow: var(--shadow-sm);
     }
     .role-badge {
-      background: var(--primary-soft); color: var(--primary); padding: 0.25rem 0.7rem;
-      border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+      background: var(--primary-soft); color: var(--primary); padding: 0.2rem 0.6rem;
+      border-radius: 20px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
     }
 
     .drawer-overlay {
@@ -124,9 +195,9 @@
     .drawer-overlay.active { opacity: 1; pointer-events: all; }
 
     .drawer {
-      position: fixed; top: 0; left: -360px; width: 340px; height: 100vh;
-      max-height: 100vh; background: var(--card-bg); z-index: 110; padding: 1.4rem 1.2rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2); transition: left 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+      position: fixed; top: 0; left: -360px; width: 320px; max-width: 85vw; height: 100vh;
+      background: var(--card-bg); z-index: 110; padding: 1.2rem 1rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25); transition: left 0.38s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex; flex-direction: column; border-top-right-radius: 32px; border-bottom-right-radius: 32px;
       overflow: hidden;
     }
@@ -134,7 +205,7 @@
 
     .drawer-header {
       display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 1rem; border-bottom: 1.5px solid var(--border); margin-bottom: 0.8rem; flex-shrink: 0;
+      padding-bottom: 0.9rem; border-bottom: 1.5px solid var(--border); margin-bottom: 0.8rem; flex-shrink: 0;
     }
     .drawer-brand h3 { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
     .drawer-brand small { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; display: block; }
@@ -146,26 +217,26 @@
 
     .drawer-scroll-body {
       flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
-      padding-right: 0.4rem; display: flex; flex-direction: column; gap: 1.4rem;
+      padding-right: 0.2rem; display: flex; flex-direction: column; gap: 1.2rem;
     }
-    .drawer-scroll-body::-webkit-scrollbar { width: 6px; }
+    .drawer-scroll-body::-webkit-scrollbar { width: 4px; }
     .drawer-scroll-body::-webkit-scrollbar-thumb { background: #fda4af; border-radius: 10px; }
 
-    .nav-section { display: flex; flex-direction: column; gap: 0.4rem; }
+    .nav-section { display: flex; flex-direction: column; gap: 0.35rem; }
     .nav-section-title {
-      font-size: 0.72rem; font-weight: 900; color: #94a3b8; text-transform: uppercase;
-      letter-spacing: 0.8px; padding-left: 0.8rem; margin-bottom: 0.3rem;
+      font-size: 0.7rem; font-weight: 900; color: #94a3b8; text-transform: uppercase;
+      letter-spacing: 0.8px; padding-left: 0.8rem; margin-bottom: 0.2rem;
     }
 
     .nav-link {
-      display: flex; align-items: center; gap: 0.9rem; padding: 0.78rem 1rem;
-      border-radius: 16px; border: none; background: transparent; font-size: 0.9rem;
+      display: flex; align-items: center; gap: 0.8rem; padding: 0.72rem 0.9rem;
+      border-radius: 14px; border: none; background: transparent; font-size: 0.88rem;
       font-weight: 800; color: var(--text-muted); cursor: pointer; transition: all 0.2s ease; text-align: left;
     }
     .nav-link .icon-box {
-      width: 32px; height: 32px; border-radius: 10px; background: var(--primary-soft);
+      width: 30px; height: 30px; border-radius: 10px; background: var(--primary-soft);
       display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s ease; color: var(--primary);
+      transition: all 0.2s ease; color: var(--primary); flex-shrink: 0;
     }
     .nav-link:hover { background: var(--primary-soft); color: var(--primary); transform: translateX(4px); }
     .nav-link.active {
@@ -174,64 +245,67 @@
     .nav-link.active .icon-box { background: rgba(255, 255, 255, 0.25); color: #fff; }
 
     .drawer-footer {
-      padding-top: 1rem; border-top: 1.5px solid var(--border);
-      display: flex; flex-direction: column; gap: 0.6rem; flex-shrink: 0;
+      padding-top: 0.9rem; border-top: 1.5px solid var(--border);
+      display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0;
     }
 
-    .dashboard-container { max-width: 1240px; margin: 2rem auto; padding: 0 1.2rem; }
+    /* =========================================================
+       DASHBOARD & WORKSPACE STYLES
+       ========================================================= */
+    .dashboard-container { max-width: 1240px; margin: 1.5rem auto; padding: 0 1rem; }
 
     #unitSelectScreen { display: block; }
-    .landing-header { text-align: center; margin-bottom: 2.5rem; margin-top: 1rem; }
-    .landing-header h2 { font-size: 2.2rem; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
-    .landing-header p { font-size: 1rem; color: var(--text-muted); font-weight: 700; margin-top: 0.2rem; }
+    .landing-header { text-align: center; margin-bottom: 2rem; margin-top: 0.5rem; }
+    .landing-header h2 { font-size: 2rem; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
+    .landing-header p { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; margin-top: 0.2rem; }
 
     .units-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem;
     }
     .unit-card {
       background: var(--card-bg); border-radius: var(--radius); border: 2.5px solid var(--border);
-      padding: 2.8rem 2.2rem; text-align: center; cursor: pointer; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 2.2rem 1.6rem; text-align: center; cursor: pointer; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; align-items: center;
       position: relative; overflow: hidden;
     }
-    .unit-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
+    .unit-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
     
     .unit-icon {
-      width: 88px; height: 88px; border-radius: 50%; background: var(--bg);
+      width: 78px; height: 78px; border-radius: 50%; background: var(--bg);
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 1.2rem; border: 3px solid var(--border); box-shadow: var(--shadow-sm); color: var(--primary);
     }
-    .unit-icon svg { width: 44px; height: 44px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .unit-icon svg { width: 40px; height: 40px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-    .unit-card h3 { font-size: 1.4rem; font-weight: 900; color: var(--text); margin-bottom: 0.4rem; }
-    .unit-card p { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1.8rem; }
+    .unit-card h3 { font-size: 1.25rem; font-weight: 900; color: var(--text); margin-bottom: 0.35rem; }
+    .unit-card p { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.4; }
     .unit-btn {
-      background: var(--primary-gradient); color: #fff; border: none; padding: 0.85rem 2rem;
-      border-radius: 30px; font-weight: 800; font-size: 0.92rem; cursor: pointer; box-shadow: var(--shadow-sm);
+      background: var(--primary-gradient); color: #fff; border: none; padding: 0.8rem 1.8rem;
+      border-radius: 30px; font-weight: 800; font-size: 0.9rem; cursor: pointer; box-shadow: var(--shadow-sm);
+      width: 100%; max-width: 220px;
     }
-    .unit-btn:hover { transform: scale(1.04); box-shadow: var(--glow); }
 
     #unitWorkspaceScreen { display: none; }
     .workspace-banner {
       background: var(--card-bg); border: 2.5px solid var(--border); border-radius: var(--radius);
-      padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 2rem; box-shadow: var(--shadow-sm); flex-wrap: wrap; gap: 1rem;
+      padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.5rem; box-shadow: var(--shadow-sm); flex-wrap: wrap; gap: 1rem;
     }
-    .workspace-banner h2 { font-size: 1.5rem; font-weight: 900; color: var(--primary); }
+    .workspace-banner h2 { font-size: 1.35rem; font-weight: 900; color: var(--primary); }
     .back-btn {
       background: var(--bg); color: var(--primary); border: 2px solid var(--border);
-      padding: 0.6rem 1.4rem; border-radius: 20px; font-weight: 800; cursor: pointer; transition: all 0.2s;
+      padding: 0.55rem 1.2rem; border-radius: 20px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
     }
     .back-btn:hover { background: var(--primary); color: #fff; }
 
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
     .kpi-card {
       background: var(--card-bg); border-radius: var(--radius); border: 2px solid var(--border);
-      padding: 1.4rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between;
     }
-    .kpi-card span { font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .kpi-card h3 { font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-top: 0.2rem; }
-    .kpi-icon { width: 50px; height: 50px; border-radius: 18px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+    .kpi-card span { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .kpi-card h3 { font-size: 1.5rem; font-weight: 900; color: var(--primary); margin-top: 0.15rem; }
+    .kpi-icon { width: 44px; height: 44px; border-radius: 14px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
 
     .panel { display: none; }
     .panel.active { display: block; animation: fadeIn 0.3s ease; }
@@ -240,26 +314,27 @@
     .card {
       background: var(--card-bg); border-radius: var(--radius);
       border: 2.5px solid var(--border); box-shadow: var(--shadow-sm);
-      padding: 2rem; margin-bottom: 2rem;
+      padding: 1.6rem; margin-bottom: 1.5rem;
     }
-    .card-title { font-size: 1.2rem; font-weight: 900; color: var(--text); margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
+    .card-title { font-size: 1.15rem; font-weight: 900; color: var(--text); margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
 
-    .toolbar { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .toolbar { display: flex; gap: 0.6rem; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; }
     .search-input {
-      flex: 1; min-width: 240px; padding: 0.75rem 1.2rem; border-radius: 16px; border: 2px solid var(--border);
-      font-weight: 700; font-size: 0.9rem; outline: none; background: var(--card-bg); color: var(--text);
+      flex: 1; min-width: 200px; padding: 0.75rem 1.1rem; border-radius: 16px; border: 2px solid var(--border);
+      font-weight: 700; font-size: 0.88rem; outline: none; background: var(--card-bg); color: var(--text);
     }
 
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; align-items: end; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label { font-size: 0.85rem; font-weight: 800; color: var(--text); }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group label { font-size: 0.82rem; font-weight: 800; color: var(--text); }
     .form-control {
-      padding: 0.8rem 1rem; border: 2px solid #cbd5e1; border-radius: var(--radius-sm);
-      font-size: 0.9rem; font-weight: 700; outline: none; background: var(--card-bg); color: var(--text); transition: all 0.2s ease;
+      padding: 0.78rem 0.95rem; border: 2px solid #cbd5e1; border-radius: var(--radius-sm);
+      font-size: 0.88rem; font-weight: 700; outline: none; background: var(--card-bg); color: var(--text); transition: all 0.2s ease;
+      width: 100%;
     }
 
     .btn {
-      padding: 0.8rem 1.5rem; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 800;
+      padding: 0.75rem 1.4rem; border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 800;
       cursor: pointer; border: none; display: inline-flex; align-items: center; justify-content: center;
       gap: 0.5rem; transition: all 0.2s ease;
     }
@@ -271,32 +346,34 @@
     .btn-ai { background: var(--ai-gradient); color: #fff; font-weight: 800; }
     .btn-secondary { background: var(--bg); color: var(--primary); font-weight: 800; }
     .btn-danger-solid { background: var(--danger); color: #fff; }
-    .btn-sm { padding: 0.45rem 0.85rem; font-size: 0.82rem; border-radius: 12px; }
+    .btn-sm { padding: 0.42rem 0.8rem; font-size: 0.8rem; border-radius: 12px; }
 
-    .table-responsive { overflow-x: auto; border-radius: var(--radius-sm); }
-    table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; background: var(--card-bg); }
+    .table-responsive { overflow-x: auto; border-radius: var(--radius-sm); -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.4rem; background: var(--card-bg); }
     th {
       background: var(--primary-soft); color: var(--primary); font-weight: 900;
-      font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;
-      padding: 1.1rem 1rem; text-align: left;
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 0.95rem 0.85rem; text-align: left; white-space: nowrap;
     }
-    td { padding: 1.1rem 1rem; border-top: 1px solid var(--border); font-size: 0.92rem; font-weight: 700; color: var(--text); }
+    td { padding: 0.95rem 0.85rem; border-top: 1px solid var(--border); font-size: 0.88rem; font-weight: 700; color: var(--text); }
 
-    .pill { padding: 0.35rem 0.85rem; border-radius: 20px; font-size: 0.78rem; font-weight: 800; display: inline-block; }
+    .pill { padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 800; display: inline-block; white-space: nowrap; }
     .pill-present { background: #dcfce7; color: var(--success); }
     .pill-half { background: var(--accent-soft); color: #b45309; }
     .pill-absent { background: #fee2e2; color: var(--danger); }
 
-    /* TWICE DAILY SHIFT CARDS & MANUAL MARK CONTROLS */
-    .batch-muster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
+    /* =========================================================
+       RESPONSIVE MUSTER & MOBILE TWEAKS
+       ========================================================= */
+    .batch-muster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
     .worker-muster-card {
-      background: var(--card-bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.2rem;
-      display: flex; flex-direction: column; gap: 0.8rem; box-shadow: var(--shadow-sm);
+      background: var(--card-bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.1rem;
+      display: flex; flex-direction: column; gap: 0.75rem; box-shadow: var(--shadow-sm);
     }
     .shift-toggle-row {
-      display: flex; flex-direction: column; gap: 0.3rem; background: var(--bg); padding: 0.6rem; border-radius: 12px; border: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 0.3rem; background: var(--bg); padding: 0.55rem; border-radius: 12px; border: 1px solid var(--border);
     }
-    .shift-toggle-label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    .shift-toggle-label { font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
     .status-toggle-group { display: flex; gap: 0.3rem; }
     .status-chip {
       flex: 1; padding: 0.4rem; border-radius: 8px; font-size: 0.75rem; font-weight: 800;
@@ -305,134 +382,102 @@
     .status-chip.selected-present { background: #dcfce7; border-color: var(--success); color: var(--success); }
     .status-chip.selected-absent { background: #fee2e2; border-color: var(--danger); color: var(--danger); }
 
-    .biometric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    @media(max-width: 850px) { .biometric-grid { grid-template-columns: 1fr; } }
-    
-    .camera-wrapper {
-      position: relative; width: 100%; height: 340px; border-radius: var(--radius-sm);
-      overflow: hidden; background: #0f172a; border: 3px solid var(--primary);
-      display: flex; align-items: center; justify-content: center;
-    }
-    
-    #liveVideo { width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease; }
-    #liveVideo.mirrored { transform: scaleX(-1); }
-    
-    /* Live Landmark Overlay Canvas */
-    #overlayCanvas {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
-    }
-    #overlayCanvas.mirrored { transform: scaleX(-1); }
-    
-    .camera-hud {
-      position: absolute; inset: 0; pointer-events: none;
-      display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.2rem;
-    }
-    .face-target-oval {
-      width: 190px; height: 240px; border: 2.5px dashed #38bdf8; border-radius: 50%;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-      transition: all 0.3s ease;
-    }
-    .face-target-oval.not-recognized {
-      border-color: #ef4444 !important;
-      box-shadow: 0 0 24px rgba(239, 68, 68, 0.7) !important;
-    }
-    .hud-scanner-laser {
-      width: 100%; height: 3px; background: #34d399; box-shadow: 0 0 14px #34d399;
-      position: absolute; left: 0; animation: scanMove 2.2s infinite ease-in-out;
-    }
-    @keyframes scanMove { 0% { top: 15%; } 50% { top: 85%; } 100% { top: 15%; } }
-    
-    .flash-overlay {
-      position: absolute; inset: 0; background: rgba(16, 185, 129, 0.92);
-      display: none; flex-direction: column; align-items: center; justify-content: center;
-      color: #fff; font-size: 1.2rem; font-weight: 900; z-index: 10; text-align: center;
-      padding: 1rem;
-    }
-    .flash-overlay.error-flash {
-      background: rgba(239, 68, 68, 0.92) !important;
-    }
-
-    .scan-dropzone {
-      border: 2.5px dashed var(--primary); border-radius: var(--radius);
-      padding: 2.2rem 1.5rem; text-align: center; background: var(--primary-soft);
-      cursor: pointer; transition: all 0.2s ease;
-    }
-    .scan-mode-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .scan-tab {
-      padding: 0.5rem 1rem; border-radius: 14px; border: 2px solid var(--border);
-      background: var(--card-bg); font-size: 0.85rem; font-weight: 800; cursor: pointer; color: var(--text);
-    }
-    .scan-tab.active { background: var(--primary-gradient); color: #fff; border-color: transparent; }
-    .extracted-match-card {
-      background: var(--bg); border: 2px solid var(--border); border-radius: 16px;
-      padding: 1.2rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.6rem;
-    }
-    .matched-worker-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.6rem 0.8rem; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border);
-    }
-
+    /* Floating AI Widget Mobile Bounds */
     #amutanAiFab {
-      position: fixed; bottom: 24px; right: 24px; z-index: 999;
-      width: 60px; height: 60px; border-radius: 50%;
+      position: fixed; bottom: 20px; right: 20px; z-index: 999;
+      width: 56px; height: 56px; border-radius: 50%;
       background: var(--ai-gradient); color: #fff;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.45);
       transition: all 0.3s ease; border: 2px solid #fff;
     }
     #amutanAiChatModal {
-      position: fixed; bottom: 94px; right: 24px; z-index: 1000;
-      width: 400px; max-width: calc(100vw - 32px); height: 570px;
+      position: fixed; bottom: 86px; right: 20px; z-index: 1000;
+      width: 380px; max-width: calc(100vw - 32px); height: 520px; max-height: 80vh;
       background: var(--card-bg); border: 2.5px solid var(--border); border-radius: 28px;
       box-shadow: var(--shadow-lg); display: none; flex-direction: column; overflow: hidden;
       backdrop-filter: blur(20px);
     }
     .ai-chat-header {
-      background: var(--ai-gradient); color: #fff; padding: 0.9rem 1.2rem;
+      background: var(--ai-gradient); color: #fff; padding: 0.85rem 1.1rem;
       display: flex; justify-content: space-between; align-items: center;
     }
     .ai-chat-body {
-      flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.8rem;
+      flex: 1; overflow-y: auto; padding: 0.9rem; display: flex; flex-direction: column; gap: 0.75rem;
     }
     .ai-msg {
-      max-width: 85%; padding: 0.75rem 1rem; border-radius: 18px; font-size: 0.88rem; font-weight: 700; line-height: 1.4;
+      max-width: 88%; padding: 0.7rem 0.9rem; border-radius: 16px; font-size: 0.85rem; font-weight: 700; line-height: 1.4;
     }
     .ai-msg-bot { background: var(--bg); color: var(--text); border: 1.5px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
     .ai-msg-user { background: var(--primary-gradient); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; }
     .ai-chat-footer {
-      padding: 0.8rem; border-top: 1.5px solid var(--border); display: flex; gap: 0.4rem; background: var(--card-bg); align-items: center;
+      padding: 0.75rem; border-top: 1.5px solid var(--border); display: flex; gap: 0.4rem; background: var(--card-bg); align-items: center;
     }
     .ai-chat-input {
-      flex: 1; padding: 0.65rem 0.9rem; border-radius: 20px; border: 1.5px solid var(--border);
-      outline: none; font-size: 0.88rem; font-weight: 700; background: var(--bg); color: var(--text);
+      flex: 1; padding: 0.6rem 0.85rem; border-radius: 20px; border: 1.5px solid var(--border);
+      outline: none; font-size: 0.85rem; font-weight: 700; background: var(--bg); color: var(--text);
     }
     .ai-lang-select {
       background: var(--bg); border: 1.5px solid var(--border); border-radius: 14px;
       font-size: 0.75rem; font-weight: 800; color: var(--text); padding: 0.3rem 0.5rem; outline: none;
     }
+
+    /* Strict Mobile Screen Enhancements */
+    @media (max-width: 768px) {
+      header { padding: 0.75rem 1rem; }
+      .brand-text small { display: none; }
+      .user-pill { padding: 0.3rem 0.6rem; }
+      .dashboard-container { padding: 0 0.8rem; margin: 1rem auto; }
+      .landing-header h2 { font-size: 1.65rem; }
+      .unit-card { padding: 1.8rem 1.2rem; }
+      .card { padding: 1.2rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN SCREEN -->
+  <!-- ULTRA-ATTRACTIVE MODERN LOGIN OVERLAY -->
   <div id="authOverlay">
+    <div class="login-orb-1"></div>
+    <div class="login-orb-2"></div>
+    
     <div class="login-card">
-      <div style="width: 80px; height: 80px; background: var(--bg); border-radius: 50%; border: 3px solid var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary);">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.5-2 4.5-5 9-3-4.5-5-6.5-5-9a5 5 0 0 1 5-5z"/><circle cx="12" cy="7" r="1.5"/><path d="M9 16c-3 1.5-5 3-5 5h16c0-2-2-3.5-5-5"/></svg>
+      <div class="login-badge">Enterprise Edition</div>
+      
+      <div class="login-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a5 5 0 0 1 5 5c0 2.5-2 4.5-5 9-3-4.5-5-6.5-5-9a5 5 0 0 1 5-5z"/>
+          <circle cx="12" cy="7" r="1.5"/>
+          <path d="M9 16c-3 1.5-5 3-5 5h16c0-2-2-3.5-5-5"/>
+        </svg>
       </div>
+
       <h2>AMUTAN GROUPS</h2>
-      <p>Poultry Farm Operations & Deep AI Biometric Portal</p>
+      <p>Poultry Farm Operations & Shift Management Portal</p>
 
       <form onsubmit="handleLogin(event)" autocomplete="off">
-        <div class="form-group" style="text-align: left; margin-bottom: 1.2rem;">
-          <label>Username</label>
-          <input type="text" id="loginUser" class="form-control" placeholder="Enter username" required autocomplete="off">
+        <div class="login-input-group">
+          <label>Username / Login ID</label>
+          <div class="login-input-wrapper">
+            <span class="login-input-icon">👤</span>
+            <input type="text" id="loginUser" class="login-input-control" placeholder="Enter username" required autocomplete="off">
+          </div>
         </div>
-        <div class="form-group" style="text-align: left; margin-bottom: 1.8rem;">
+
+        <div class="login-input-group">
           <label>Password</label>
-          <input type="password" id="loginPass" class="form-control" placeholder="Enter password" required autocomplete="new-password">
+          <div class="login-input-wrapper">
+            <span class="login-input-icon">🔒</span>
+            <input type="password" id="loginPass" class="login-input-control" placeholder="Enter password" required autocomplete="new-password">
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem;">Enter Poultry Farm Portal</button>
+
+        <button type="submit" class="login-submit-btn">
+          <span>Sign In to Dashboard</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
       </form>
     </div>
   </div>
@@ -450,10 +495,9 @@
 
     <div class="drawer-scroll-body">
       <div class="nav-section">
-        <span class="nav-section-title">Workforce & Biometrics</span>
+        <span class="nav-section-title">Workforce & Operations</span>
         <button class="nav-link active" onclick="switchNav('staffPanel', this)"><span class="icon-box">👥</span> Staff Directory</button>
-        <button class="nav-link" onclick="switchNav('attPanel', this)"><span class="icon-box">⚡</span> Shift Muster & Manual Punch</button>
-        <button class="nav-link" onclick="switchNav('biometricPanel', this)"><span class="icon-box">📷</span> Face Scan & Attendance</button>
+        <button class="nav-link" onclick="switchNav('attPanel', this)"><span class="icon-box">⚡</span> Shift Muster & Attendance</button>
         <button class="nav-link" onclick="switchNav('timeTrackerPanel', this)"><span class="icon-box">⏱️</span> Late Arrival & Overtime</button>
         <button class="nav-link" onclick="switchNav('advPanel', this)"><span class="icon-box">💰</span> Advance Salary Ledger</button>
         <button class="nav-link" onclick="switchNav('payrollPanel', this)"><span class="icon-box">📄</span> Monthly Payroll & PDF</button>
@@ -468,8 +512,7 @@
       </div>
 
       <div class="nav-section">
-        <span class="nav-section-title">Smart Scanner & AI</span>
-        <button class="nav-link" onclick="switchNav('scannerPanel', this)"><span class="icon-box">📸</span> OCR Document Scanner</button>
+        <span class="nav-section-title">Financials & Reports</span>
         <button class="nav-link" onclick="switchNav('financePanel', this)"><span class="icon-box">💵</span> Unit P&L Statement</button>
         <button class="nav-link" onclick="switchNav('reportHubPanel', this)"><span class="icon-box">📊</span> Comprehensive Unit Report</button>
       </div>
@@ -477,7 +520,6 @@
       <div class="nav-section">
         <span class="nav-section-title">System & Security</span>
         <button class="nav-link" id="rolesMenuBtn" onclick="switchNav('rolesPanel', this)"><span class="icon-box">🛡️</span> Role & User Access</button>
-        <button class="nav-link" onclick="switchNav('geofenceSettingsPanel', this)"><span class="icon-box">📍</span> Unit Geofence Settings</button>
         <button class="nav-link" onclick="switchNav('backupPanel', this)"><span class="icon-box">💾</span> Cloud Backup & Sync</button>
       </div>
     </div>
@@ -504,12 +546,12 @@
       </div>
 
       <div class="header-right">
-        <button class="theme-toggle-btn" onclick="toggleTheme()">🌓 Theme</button>
+        <button class="theme-toggle-btn" onclick="toggleTheme()">🌓</button>
         <div class="user-pill">
-          <strong id="activeUserName" style="font-size: 0.88rem;">Amutan</strong>
+          <strong id="activeUserName" style="font-size: 0.84rem;">Amutan</strong>
           <span class="role-badge" id="activeUserRole">MD</span>
         </div>
-        <button class="btn btn-secondary btn-sm" onclick="logout()">Sign Out</button>
+        <button class="btn btn-secondary btn-sm" onclick="logout()">Exit</button>
       </div>
     </header>
 
@@ -519,7 +561,7 @@
       <div id="unitSelectScreen">
         <div class="landing-header">
           <h2>Select Poultry Division</h2>
-          <p>Manage separate live records, shift attendance, production, feed, and finances across all 3 poultry units</p>
+          <p>Manage live records, shift muster, feeds, and finances across all 3 units</p>
         </div>
 
         <div class="units-grid">
@@ -530,7 +572,7 @@
               <h3>AMUTAN BREEDING FARM</h3>
               <p>Parent Stock Breeder Operations, Breeder Mash & Hatching Eggs</p>
             </div>
-            <button class="unit-btn">Enter Breeding Farm</button>
+            <button class="unit-btn">Enter Division</button>
           </div>
 
           <!-- Unit 2 -->
@@ -540,7 +582,7 @@
               <h3>AMUTAN FARM</h3>
               <p>Commercial Poultry Sheds, Table Eggs, Broiler/Layer Rearing</p>
             </div>
-            <button class="unit-btn">Enter Commercial Farm</button>
+            <button class="unit-btn">Enter Division</button>
           </div>
 
           <!-- Unit 3 -->
@@ -550,7 +592,7 @@
               <h3>AMUTAN HATCHERIES</h3>
               <p>Setter, Candling, Incubation & Day Old Chick (DOC) Dispatches</p>
             </div>
-            <button class="unit-btn">Enter Hatcheries</button>
+            <button class="unit-btn">Enter Division</button>
           </div>
         </div>
       </div>
@@ -559,7 +601,7 @@
       <div id="unitWorkspaceScreen">
         <div class="workspace-banner">
           <div>
-            <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Active Poultry Division</span>
+            <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Active Poultry Division</span>
             <h2 id="currentUnitTitle">AMUTAN BREEDING FARM</h2>
           </div>
           <button class="back-btn" onclick="goToUnitSelection()">← Switch Division</button>
@@ -569,28 +611,28 @@
         <div class="kpi-grid">
           <div class="kpi-card">
             <div>
-              <span>Hatchability % Rate</span>
+              <span>Hatchability %</span>
               <h3 id="kpiHatchability">0%</h3>
             </div>
             <div class="kpi-icon">🎯</div>
           </div>
           <div class="kpi-card">
             <div>
-              <span>Unit Total Eggs</span>
+              <span>Total Eggs</span>
               <h3 id="kpiEggs">0</h3>
             </div>
             <div class="kpi-icon">🥚</div>
           </div>
           <div class="kpi-card">
             <div>
-              <span>Feed Inventory</span>
+              <span>Feed Stock</span>
               <h3 id="kpiFeed">0 Bags</h3>
             </div>
             <div class="kpi-icon">🌾</div>
           </div>
           <div class="kpi-card">
             <div>
-              <span>Unit Net Profit / Loss</span>
+              <span>Net Profit / Loss</span>
               <h3 id="kpiNetPL">₹0</h3>
             </div>
             <div class="kpi-icon">💰</div>
@@ -612,7 +654,7 @@
               </div>
               <div class="form-group">
                 <label>Job Designation</label>
-                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Flock Caretaker, Shed Supervisor">
+                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Caretaker, Supervisor">
               </div>
               <div class="form-group">
                 <label>Full Day Wage Rate (₹)</label>
@@ -626,9 +668,9 @@
             <div class="card-title">
               <span>Staff Roster - <span class="unit-label-span"></span></span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="downloadPoultryStaffPDF()">📄 Download PDF</button>
-                <button class="btn btn-whatsapp btn-sm" onclick="shareRosterWhatsApp()">💬 Share on WhatsApp</button>
-                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('staffList', 'Staff_List.csv')">Export CSV</button>
+                <button class="btn btn-primary btn-sm" onclick="downloadPoultryStaffPDF()">📄 PDF</button>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareRosterWhatsApp()">💬 Share Roster</button>
+                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('staffList', 'Staff_List.csv')">CSV</button>
               </div>
             </div>
             <div class="toolbar">
@@ -645,26 +687,26 @@
           </div>
         </div>
 
-        <!-- 2. TWICE DAILY MUSTER & MANUAL ENTRY -->
+        <!-- 2. TWICE DAILY MUSTER & MANUAL ATTENDANCE -->
         <div id="attPanel" class="panel">
           <div class="card">
             <div class="card-title">
-              <span>⚡ Twice Daily Batch Muster (Morning 0.5 + Afternoon 0.5)</span>
+              <span>⚡ Twice Daily Attendance Muster (Morning 0.5 + Afternoon 0.5)</span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-success btn-sm" onclick="quickMarkAllShifts('Present')">Mark All Full Day (Both Shifts)</button>
+                <button class="btn btn-success btn-sm" onclick="quickMarkAllShifts('Present')">Mark All Full Day</button>
                 <button class="btn btn-primary btn-sm" onclick="saveBatchAttendance()">Save Muster</button>
               </div>
             </div>
             
-            <div style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-              <label style="font-weight: 800; font-size: 0.9rem;">Muster Date:</label>
+            <div style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
+              <label style="font-weight: 800; font-size: 0.88rem;">Muster Date:</label>
               <input type="date" id="batchAttDate" class="form-control" style="width: auto;" onchange="loadBatchAttendanceForDate()">
               <button class="btn btn-whatsapp btn-sm" onclick="shareAttendanceWhatsApp()">💬 Send Daily Muster on WhatsApp</button>
             </div>
 
             <!-- MANUAL INDIVIDUAL ENTRY FORM -->
             <div style="background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 1.2rem; margin-bottom: 1.5rem;">
-              <div style="font-weight: 900; color: var(--primary); margin-bottom: 0.8rem;">✍️ Manual Single Worker Attendance & Timing Punch</div>
+              <div style="font-weight: 900; color: var(--primary); margin-bottom: 0.8rem; font-size: 0.95rem;">✍️ Manual Single Worker Attendance Punch</div>
               <div class="form-grid">
                 <div class="form-group">
                   <label>Select Worker</label>
@@ -685,7 +727,7 @@
                     <option value="Absent">Absent</option>
                   </select>
                 </div>
-                <button class="btn btn-primary" onclick="markManualAttendance()">✔ Mark Manual Entry</button>
+                <button class="btn btn-primary" onclick="markManualAttendance()">✔ Mark Entry</button>
               </div>
             </div>
 
@@ -693,96 +735,7 @@
           </div>
         </div>
 
-        <!-- 3. LIVE BIOMETRIC FACE CAMERA WITH FLIP & STRICT RECOGNITION -->
-        <div id="biometricPanel" class="panel">
-          <div class="card">
-            <div class="card-title">
-              <span>📍 99.3% Deep AI Biometric Face Camera (<span class="unit-label-span"></span>)</span>
-              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-                <button class="btn btn-sm btn-secondary" onclick="toggleCameraMirror()">🔄 Flip Mirror</button>
-                <button class="btn btn-sm btn-secondary" onclick="switchCameraLens()">📷 Switch Lens (Front/Back)</button>
-                <button class="btn btn-sm btn-primary" id="btnModePunch" onclick="setBiometricMode('PUNCH')">Camera Punch</button>
-                <button class="btn btn-sm btn-secondary" id="btnModeEnroll" onclick="setBiometricMode('ENROLL')">MD Enroll Face</button>
-              </div>
-            </div>
-
-            <!-- GEOFENCE STATUS BADGE -->
-            <div style="margin-bottom: 0.8rem; padding: 0.8rem 1.2rem; border-radius: 14px; background: var(--bg); border: 2px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem;">
-              <div style="display: flex; align-items: center; gap: 0.6rem;">
-                <span style="font-size: 1.2rem;">📍</span>
-                <div>
-                  <strong style="font-size: 0.88rem;">GPS Location Verification:</strong>
-                  <span id="geofenceStatusText" style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted); margin-left: 0.3rem;">Checking coordinates...</span>
-                </div>
-              </div>
-              <button class="btn btn-sm btn-secondary" onclick="checkCurrentGeofence()">🔄 Refresh GPS</button>
-            </div>
-
-            <div class="biometric-grid">
-              <div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem;">
-                  <div class="form-group">
-                    <label style="font-size: 0.82rem; color: var(--text-muted);">Active Punch Shift:</label>
-                    <select id="biometricShiftSelect" class="form-control" style="padding: 0.5rem 0.8rem;">
-                      <option value="AUTO">⚡ Auto (By Time of Day)</option>
-                      <option value="morning">🌅 Morning Shift (0.5)</option>
-                      <option value="afternoon">🌇 Afternoon Shift (0.5)</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label style="font-size: 0.82rem; color: var(--text-muted);">🔊 Audio Language:</label>
-                    <select id="voiceLangSelect" class="form-control" style="padding: 0.5rem 0.8rem;">
-                      <option value="ALL">🔊 Tri-Lingual (Tamil + Hindi + English)</option>
-                      <option value="ta-IN">தமிழ் (Tamil Only)</option>
-                      <option value="hi-IN">हिंदी (Hindi Only)</option>
-                      <option value="en-IN">English (English Only)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="camera-wrapper">
-                  <video id="liveVideo" class="mirrored" autoplay playsinline muted></video>
-                  <canvas id="overlayCanvas" class="mirrored"></canvas>
-                  <div class="camera-hud">
-                    <div style="color: #fff; font-size: 0.75rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="hudGuidanceText">ALIGN FACE INSIDE TARGET</div>
-                    <div class="face-target-oval" id="targetOvalBox"></div>
-                    <div class="hud-scanner-laser"></div>
-                    <div style="color: #34d399; font-size: 0.78rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="aiModelStatusText">● INITIALIZING AI EMBEDDING ENGINE...</div>
-                  </div>
-                  <div id="punchFlash" class="flash-overlay"><div id="flashText">✔ FACE RECOGNIZED!</div></div>
-                </div>
-
-                <div id="punchControlSection" style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem;">
-                  <button class="btn btn-primary" onclick="scanFaceForAttendance()">📸 Scan & Punch Shift</button>
-                  <button class="btn btn-ai" id="btnAutoScan" onclick="toggleContinuousDetection()">⚡ Start Auto Hands-Free Punch</button>
-                </div>
-
-                <div id="enrollControlSection" style="display: none; flex-direction: column; gap: 0.8rem; margin-top: 0.8rem;">
-                  <div class="form-group">
-                    <label>Select Worker to Register Face:</label>
-                    <select id="enrollWorkerSelect" class="form-control"></select>
-                  </div>
-                  <button class="btn btn-ai" onclick="captureAndRegisterFace()">📸 Capture 128D Embedding & Store</button>
-                </div>
-              </div>
-
-              <div>
-                <div class="card-title" style="font-size: 1rem;">Registered Faces in <span class="unit-label-span"></span></div>
-                <div class="worker-card-grid" id="workerEnrolledGrid" style="margin-bottom: 1rem;"></div>
-                
-                <div class="card-title" style="font-size: 0.95rem; border-top: 1px solid var(--border); padding-top: 0.8rem;">Today's Live Biometric Shift Log</div>
-                <div class="table-responsive">
-                  <table>
-                    <thead><tr><th>Time</th><th>Worker</th><th>Shift</th><th>Timing Flag</th></tr></thead>
-                    <tbody id="livePunchLogBody"></tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. LATE ARRIVAL & OVERTIME (OT) TRACKER -->
+        <!-- 3. LATE ARRIVAL & OVERTIME (OT) TRACKER -->
         <div id="timeTrackerPanel" class="panel">
           <div class="card">
             <div class="card-title">
@@ -826,19 +779,19 @@
             </div>
 
             <div class="card-title" style="font-size: 1rem; border-top: 1px solid var(--border); padding-top: 1rem;">
-              <span>Today's Late Arrivals & Overtime Log</span>
+              <span>Overtime Log</span>
               <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('otListBody', 'Overtime_Log.csv')">Export CSV</button>
             </div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Date</th><th>Worker</th><th>Hours / Timing Flag</th><th>Total Earned (₹)</th><th>Remarks</th></tr></thead>
+                <thead><tr><th>Date</th><th>Worker</th><th>Hours</th><th>Total Earned (₹)</th><th>Remarks</th></tr></thead>
                 <tbody id="otListBody"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 5. VEHICLE GATE PASS & DOC DISPATCH TRACKER -->
+        <!-- 4. VEHICLE GATE PASS & DOC DISPATCH TRACKER -->
         <div id="gatePassPanel" class="panel">
           <div class="card">
             <div class="card-title">
@@ -859,14 +812,8 @@
                 <input type="text" id="gateDriverInfo" class="form-control" placeholder="Driver Name / Mobile">
               </div>
               <div class="form-group">
-                <label>Dispatch Cargo Type</label>
-                <select id="gateCargoType" class="form-control">
-                  <option value="Day-Old Chicks (DOC)">Day-Old Chicks (DOC)</option>
-                  <option value="Hatching Eggs">Hatching Eggs</option>
-                  <option value="Commercial Table Eggs">Commercial Table Eggs</option>
-                  <option value="Poultry Manure">Poultry Manure Tractor Load</option>
-                  <option value="Feed Delivery Inward">Feed Inward Delivery</option>
-                </select>
+                <label>Dispatch Cargo Name / Type</label>
+                <input type="text" id="gateCargoType" class="form-control" placeholder="e.g. DOC Chicks, Hatching Eggs, Manure">
               </div>
               <div class="form-group">
                 <label>Quantity (Chicks / Crates / Trays / Bags)</label>
@@ -877,11 +824,8 @@
                 <input type="text" id="gateDestination" class="form-control" placeholder="e.g. Coimbatore Broilers / Trader">
               </div>
               <div class="form-group">
-                <label>Security Inspection & Disinfection</label>
-                <select id="gateDisinfection" class="form-control">
-                  <option value="Wheel Spray Done">✔ Vehicle Wheel-Dip & Spray Done</option>
-                  <option value="Full Sanitization Done">✔ Full Vehicle Disinfection Done</option>
-                </select>
+                <label>Security & Disinfection Remarks</label>
+                <input type="text" id="gateDisinfection" class="form-control" placeholder="e.g. Wheel-dip done, Sanitized">
               </div>
               <button class="btn btn-primary" onclick="issueVehicleGatePass()">Issue Gate Pass</button>
             </div>
@@ -901,7 +845,7 @@
           </div>
         </div>
 
-        <!-- 6. ADVANCES -->
+        <!-- 5. ADVANCES -->
         <div id="advPanel" class="panel">
           <div class="card">
             <div class="card-title">Issue Cash Advance Under <span class="unit-label-span"></span></div>
@@ -936,15 +880,15 @@
           </div>
         </div>
 
-        <!-- 7. PAYROLL -->
+        <!-- 6. PAYROLL -->
         <div id="payrollPanel" class="panel">
           <div class="card">
             <div class="card-title">
               <span>Monthly Payroll & Payslips (<span class="unit-label-span"></span>)</span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-success btn-sm" onclick="downloadAllPayrollPDF()">📄 Download Master PDF</button>
-                <button class="btn btn-whatsapp btn-sm" onclick="shareMasterPayrollWhatsApp()">💬 Share Payroll Summary</button>
-                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('payrollList', 'Payroll.csv')">Export CSV</button>
+                <button class="btn btn-success btn-sm" onclick="downloadAllPayrollPDF()">📄 Master PDF</button>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareMasterPayrollWhatsApp()">💬 Summary</button>
+                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('payrollList', 'Payroll.csv')">CSV</button>
               </div>
             </div>
             <div class="toolbar">
@@ -959,7 +903,7 @@
           </div>
         </div>
 
-        <!-- 8. EGG PRODUCTION -->
+        <!-- 7. EGG PRODUCTION -->
         <div id="eggPanel" class="panel">
           <div class="card">
             <div class="card-title">Record Egg Collection & Sales (<span class="unit-label-span"></span>)</div>
@@ -992,7 +936,7 @@
                 <label>Selling Price (₹ / unit)</label>
                 <input type="number" step="0.25" id="eggPrice" class="form-control" placeholder="6.50">
               </div>
-              <button class="btn btn-primary" onclick="addEggLog()">Save Production & Sales</button>
+              <button class="btn btn-primary" onclick="addEggLog()">Save Record</button>
             </div>
           </div>
 
@@ -1010,7 +954,7 @@
           </div>
         </div>
 
-        <!-- 9. FEED INVENTORY -->
+        <!-- 8. FEED INVENTORY (MANUAL ENTRIES) -->
         <div id="feedPanel" class="panel">
           <div class="card">
             <div class="card-title">Log Feed Stock & Daily Ration (<span class="unit-label-span"></span>)</div>
@@ -1020,13 +964,8 @@
                 <input type="date" id="feedDate" class="form-control">
               </div>
               <div class="form-group">
-                <label>Feed Variety</label>
-                <select id="feedType" class="form-control">
-                  <option value="Parent Breeder Mash">Parent Breeder Mash</option>
-                  <option value="Chick Starter">Chick Starter</option>
-                  <option value="Grower Mash">Grower Mash</option>
-                  <option value="Layer Mash">Layer Mash</option>
-                </select>
+                <label>Feed Name / Variety (Manual Entry)</label>
+                <input type="text" id="feedType" class="form-control" placeholder="e.g. Parent Breeder Mash, Grower, Soya Pre-mix">
               </div>
               <div class="form-group">
                 <label>Stock Received (Bags In)</label>
@@ -1040,7 +979,7 @@
                 <label>Feed Purchase Cost (₹)</label>
                 <input type="number" id="feedCost" class="form-control" placeholder="optional">
               </div>
-              <button class="btn btn-primary" onclick="addFeedLog()">Record Feed Entry</button>
+              <button class="btn btn-primary" onclick="addFeedLog()">Record Entry</button>
             </div>
           </div>
 
@@ -1051,17 +990,17 @@
             </div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Date</th><th>Feed Variety</th><th>Received (Bags)</th><th>Fed (Bags)</th></tr></thead>
+                <thead><tr><th>Date</th><th>Feed Name / Variety</th><th>Received (Bags)</th><th>Fed (Bags)</th></tr></thead>
                 <tbody id="feedList"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 10. MORTALITY & BIRD HEALTH -->
+        <!-- 9. MORTALITY, VACCINE & BIRD HEALTH (MANUAL ENTRIES) -->
         <div id="mortalityPanel" class="panel">
           <div class="card">
-            <div class="card-title">Flock Health & Mortality Log (<span class="unit-label-span"></span>)</div>
+            <div class="card-title">Flock Health, Mortality & Vaccine Log (<span class="unit-label-span"></span>)</div>
             <div class="form-grid">
               <div class="form-group">
                 <label>Date</label>
@@ -1069,67 +1008,38 @@
               </div>
               <div class="form-group">
                 <label>Shed / Pen #</label>
-                <input type="text" id="mortShed" class="form-control" placeholder="e.g. Shed 2">
+                <input type="text" id="mortShed" class="form-control" placeholder="e.g. Shed 2, Brooder A">
               </div>
               <div class="form-group">
                 <label>Dead Birds Count</label>
                 <input type="number" id="mortCount" class="form-control" placeholder="0">
               </div>
               <div class="form-group">
-                <label>Medication / Vaccination Notes</label>
-                <input type="text" id="mortNotes" class="form-control" placeholder="e.g. Lasota Booster Given">
+                <label>Vaccine Name (Manual Entry)</label>
+                <input type="text" id="vaccineName" class="form-control" placeholder="e.g. Lasota Booster, IBD, Mareks, ND-IB">
+              </div>
+              <div class="form-group">
+                <label>Medication / Clinical Notes</label>
+                <input type="text" id="mortNotes" class="form-control" placeholder="e.g. Given in drinking water, Vitamin D3 booster">
               </div>
               <button class="btn btn-primary" onclick="addMortLog()">Record Health</button>
             </div>
           </div>
           <div class="card">
             <div class="card-title">
-              <span>Mortality Sheet</span>
+              <span>Mortality & Vaccination Sheet</span>
               <button class="btn btn-whatsapp btn-sm" onclick="shareMortalityWhatsApp()">💬 Share on WhatsApp</button>
             </div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Date</th><th>Shed</th><th>Mortality</th><th>Medication / Notes</th></tr></thead>
+                <thead><tr><th>Date</th><th>Shed</th><th>Mortality</th><th>Vaccine Name</th><th>Medication / Notes</th></tr></thead>
                 <tbody id="mortList"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 11. OCR DOCUMENT SCANNER -->
-        <div id="scannerPanel" class="panel">
-          <div class="card">
-            <div class="card-title">📸 Smart OCR Slip, Muster & Bill Scanner</div>
-            <div class="scan-mode-tabs">
-              <button class="scan-tab active" id="tabModeAuto" onclick="setScanMode('AUTO')">⚡ Auto-Detect</button>
-              <button class="scan-tab" id="tabModeAtt" onclick="setScanMode('ATTENDANCE')">👥 Attendance Sheet</button>
-              <button class="scan-tab" id="tabModeEgg" onclick="setScanMode('EGG')">🥚 Egg Slip</button>
-              <button class="scan-tab" id="tabModeFeed" onclick="setScanMode('FEED')">🌾 Feed Bill</button>
-              <button class="scan-tab" id="tabModeExp" onclick="setScanMode('EXPENSE')">💵 Expense Cash Memo</button>
-            </div>
-
-            <div class="scan-dropzone" onclick="document.getElementById('docFileInput').click()">
-              <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📷</div>
-              <strong>Click to Snap Photo or Upload Register / Slip</strong>
-              <input type="file" id="docFileInput" accept="image/*" style="display: none;" onchange="handleDocumentScan(event)">
-            </div>
-
-            <div id="ocrProgressBox" style="display: none; margin-top: 1.2rem; text-align: center;">
-              <strong id="ocrStatusText" style="color: var(--primary);">Reading image with OCR... 0%</strong>
-            </div>
-
-            <div id="ocrResultBox" style="display: none; margin-top: 1.5rem;">
-              <div class="card-title" style="font-size: 1.05rem;">Detected Record & Smart Match Result</div>
-              <div id="ocrParsedResultView" class="extracted-match-card"></div>
-              <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
-                <button class="btn btn-success btn-sm" onclick="applyScannedData()">⚡ Confirm & Feed Into Active Unit Ledger</button>
-                <button class="btn btn-secondary btn-sm" onclick="document.getElementById('ocrResultBox').style.display='none'">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 12. FINANCIALS & P&L -->
+        <!-- 10. FINANCIALS & P&L (MANUAL CATEGORIES) -->
         <div id="financePanel" class="panel">
           <div class="card">
             <div class="card-title">Record Farm Operational Expense (<span class="unit-label-span"></span>)</div>
@@ -1139,17 +1049,12 @@
                 <input type="date" id="expDate" class="form-control">
               </div>
               <div class="form-group">
-                <label>Category</label>
-                <select id="expCategory" class="form-control">
-                  <option value="Electricity & Diesel">Electricity & Diesel</option>
-                  <option value="Vaccination & Medicine">Vaccines & Medicine</option>
-                  <option value="Maintenance & Transport">Maintenance & Transport</option>
-                  <option value="Other Expenses">Other Operational Expense</option>
-                </select>
+                <label>Expense Category (Manual Entry)</label>
+                <input type="text" id="expCategory" class="form-control" placeholder="e.g. Electricity, Diesel, Tractor Hire, Labour, Disinfectant">
               </div>
               <div class="form-group">
                 <label>Description</label>
-                <input type="text" id="expDescription" class="form-control" placeholder="e.g. Brooder lamps replacement">
+                <input type="text" id="expDescription" class="form-control" placeholder="e.g. Brooder lamps, Generator fuel">
               </div>
               <div class="form-group">
                 <label>Amount (₹)</label>
@@ -1163,8 +1068,8 @@
             <div class="card-title">
               <span>Unit Profit & Loss Statement (<span class="unit-label-span"></span>)</span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="downloadFinancialPDF()">📄 Download PDF</button>
-                <button class="btn btn-whatsapp btn-sm" onclick="shareFinancialWhatsApp()">💬 Share on WhatsApp</button>
+                <button class="btn btn-primary btn-sm" onclick="downloadFinancialPDF()">📄 PDF</button>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareFinancialWhatsApp()">💬 WhatsApp</button>
               </div>
             </div>
             <div class="table-responsive">
@@ -1183,13 +1088,13 @@
           </div>
         </div>
 
-        <!-- 13. REPORT HUB -->
+        <!-- 11. REPORT HUB -->
         <div id="reportHubPanel" class="panel">
           <div class="card">
             <div class="card-title">
               <span>📊 Comprehensive Operational Report (<span class="unit-label-span"></span>)</span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="downloadComprehensiveUnitReportPDF()">📄 Download Complete Unit PDF</button>
+                <button class="btn btn-primary btn-sm" onclick="downloadComprehensiveUnitReportPDF()">📄 Download PDF</button>
                 <button class="btn btn-whatsapp btn-sm" onclick="shareComprehensiveUnitReportWhatsApp()">💬 Share Full Report</button>
               </div>
             </div>
@@ -1208,62 +1113,7 @@
           </div>
         </div>
 
-        <!-- 14. GEOFENCE MANUAL SETUP (SEPARATE FOR ALL 3 UNITS) -->
-        <div id="geofenceSettingsPanel" class="panel">
-          <div class="card">
-            <div class="card-title">
-              <span>📍 Unit Geofencing Configuration (Separately Configurable)</span>
-              <button class="btn btn-sm btn-primary" onclick="saveGeofenceSettings()">Save Geofence Coordinates</button>
-            </div>
-            
-            <p style="font-size: 0.88rem; color: var(--text-muted); font-weight: 700; margin-bottom: 1.5rem;">
-              Set the precise Latitude, Longitude, and allowed radius (in meters) for each poultry unit. Workers must physically be within the geofence perimeter to punch attendance.
-            </p>
-
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-              <!-- Unit 1 Geofence -->
-              <div style="background: var(--bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.4rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
-                  <strong style="color: var(--primary); font-size: 1.05rem;">1. AMUTAN BREEDING FARM GEOFENCE</strong>
-                  <button class="btn btn-sm btn-secondary" onclick="fetchCurrentGpsForUnit(1)">📍 Capture Current GPS</button>
-                </div>
-                <div class="form-grid">
-                  <div class="form-group"><label>Latitude</label><input type="number" step="any" id="geoLat1" class="form-control" placeholder="11.0168"></div>
-                  <div class="form-group"><label>Longitude</label><input type="number" step="any" id="geoLng1" class="form-control" placeholder="76.9558"></div>
-                  <div class="form-group"><label>Allowed Radius (Meters)</label><input type="number" id="geoRadius1" class="form-control" placeholder="150"></div>
-                </div>
-              </div>
-
-              <!-- Unit 2 Geofence -->
-              <div style="background: var(--bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.4rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
-                  <strong style="color: var(--primary); font-size: 1.05rem;">2. AMUTAN FARM (COMMERCIAL) GEOFENCE</strong>
-                  <button class="btn btn-sm btn-secondary" onclick="fetchCurrentGpsForUnit(2)">📍 Capture Current GPS</button>
-                </div>
-                <div class="form-grid">
-                  <div class="form-group"><label>Latitude</label><input type="number" step="any" id="geoLat2" class="form-control" placeholder="11.1085"></div>
-                  <div class="form-group"><label>Longitude</label><input type="number" step="any" id="geoLng2" class="form-control" placeholder="77.3411"></div>
-                  <div class="form-group"><label>Allowed Radius (Meters)</label><input type="number" id="geoRadius2" class="form-control" placeholder="200"></div>
-                </div>
-              </div>
-
-              <!-- Unit 3 Geofence -->
-              <div style="background: var(--bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.4rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
-                  <strong style="color: var(--primary); font-size: 1.05rem;">3. AMUTAN HATCHERIES GEOFENCE</strong>
-                  <button class="btn btn-sm btn-secondary" onclick="fetchCurrentGpsForUnit(3)">📍 Capture Current GPS</button>
-                </div>
-                <div class="form-grid">
-                  <div class="form-group"><label>Latitude</label><input type="number" step="any" id="geoLat3" class="form-control" placeholder="11.0822"></div>
-                  <div class="form-group"><label>Longitude</label><input type="number" step="any" id="geoLng3" class="form-control" placeholder="77.0124"></div>
-                  <div class="form-group"><label>Allowed Radius (Meters)</label><input type="number" id="geoRadius3" class="form-control" placeholder="120"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 15. ROLES (MD ONLY) -->
+        <!-- 12. ROLES (MD ONLY) -->
         <div id="rolesPanel" class="panel">
           <div class="card">
             <div class="card-title">Create Management Account</div>
@@ -1282,7 +1132,7 @@
           </div>
         </div>
 
-        <!-- 16. BACKUP & CLOUD RESET -->
+        <!-- 13. BACKUP & CLOUD RESET -->
         <div id="backupPanel" class="panel">
           <div class="card">
             <div class="card-title">Cloud Backup & Device Sync</div>
@@ -1304,7 +1154,7 @@
 
   <!-- FLOATING AMUTAN AI ASSISTANT -->
   <div id="amutanAiFab" onclick="toggleAiChat()">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 3.36 2.07 6.24 5 7.43V20a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2.57c2.93-1.19 5-4.07 5-7.43a8 8 0 0 0-8-8z"/><line x1="9.5" y1="9" x2="9.51" y2="9"/><line x1="14.5" y1="9" x2="14.51" y2="9"/></svg>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 3.36 2.07 6.24 5 7.43V20a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2.57c2.93-1.19 5-4.07 5-7.43a8 8 0 0 0-8-8z"/><line x1="9.5" y1="9" x2="9.51" y2="9"/><line x1="14.5" y1="9" x2="14.51" y2="9"/></svg>
   </div>
 
   <div id="amutanAiChatModal">
@@ -1313,7 +1163,7 @@
         <span style="font-size: 1.3rem;">🤖</span>
         <div>
           <strong style="font-size: 0.95rem;">Amutan AI (அமுதன் AI)</strong>
-          <small style="display: block; font-size: 0.72rem; opacity: 0.9;">Voice, Biometrics & Gatepass Assistant</small>
+          <small style="display: block; font-size: 0.72rem; opacity: 0.9;">Voice & Operations Assistant</small>
         </div>
       </div>
       <div style="display: flex; align-items: center; gap: 0.4rem;">
@@ -1332,8 +1182,8 @@
         <br><br>
         • <em>"காலையில் அனைவரும் ஆஜர்" (Morning shift all present)</em><br>
         • <em>"Vehicle gate pass DOC 12000" / "Dispatch pass"</em><br>
-        • <em>"Who is late today?" / "Late arrivals"</em><br>
-        • <em>"Egg status" / "Add 50 bags feed"</em>
+        • <em>"Egg status" / "Add 50 bags feed"</em><br>
+        • <em>"Download report" / "Switch to Commercial farm"</em>
       </div>
     </div>
 
@@ -1347,7 +1197,6 @@
   <script>
     const { jsPDF } = window.jspdf;
 
-    // Firebase Database Setup
     const firebaseConfig = {
       apiKey: "AIzaSyAQOU09zav6B7DAORcz3EWvbRTM9TAVctM",
       authDomain: "farm-70186.firebaseapp.com",
@@ -1369,11 +1218,6 @@
         { id: 2, name: 'AMUTAN FARM', desc: 'Commercial Poultry Operations' },
         { id: 3, name: 'AMUTAN HATCHERIES', desc: 'Incubation & Hatchery Facility' }
       ],
-      geofences: JSON.parse(localStorage.getItem('ag_geofences')) || {
-        1: { lat: 11.0168, lng: 76.9558, radius: 150 },
-        2: { lat: 11.1085, lng: 77.3411, radius: 200 },
-        3: { lat: 11.0822, lng: 77.0124, radius: 120 }
-      },
       timeRules: JSON.parse(localStorage.getItem('ag_timerules')) || {
         cutoffMorning: "08:30",
         cutoffAfternoon: "13:30",
@@ -1386,10 +1230,10 @@
         { user: 'supervisor', pass: '1234', role: 'Supervisor', name: 'Supervisor' }
       ],
       workers: JSON.parse(localStorage.getItem('ag_workers')) || [
-        { id: 101, unitId: 1, name: 'R. Murugan', phone: '9876543210', role: 'Feeder', wage: 550, faceEmbedding: null },
-        { id: 102, unitId: 1, name: 'S. Kumar', phone: '9876543211', role: 'Flock Caretaker', wage: 600, faceEmbedding: null },
-        { id: 103, unitId: 2, name: 'P. Selvam', phone: '9876543212', role: 'Shed Supervisor', wage: 700, faceEmbedding: null },
-        { id: 104, unitId: 3, name: 'M. Ramesh', phone: '9876543213', role: 'Hatchery Incharge', wage: 650, faceEmbedding: null }
+        { id: 101, unitId: 1, name: 'R. Murugan', phone: '9876543210', role: 'Feeder', wage: 550 },
+        { id: 102, unitId: 1, name: 'S. Kumar', phone: '9876543211', role: 'Flock Caretaker', wage: 600 },
+        { id: 103, unitId: 2, name: 'P. Selvam', phone: '9876543212', role: 'Shed Supervisor', wage: 700 },
+        { id: 104, unitId: 3, name: 'M. Ramesh', phone: '9876543213', role: 'Hatchery Incharge', wage: 650 }
       ],
       attendance: JSON.parse(localStorage.getItem('ag_attendance')) || [],
       overtime: JSON.parse(localStorage.getItem('ag_overtime')) || [],
@@ -1398,39 +1242,10 @@
       eggs: JSON.parse(localStorage.getItem('ag_eggs')) || [],
       feed: JSON.parse(localStorage.getItem('ag_feed')) || [],
       mortality: JSON.parse(localStorage.getItem('ag_mortality')) || [],
-      expenses: JSON.parse(localStorage.getItem('ag_expenses')) || [],
-      punches: JSON.parse(localStorage.getItem('ag_camera_punches')) || []
+      expenses: JSON.parse(localStorage.getItem('ag_expenses')) || []
     };
 
     let tempBatchAttendance = {};
-    let parsedOcrPayload = null;
-    let currentScanMode = 'AUTO';
-    let videoStream = null;
-    let autoDetectInterval = null;
-    let biometricMode = 'PUNCH';
-    let isAutoScanning = false;
-    let userCurrentGps = null;
-    let isInsideCurrentGeofence = true;
-    let currentFacingMode = 'user';
-    let isCameraMirrored = true;
-    let isAiModelsLoaded = false;
-
-    // Load Deep Neural Face Engine
-    async function loadRealFaceAiModels() {
-      const statusElem = document.getElementById('aiModelStatusText');
-      try {
-        const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
-        await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
-        await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-        await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-        isAiModelsLoaded = true;
-        if (statusElem) statusElem.innerText = '● 99.3% DEEP AI BIOMETRIC ACTIVE';
-      } catch (err) {
-        console.warn("Face-API CDN connection retry or fallback: ", err);
-        if (statusElem) statusElem.innerText = '● BIOMETRIC SENSOR READY';
-      }
-    }
-    loadRealFaceAiModels();
 
     function persist() {
       localStorage.setItem('ag_users', JSON.stringify(state.users));
@@ -1438,14 +1253,12 @@
       localStorage.setItem('ag_attendance', JSON.stringify(state.attendance));
       localStorage.setItem('ag_overtime', JSON.stringify(state.overtime));
       localStorage.setItem('ag_gatepasses', JSON.stringify(state.gatepasses));
-      localStorage.setItem('ag_geofences', JSON.stringify(state.geofences));
       localStorage.setItem('ag_timerules', JSON.stringify(state.timeRules));
       localStorage.setItem('ag_advances', JSON.stringify(state.advances));
       localStorage.setItem('ag_eggs', JSON.stringify(state.eggs));
       localStorage.setItem('ag_feed', JSON.stringify(state.feed));
       localStorage.setItem('ag_mortality', JSON.stringify(state.mortality));
       localStorage.setItem('ag_expenses', JSON.stringify(state.expenses));
-      localStorage.setItem('ag_camera_punches', JSON.stringify(state.punches));
 
       db.ref('amutan_poultry_records').set(state).catch(e => console.error("Firebase sync error:", e));
       renderWorkspace();
@@ -1460,14 +1273,12 @@
           if (d.attendance) state.attendance = d.attendance;
           if (d.overtime) state.overtime = d.overtime;
           if (d.gatepasses) state.gatepasses = d.gatepasses;
-          if (d.geofences) state.geofences = d.geofences;
           if (d.timeRules) state.timeRules = d.timeRules;
           if (d.advances) state.advances = d.advances;
           if (d.eggs) state.eggs = d.eggs;
           if (d.feed) state.feed = d.feed;
           if (d.mortality) state.mortality = d.mortality;
           if (d.expenses) state.expenses = d.expenses;
-          if (d.punches) state.punches = d.punches;
           renderWorkspace();
         }
       });
@@ -1480,148 +1291,10 @@
       document.getElementById('drawerOverlay').classList.toggle('active');
     }
 
-    // GEOFENCING LOGIC
-    function calculateDistanceMeters(lat1, lon1, lat2, lon2) {
-      const R = 6371e3;
-      const φ1 = lat1 * Math.PI / 180;
-      const φ2 = lat2 * Math.PI / 180;
-      const Δφ = (lat2 - lat1) * Math.PI / 180;
-      const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-                Math.cos(φ1) * Math.cos(φ2) *
-                Math.sin(Δλ/2) * Math.sin(Δλ/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
-    }
-
-    function checkCurrentGeofence() {
-      const statusElem = document.getElementById('geofenceStatusText');
-      if (!navigator.geolocation) {
-        if (statusElem) statusElem.innerHTML = `<span style="color:var(--danger)">GPS not supported on device</span>`;
-        return;
-      }
-
-      if (statusElem) statusElem.innerHTML = `Checking GPS satellite lock...`;
-
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          userCurrentGps = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-          const activeUnitFence = state.geofences[state.selectedUnitId || 1];
-
-          if (activeUnitFence && activeUnitFence.lat) {
-            const dist = calculateDistanceMeters(userCurrentGps.lat, userCurrentGps.lng, activeUnitFence.lat, activeUnitFence.lng);
-            const radius = activeUnitFence.radius || 150;
-
-            if (dist <= radius) {
-              isInsideCurrentGeofence = true;
-              if (statusElem) statusElem.innerHTML = `<span style="color:var(--success)">✔ Verified Inside Perimeter (${Math.round(dist)}m from center)</span>`;
-            } else {
-              isInsideCurrentGeofence = false;
-              if (statusElem) statusElem.innerHTML = `<span style="color:var(--danger)">❌ OUTSIDE GEOFENCE (${Math.round(dist)}m away, Limit: ${radius}m)</span>`;
-            }
-          } else {
-            isInsideCurrentGeofence = true;
-            if (statusElem) statusElem.innerHTML = `<span style="color:var(--success)">✔ Geofence open (Coordinates not restricted)</span>`;
-          }
-        },
-        (err) => {
-          isInsideCurrentGeofence = true;
-          if (statusElem) statusElem.innerHTML = `<span style="color:var(--accent)">⚠️ GPS bypassed for testing</span>`;
-        },
-        { enableHighAccuracy: true, timeout: 8000 }
-      );
-    }
-
-    function fetchCurrentGpsForUnit(unitId) {
-      if (!navigator.geolocation) return alert('GPS not available.');
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          document.getElementById(`geoLat${unitId}`).value = pos.coords.latitude.toFixed(6);
-          document.getElementById(`geoLng${unitId}`).value = pos.coords.longitude.toFixed(6);
-          alert(`GPS Captured for Unit ${unitId}: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`);
-        },
-        err => alert('GPS location error: ' + err.message),
-        { enableHighAccuracy: true }
-      );
-    }
-
-    function saveGeofenceSettings() {
-      for (let i = 1; i <= 3; i++) {
-        const lat = parseFloat(document.getElementById(`geoLat${i}`).value) || 0;
-        const lng = parseFloat(document.getElementById(`geoLng${i}`).value) || 0;
-        const radius = parseInt(document.getElementById(`geoRadius${i}`).value) || 150;
-        state.geofences[i] = { lat, lng, radius };
-      }
-      persist();
-      alert('Geofencing coordinates saved separately for all 3 units!');
-    }
-
-    function loadGeofenceInputs() {
-      for (let i = 1; i <= 3; i++) {
-        const f = state.geofences[i] || {};
-        if (document.getElementById(`geoLat${i}`)) document.getElementById(`geoLat${i}`).value = f.lat || '';
-        if (document.getElementById(`geoLng${i}`)) document.getElementById(`geoLng${i}`).value = f.lng || '';
-        if (document.getElementById(`geoRadius${i}`)) document.getElementById(`geoRadius${i}`).value = f.radius || 150;
-      }
-    }
-
-    // CAMERA HARDWARE
-    async function startCamera() {
-      if (videoStream) stopCamera();
-      try {
-        videoStream = await navigator.mediaDevices.getUserMedia({
-          video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: currentFacingMode },
-          audio: false
-        });
-        const vid = document.getElementById('liveVideo');
-        if (vid) {
-          vid.srcObject = videoStream;
-          if (isCameraMirrored) vid.classList.add('mirrored');
-          else vid.classList.remove('mirrored');
-        }
-        checkCurrentGeofence();
-      } catch (err) {
-        alert("Camera Access Required: Please grant browser webcam permissions.");
-      }
-    }
-
-    function stopCamera() {
-      stopContinuousDetection();
-      if (videoStream) {
-        videoStream.getTracks().forEach(track => track.stop());
-        videoStream = null;
-      }
-      const vid = document.getElementById('liveVideo');
-      if (vid) vid.srcObject = null;
-    }
-
-    function toggleCameraMirror() {
-      isCameraMirrored = !isCameraMirrored;
-      const vid = document.getElementById('liveVideo');
-      const ov = document.getElementById('overlayCanvas');
-      if (vid) {
-        if (isCameraMirrored) { vid.classList.add('mirrored'); ov.classList.add('mirrored'); }
-        else { vid.classList.remove('mirrored'); ov.classList.remove('mirrored'); }
-      }
-    }
-
-    function switchCameraLens() {
-      currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
-      isCameraMirrored = currentFacingMode === 'user';
-      startCamera();
-    }
-
     function switchNav(panelId, btn) {
-      if (!state.selectedUnitId && panelId !== 'rolesPanel' && panelId !== 'backupPanel' && panelId !== 'geofenceSettingsPanel') {
+      if (!state.selectedUnitId && panelId !== 'rolesPanel' && panelId !== 'backupPanel') {
         alert('Please select a poultry division first.');
         return toggleDrawer();
-      }
-
-      if (panelId !== 'biometricPanel') {
-        stopCamera();
-      } else {
-        startCamera();
       }
 
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -1649,7 +1322,6 @@
     }
 
     function logout() {
-      stopCamera();
       state.currentUser = null;
       state.selectedUnitId = null;
       document.getElementById('loginUser').value = '';
@@ -1669,7 +1341,6 @@
     }
 
     function goToUnitSelection() {
-      stopCamera();
       state.selectedUnitId = null;
       document.getElementById('unitSelectScreen').style.display = 'block';
       document.getElementById('unitWorkspaceScreen').style.display = 'none';
@@ -1688,7 +1359,6 @@
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.getElementById('staffPanel').classList.add('active');
       loadBatchAttendanceForDate();
-      loadGeofenceInputs();
       renderWorkspace();
     }
 
@@ -1698,7 +1368,7 @@
       const role = document.getElementById('staffRole').value.trim();
       const wage = parseFloat(document.getElementById('staffWage').value);
       if (!name || isNaN(wage)) return alert('Fill worker details.');
-      state.workers.push({ id: Date.now(), unitId: state.selectedUnitId, name, phone, role, wage, faceEmbedding: null });
+      state.workers.push({ id: Date.now(), unitId: state.selectedUnitId, name, phone, role, wage });
       document.getElementById('staffName').value = '';
       document.getElementById('staffPhone').value = '';
       document.getElementById('staffRole').value = '';
@@ -1711,7 +1381,7 @@
       persist();
     }
 
-    // ATTENDANCE & MANUAL OVERRIDE
+    // ATTENDANCE MUSTER & MANUAL ENTRY
     function loadBatchAttendanceForDate() {
       const date = document.getElementById('batchAttDate').value;
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
@@ -1844,22 +1514,6 @@
       persist();
     }
 
-    function checkLateStatus(shift, punchTimeString) {
-      const parts = punchTimeString.split(':');
-      const punchHour = parseInt(parts[0]);
-      const punchMin = parseInt(parts[1]);
-      const punchMinutes = punchHour * 60 + punchMin;
-
-      const cutoffStr = shift === 'morning' ? state.timeRules.cutoffMorning : state.timeRules.cutoffAfternoon;
-      const cutoffParts = cutoffStr.split(':');
-      const cutoffMinutes = parseInt(cutoffParts[0]) * 60 + parseInt(cutoffParts[1]);
-
-      if (punchMinutes > cutoffMinutes) {
-        return `Late (+${punchMinutes - cutoffMinutes} mins)`;
-      }
-      return 'On Time';
-    }
-
     function addOvertimeLog() {
       const date = document.getElementById('otLogDate').value;
       const workerId = parseInt(document.getElementById('otWorkerSelect').value);
@@ -1892,10 +1546,10 @@
       const dateTime = document.getElementById('gatePassDateTime').value;
       const vehicleNo = document.getElementById('gateVehicleNo').value.trim();
       const driverInfo = document.getElementById('gateDriverInfo').value.trim();
-      const cargo = document.getElementById('gateCargoType').value;
+      const cargo = document.getElementById('gateCargoType').value.trim() || 'General Cargo';
       const quantity = parseInt(document.getElementById('gateQuantity').value) || 0;
       const destination = document.getElementById('gateDestination').value.trim();
-      const disinfection = document.getElementById('gateDisinfection').value;
+      const disinfection = document.getElementById('gateDisinfection').value.trim() || 'Disinfected';
 
       if (!dateTime || !vehicleNo || !driverInfo) return alert('Fill gate pass date, vehicle and driver details.');
 
@@ -1916,8 +1570,10 @@
       state.gatepasses.unshift(newPass);
       document.getElementById('gateVehicleNo').value = '';
       document.getElementById('gateDriverInfo').value = '';
+      document.getElementById('gateCargoType').value = '';
       document.getElementById('gateQuantity').value = '';
       document.getElementById('gateDestination').value = '';
+      document.getElementById('gateDisinfection').value = '';
       persist();
 
       downloadSingleGatePassPDF(newPass);
@@ -1964,273 +1620,7 @@
       doc.save(`GatePass_${pass.passNo}_${pass.vehicleNo.replace(/\s+/g, '_')}.pdf`);
     }
 
-    // DEEP BIOMETRIC EXTRACTION & MATCHING
-    function setBiometricMode(mode) {
-      biometricMode = mode;
-      document.getElementById('btnModePunch').classList.toggle('btn-primary', mode === 'PUNCH');
-      document.getElementById('btnModePunch').classList.toggle('btn-secondary', mode !== 'PUNCH');
-      document.getElementById('btnModeEnroll').classList.toggle('btn-primary', mode === 'ENROLL');
-      document.getElementById('btnModeEnroll').classList.toggle('btn-secondary', mode !== 'ENROLL');
-      document.getElementById('punchControlSection').style.display = mode === 'PUNCH' ? 'flex' : 'none';
-      document.getElementById('enrollControlSection').style.display = mode === 'ENROLL' ? 'flex' : 'none';
-      document.getElementById('hudGuidanceText').innerText = mode === 'ENROLL' ? 'MD ENROLLMENT: POSITION WORKER FACE' : 'ALIGN FACE TO PUNCH SHIFT';
-      if (mode === 'ENROLL') stopContinuousDetection();
-    }
-
-    async function extractAiDeepFaceEmbedding() {
-      const video = document.getElementById('liveVideo');
-      if (!video || !videoStream || video.videoWidth === 0) return null;
-
-      try {
-        const detection = await faceapi.detectSingleFace(
-          video, 
-          new faceapi.SsdMobilenetv1Options({ minConfidence: 0.50 })
-        ).withFaceLandmarks().withFaceDescriptor();
-
-        const canvas = document.getElementById('overlayCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = video.videoWidth || 640;
-        canvas.height = video.videoHeight || 480;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        if (detection) {
-          const dims = faceapi.matchDimensions(canvas, video, true);
-          const resized = faceapi.resizeResults(detection, dims);
-          faceapi.draw.drawDetections(canvas, resized);
-          faceapi.draw.drawFaceLandmarks(canvas, resized);
-
-          return Array.from(detection.descriptor);
-        }
-      } catch (err) {
-        console.error("AI Face Detection error:", err);
-      }
-      return null;
-    }
-
-    async function captureAndRegisterFace() {
-      const select = document.getElementById('enrollWorkerSelect');
-      const workerId = parseInt(select.value);
-      const worker = state.workers.find(w => w.id === workerId);
-      if (!worker) return alert('Select a worker.');
-
-      const descriptor = await extractAiDeepFaceEmbedding();
-      if (!descriptor || descriptor.length !== 128) {
-        triggerFaceNotRecognizedUI("NO CLEAR FACE DETECTED");
-        return;
-      }
-
-      worker.faceEmbedding = descriptor;
-      persist();
-
-      playBiometricNotification(worker.name, 'ENROLL', 'morning');
-      alert(`128-D Deep Neural Face Embedding Registered for ${worker.name}! Accuracy is now locked.`);
-      setBiometricMode('PUNCH');
-    }
-
-    function determineActiveShift() {
-      const selected = document.getElementById('biometricShiftSelect').value;
-      if (selected !== 'AUTO') return selected;
-      return new Date().getHours() < 13 ? 'morning' : 'afternoon';
-    }
-
-    async function scanFaceForAttendance() {
-      if (!isInsideCurrentGeofence) {
-        alert("GEOFENCE PERIMETER RESTRICTION: You are outside the authorized poultry farm boundary.");
-        return false;
-      }
-
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId && w.faceEmbedding !== null && w.faceEmbedding.length === 128);
-      if (unitWorkers.length === 0) {
-        triggerFaceNotRecognizedUI("NO REGISTERED FACES IN THIS UNIT");
-        return false;
-      }
-
-      const liveDescriptor = await extractAiDeepFaceEmbedding();
-      if (!liveDescriptor) {
-        triggerFaceNotRecognizedUI("NO FACE DETECTED INSIDE TARGET");
-        return false;
-      }
-
-      let bestMatch = null;
-      let lowestDistance = 1.0;
-
-      for (const w of unitWorkers) {
-        const distance = faceapi.euclideanDistance(liveDescriptor, w.faceEmbedding);
-        if (distance < lowestDistance) {
-          lowestDistance = distance;
-          bestMatch = w;
-        }
-      }
-
-      if (lowestDistance <= 0.45 && bestMatch) {
-        const shift = determineActiveShift();
-        recordBiometricShiftPunch(bestMatch, shift);
-        return true;
-      } else {
-        triggerFaceNotRecognizedUI("FACE NOT RECOGNIZED");
-        return false;
-      }
-    }
-
-    function recordBiometricShiftPunch(worker, shift) {
-      const today = new Date().toISOString().slice(0, 10);
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const time24 = new Date().toTimeString().slice(0,5);
-      const timingFlag = checkLateStatus(shift, time24);
-
-      let existIndex = state.attendance.findIndex(a => a.date === today && a.workerId === worker.id);
-      let record = { date: today, workerId: worker.id, morning: false, afternoon: false, units: 0.5, status: 'Half Day' };
-
-      if (existIndex >= 0) record = state.attendance[existIndex];
-      else state.attendance.unshift(record);
-
-      const alreadyPunched = record[shift] === true;
-      record[shift] = true;
-      record.units = (record.morning ? 0.5 : 0) + (record.afternoon ? 0.5 : 0);
-      record.status = record.units === 1.0 ? 'Present' : (record.units === 0.5 ? 'Half Day' : 'Absent');
-
-      state.punches.unshift({
-        id: Date.now(),
-        date: today,
-        time,
-        workerId: worker.id,
-        workerName: worker.name,
-        unitId: worker.unitId,
-        shift: shift === 'morning' ? 'Morning Shift (0.5)' : 'Afternoon Shift (0.5)',
-        totalUnits: `${record.units} Units`,
-        timingFlag
-      });
-
-      const flash = document.getElementById('punchFlash');
-      const shiftName = shift === 'morning' ? 'MORNING SHIFT' : 'AFTERNOON SHIFT';
-      document.getElementById('flashText').innerHTML = `✔ ${worker.name.toUpperCase()}<br><span style="font-size:0.85rem;">${shiftName} (${timingFlag})</span>`;
-      flash.style.display = 'flex';
-      setTimeout(() => { flash.style.display = 'none'; }, 2000);
-
-      if (!alreadyPunched) {
-        playBiometricNotification(worker.name, 'PUNCH', shift);
-      }
-      persist();
-    }
-
-    function triggerFaceNotRecognizedUI(customMsg = "FACE NOT RECOGNIZED") {
-      const oval = document.getElementById('targetOvalBox');
-      const flash = document.getElementById('punchFlash');
-      const flashText = document.getElementById('flashText');
-
-      if (oval) oval.classList.add('not-recognized');
-      if (flash) {
-        flashText.innerHTML = `⚠️ ${customMsg}<br><span style="font-size:0.85rem;">PLEASE LOOK DIRECTLY AT CAMERA OR ENROLL FIRST</span>`;
-        flash.classList.add('error-flash');
-        flash.style.display = 'flex';
-      }
-
-      playErrorTone();
-
-      setTimeout(() => {
-        if (oval) oval.classList.remove('not-recognized');
-        if (flash) {
-          flash.style.display = 'none';
-          flash.classList.remove('error-flash');
-        }
-      }, 2000);
-    }
-
-    function toggleContinuousDetection() {
-      if (isAutoScanning) {
-        stopContinuousDetection();
-      } else {
-        startContinuousDetection();
-      }
-    }
-
-    function startContinuousDetection() {
-      if (autoDetectInterval) return;
-      isAutoScanning = true;
-      document.getElementById('btnAutoScan').innerText = '⏹ Stop Auto Punch';
-      document.getElementById('btnAutoScan').className = 'btn btn-danger-solid';
-      document.getElementById('hudGuidanceText').innerText = 'AUTO GEOFENCED SCANNING ACTIVE';
-      autoDetectInterval = setInterval(() => { scanFaceForAttendance(); }, 600);
-    }
-
-    function stopContinuousDetection() {
-      if (autoDetectInterval) { clearInterval(autoDetectInterval); autoDetectInterval = null; }
-      isAutoScanning = false;
-      const btn = document.getElementById('btnAutoScan');
-      if (btn) { btn.innerText = '⚡ Start Auto Hands-Free Punch'; btn.className = 'btn btn-ai'; }
-      const hud = document.getElementById('hudGuidanceText');
-      if (hud) hud.innerText = 'ALIGN FACE INSIDE OVAL TARGET';
-    }
-
-    // AUDIO CHIMES & SPEECH SYNTHESIS
-    function playBeepSound() {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const notes = [523.25, 659.25, 783.99];
-        notes.forEach((freq, i) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (i * 0.08));
-          gain.gain.setValueAtTime(0, audioCtx.currentTime + (i * 0.08));
-          gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + (i * 0.08) + 0.02);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (i * 0.08) + 0.35);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start(audioCtx.currentTime + (i * 0.08));
-          osc.stop(audioCtx.currentTime + (i * 0.08) + 0.36);
-        });
-      } catch (e) {}
-    }
-
-    function playErrorTone() {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(220, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
-      } catch (e) {}
-    }
-
-    function playBiometricNotification(name, type, shift) {
-      playBeepSound();
-      const choice = document.getElementById('voiceLangSelect').value;
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-
-      const shiftTa = shift === 'morning' ? 'காலை நேர' : 'மதிய நேர';
-      const shiftHi = shift === 'morning' ? 'सुबह की' : 'दोपहर की';
-      const shiftEn = shift === 'morning' ? 'morning shift' : 'afternoon shift';
-
-      let utterances = [];
-      if (type === 'PUNCH') {
-        if (choice === 'ALL' || choice === 'ta-IN') utterances.push({ text: `வணக்கம் ${name}, தங்களின் ${shiftTa} வருகை வெற்றிகரமாக பதிவானது.`, lang: 'ta-IN' });
-        if (choice === 'ALL' || choice === 'hi-IN') utterances.push({ text: `नमस्ते ${name}, आपकी ${shiftHi} उपस्थिति दर्ज कर ली गई है।`, lang: 'hi-IN' });
-        if (choice === 'ALL' || choice === 'en-IN') utterances.push({ text: `Welcome ${name}. Your ${shiftEn} attendance is confirmed.`, lang: 'en-IN' });
-      } else {
-        if (choice === 'ALL' || choice === 'ta-IN') utterances.push({ text: `${name}, உங்கள் முகம் வெற்றிகரமாக பதிவு செய்யப்பட்டது.`, lang: 'ta-IN' });
-        if (choice === 'ALL' || choice === 'hi-IN') utterances.push({ text: `${name}, आपका चेहरा सफलतापूर्वक पंजीकृत हो गया है।`, lang: 'hi-IN' });
-        if (choice === 'ALL' || choice === 'en-IN') utterances.push({ text: `Face successfully enrolled for ${name}.`, lang: 'en-IN' });
-      }
-
-      utterances.forEach((item, index) => {
-        const s = new SpeechSynthesisUtterance(item.text);
-        s.lang = item.lang;
-        s.rate = 0.95;
-        s.pitch = 1.05;
-        if (index > 0) setTimeout(() => window.speechSynthesis.speak(s), index * 300);
-        else window.speechSynthesis.speak(s);
-      });
-    }
-
-    // WHATSAPP HELPER
+    // WHATSAPP DISPATCH HELPER
     function openWhatsAppLink(text, phone = '') {
       let cleanPhone = phone.replace(/[^0-9]/g, '');
       if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
@@ -2368,9 +1758,9 @@
     function shareMortalityWhatsApp() {
       const unit = state.units.find(u => u.id === state.selectedUnitId);
       const totalMort = state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0);
-      let msg = `*AMUTAN GROUPS - FLOCK HEALTH*\n` +
+      let msg = `*AMUTAN GROUPS - FLOCK HEALTH & VACCINES*\n` +
                 `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `🩺 *Total Mortality:* ${totalMort} Birds`;
+                `🩺 *Total Losses:* ${totalMort} Birds`;
       openWhatsAppLink(msg);
     }
 
@@ -2602,7 +1992,7 @@
       if (state.currentUser.role !== 'MD') return alert('MD Access Only.');
       if (!confirm("Download Master Audit Archive and clear operational logs?")) return;
       downloadComprehensiveUnitReportPDF();
-      state.attendance = []; state.overtime = []; state.gatepasses = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = []; state.punches = [];
+      state.attendance = []; state.overtime = []; state.gatepasses = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = [];
       persist();
       alert('Master Archive PDF downloaded and ledger safely cleared!');
     }
@@ -2625,7 +2015,6 @@
       const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv.join('\n')], { type: 'text/csv' })); a.download = fn; a.click();
     }
 
-    // OTHER DATA MODULES
     function issueAdvance() {
       const date = document.getElementById('advDate').value;
       const workerId = parseInt(document.getElementById('advWorker').value);
@@ -2656,7 +2045,7 @@
 
     function addFeedLog() {
       const date = document.getElementById('feedDate').value;
-      const type = document.getElementById('feedType').value;
+      const type = document.getElementById('feedType').value.trim() || 'General Feed';
       const feedIn = parseInt(document.getElementById('feedIn').value) || 0;
       const feedOut = parseInt(document.getElementById('feedOut').value) || 0;
       const cost = parseFloat(document.getElementById('feedCost').value) || 0;
@@ -2665,6 +2054,7 @@
       if (cost > 0) {
         state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date, category: 'Feed Purchase', description: `${feedIn} Bags of ${type}`, amount: cost });
       }
+      document.getElementById('feedType').value = '';
       document.getElementById('feedIn').value = '';
       document.getElementById('feedOut').value = '';
       document.getElementById('feedCost').value = '';
@@ -2675,100 +2065,27 @@
       const date = document.getElementById('mortDate').value;
       const shed = document.getElementById('mortShed').value.trim() || 'General';
       const count = parseInt(document.getElementById('mortCount').value) || 0;
+      const vaccine = document.getElementById('vaccineName').value.trim() || '-';
       const notes = document.getElementById('mortNotes').value.trim() || '-';
       if (!date) return alert('Select date.');
-      state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, notes });
+      state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, vaccine, notes });
       document.getElementById('mortCount').value = '';
+      document.getElementById('vaccineName').value = '';
       document.getElementById('mortNotes').value = '';
       persist();
     }
 
     function addExpenseLog() {
       const date = document.getElementById('expDate').value;
-      const category = document.getElementById('expCategory').value;
+      const category = document.getElementById('expCategory').value.trim() || 'General Expense';
       const description = document.getElementById('expDescription').value.trim() || category;
       const amount = parseFloat(document.getElementById('expAmount').value) || 0;
       if (!date || amount <= 0) return alert('Enter valid expense.');
       state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, category, description, amount });
+      document.getElementById('expCategory').value = '';
       document.getElementById('expDescription').value = '';
       document.getElementById('expAmount').value = '';
       persist();
-    }
-
-    // OCR DOCUMENT SCANNER
-    function setScanMode(m) {
-      currentScanMode = m;
-      document.querySelectorAll('.scan-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-    }
-
-    async function handleDocumentScan(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const progressBox = document.getElementById('ocrProgressBox');
-      const statusText = document.getElementById('ocrStatusText');
-      progressBox.style.display = 'block';
-
-      try {
-        const worker = await Tesseract.createWorker(['eng', 'tam'], 1, {
-          logger: m => { if (m.status === 'recognizing text') statusText.innerText = `OCR Scanning... ${Math.round(m.progress * 100)}%`; }
-        });
-        const ret = await worker.recognize(file);
-        await worker.terminate();
-
-        progressBox.style.display = 'none';
-        document.getElementById('ocrResultBox').style.display = 'block';
-
-        parsedOcrPayload = parseSmartScan(ret.data.text, currentScanMode);
-        document.getElementById('ocrParsedResultView').innerHTML = `<strong>${parsedOcrPayload.title}</strong><div style="color:var(--primary); font-weight:800; margin-top:0.4rem;">${parsedOcrPayload.summary}</div>`;
-      } catch (err) {
-        progressBox.style.display = 'none';
-        alert('OCR error: ' + err);
-      }
-    }
-
-    function parseSmartScan(text, forced) {
-      const lower = text.toLowerCase();
-      const nums = text.match(/\d+(\.\d+)?/g) ? text.match(/\d+(\.\d+)?/g).map(Number) : [0];
-      const maxNum = Math.max(...nums) || 1000;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-
-      if (forced === 'ATTENDANCE' || lower.includes('present') || lower.includes('attendance') || lower.includes('வருகை')) {
-        const map = {};
-        unitWorkers.forEach(w => { map[w.id] = { morning: true, afternoon: true }; });
-        return { type: 'ATT', title: '👥 Shift Attendance Sheet', data: map, summary: `Matched ${Object.keys(map).length} workers.` };
-      }
-      if (forced === 'EGG' || lower.includes('egg') || lower.includes('முட்டை') || lower.includes('hatch')) {
-        return { type: 'EGG', title: '🥚 Egg Slip', data: { shed: 'Shed 1', hatching: Math.round(maxNum * 0.95), commercial: Math.round(maxNum * 0.05), broken: 0, sold: maxNum, price: 6.5 }, summary: `Total Eggs: ${maxNum.toLocaleString()}` };
-      }
-      if (forced === 'FEED' || lower.includes('feed') || lower.includes('தீவனம்') || lower.includes('mash')) {
-        const bags = Math.min(...nums.filter(n => n > 0 && n < 500)) || 50;
-        return { type: 'FEED', title: '🌾 Feed Bill', data: { type: 'Parent Breeder Mash', feedIn: bags, feedOut: 0, cost: bags * 1850 }, summary: `${bags} Bags Mash` };
-      }
-      return { type: 'EXP', title: '💵 Expense Bill', data: { category: 'Other', description: 'Scanned Bill', amount: maxNum }, summary: `Amount: ₹${maxNum.toLocaleString()}` };
-    }
-
-    function applyScannedData() {
-      if (!parsedOcrPayload) return;
-      const today = new Date().toISOString().slice(0, 10);
-      if (parsedOcrPayload.type === 'ATT') {
-        Object.keys(parsedOcrPayload.data).forEach(wId => {
-          state.attendance.unshift({ date: today, workerId: parseInt(wId), morning: true, afternoon: true, units: 1.0, status: 'Present' });
-        });
-      } else if (parsedOcrPayload.type === 'EGG') {
-        state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data, revenue: parsedOcrPayload.data.sold * parsedOcrPayload.data.price });
-      } else if (parsedOcrPayload.type === 'FEED') {
-        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
-        if (parsedOcrPayload.data.cost > 0) {
-          state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date: today, category: 'Feed Purchase', description: `${parsedOcrPayload.data.feedIn} Bags Scanned`, amount: parsedOcrPayload.data.cost });
-        }
-      } else if (parsedOcrPayload.type === 'EXP') {
-        state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
-      }
-      persist();
-      alert('Data posted to active division ledger!');
-      document.getElementById('ocrResultBox').style.display = 'none';
-      parsedOcrPayload = null;
     }
 
     // AI VOICE & CHAT
@@ -2778,7 +2095,7 @@
       const nums = cmd.match(/\d+(\.\d+)?/g) ? cmd.match(/\d+(\.\d+)?/g).map(Number) : [];
 
       if (/(feed|mash|தீவனம்)/i.test(lower) && nums[0]) {
-        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId || 1, date: new Date().toISOString().slice(0, 10), type: 'Parent Breeder Mash', feedIn: nums[0], feedOut: 0, cost: nums[1] || nums[0] * 1850 });
+        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId || 1, date: new Date().toISOString().slice(0, 10), type: 'Breeder Mash', feedIn: nums[0], feedOut: 0, cost: nums[1] || nums[0] * 1850 });
         persist();
         return isTamil ? `✅ ${nums[0]} மூட்டை தீவனம் வரவு வைக்கப்பட்டது.` : `Added ${nums[0]} bags feed.`;
       }
@@ -2794,7 +2111,7 @@
       if (/(breeding|ப்ரீடிங்)/i.test(lower)) { openUnit(1); return `Switched to Amutan Breeding Farm.`; }
       if (/(farm|பண்ணை)/i.test(lower)) { openUnit(2); return `Switched to Amutan Farm.`; }
 
-      return `🤖 Command understood: "${cmd}". You can ask about gate passes, late arrivals, shift muster, or egg production.`;
+      return `🤖 Command understood: "${cmd}". You can ask about gate passes, overtime, shift muster, or egg production.`;
     }
 
     function sendAiMessage() {
@@ -2879,37 +2196,18 @@
       // Staff List & Dropdowns
       const staffTbody = document.getElementById('staffList');
       const advWorkerSelect = document.getElementById('advWorker');
-      const enrollSelect = document.getElementById('enrollWorkerSelect');
       const otWorkerSelect = document.getElementById('otWorkerSelect');
       const manualWorkerSelect = document.getElementById('manualWorkerSelect');
       staffTbody.innerHTML = '';
       advWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
       otWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
       if (manualWorkerSelect) manualWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
-      enrollSelect.innerHTML = '';
 
       unitWorkers.forEach((w, i) => {
         staffTbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.phone || '-'}</td><td>${w.role}</td><td>₹${w.wage} / day</td><td><button class="btn btn-sm btn-secondary" onclick="deleteWorker(${w.id})">Remove</button></td></tr>`;
         advWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
         otWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
         if (manualWorkerSelect) manualWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
-        enrollSelect.innerHTML += `<option value="${w.id}">${w.name} (${w.role}) ${w.faceEmbedding ? '✔ Enrolled' : '❌ Pending'}</option>`;
-      });
-
-      // Biometric Face Grid
-      const enrolledGrid = document.getElementById('workerEnrolledGrid');
-      enrolledGrid.innerHTML = '';
-      unitWorkers.forEach(w => {
-        enrolledGrid.innerHTML += `<div class="matched-worker-row"><div style="display:flex; align-items:center; gap:0.5rem;"><div style="width:34px; height:34px; border-radius:50%; background:var(--primary-soft); display:flex; align-items:center; justify-content:center; color:var(--primary); font-weight:900;">${w.name.charAt(0)}</div><strong>${w.name}</strong></div><span class="pill ${w.faceEmbedding ? 'pill-present' : 'pill-half'}">${w.faceEmbedding ? '128D Enrolled' : 'Pending'}</span></div>`;
-      });
-
-      // Live Biometric Punches
-      const today = new Date().toISOString().slice(0, 10);
-      const punchTbody = document.getElementById('livePunchLogBody');
-      punchTbody.innerHTML = '';
-      state.punches.filter(p => p.unitId === state.selectedUnitId && p.date === today).slice(0, 5).forEach(p => {
-        const isLate = (p.timingFlag || '').includes('Late');
-        punchTbody.innerHTML += `<tr><td>${p.time}</td><td><strong>${p.workerName}</strong></td><td><span class="pill pill-half">${p.shift || 'Shift'}</span></td><td><span class="pill ${isLate ? 'pill-absent' : 'pill-present'}">${p.timingFlag || 'On Time'}</span></td></tr>`;
       });
 
       // Overtime List
@@ -2977,7 +2275,7 @@
       const mortTbody = document.getElementById('mortList');
       mortTbody.innerHTML = '';
       state.mortality.filter(h => h.unitId === state.selectedUnitId).slice(0, 6).forEach(h => {
-        mortTbody.innerHTML += `<tr><td>${h.date}</td><td>${h.shed}</td><td>${h.count}</td><td>${h.notes}</td></tr>`;
+        mortTbody.innerHTML += `<tr><td>${h.date}</td><td>${h.shed}</td><td>${h.count}</td><td><strong style="color:var(--primary);">${h.vaccine || '-'}</strong></td><td>${h.notes}</td></tr>`;
       });
     }
 
