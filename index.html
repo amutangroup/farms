@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amutan Groups | Enterprise Multi-Unit Farm Portal</title>
+  <title>Amutan Groups </title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- PDF, Charting & Client-Side OCR Libraries -->
+  <!-- PDF, Charting & OCR Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
-  <!-- Firebase SDKs (v8 compat) -->
+  <!-- Firebase Realtime Database SDKs -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
@@ -132,8 +132,7 @@
 
     .drawer-header {
       display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 1rem; border-bottom: 1.5px solid var(--border); margin-bottom: 0.8rem;
-      flex-shrink: 0;
+      padding-bottom: 1rem; border-bottom: 1.5px solid var(--border); margin-bottom: 0.8rem; flex-shrink: 0;
     }
     .drawer-brand h3 { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
     .drawer-brand small { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; display: block; }
@@ -185,32 +184,28 @@
     .landing-header p { font-size: 1rem; color: var(--text-muted); font-weight: 700; margin-top: 0.2rem; }
 
     .units-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;
     }
     .unit-card {
       background: var(--card-bg); border-radius: var(--radius); border: 2.5px solid var(--border);
-      padding: 2.2rem 1.8rem; text-align: center; cursor: pointer; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 2.8rem 2.2rem; text-align: center; cursor: pointer; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; align-items: center;
       position: relative; overflow: hidden;
     }
-    .unit-card:hover {
-      transform: translateY(-8px); border-color: var(--primary); box-shadow: var(--shadow-lg);
-    }
+    .unit-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
     
     .unit-icon {
-      width: 76px; height: 76px; border-radius: 50%; background: var(--bg);
+      width: 88px; height: 88px; border-radius: 50%; background: var(--bg);
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem; border: 3px solid var(--border); box-shadow: var(--shadow-sm);
-      color: var(--primary);
+      margin-bottom: 1.2rem; border: 3px solid var(--border); box-shadow: var(--shadow-sm); color: var(--primary);
     }
-    .unit-icon svg { width: 38px; height: 38px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .unit-icon svg { width: 44px; height: 44px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-    .unit-card h3 { font-size: 1.2rem; font-weight: 900; color: var(--text); margin-bottom: 0.4rem; }
-    .unit-card p { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .unit-card h3 { font-size: 1.4rem; font-weight: 900; color: var(--text); margin-bottom: 0.4rem; }
+    .unit-card p { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1.8rem; }
     .unit-btn {
-      background: var(--primary-gradient); color: #fff; border: none; padding: 0.75rem 1.8rem;
-      border-radius: 30px; font-weight: 800; font-size: 0.88rem; cursor: pointer; box-shadow: var(--shadow-sm);
-      transition: all 0.2s;
+      background: var(--primary-gradient); color: #fff; border: none; padding: 0.85rem 2rem;
+      border-radius: 30px; font-weight: 800; font-size: 0.92rem; cursor: pointer; box-shadow: var(--shadow-sm);
     }
     .unit-btn:hover { transform: scale(1.04); box-shadow: var(--glow); }
 
@@ -234,7 +229,7 @@
     }
     .kpi-card span { font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
     .kpi-card h3 { font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-top: 0.2rem; }
-    .kpi-icon { width: 50px; height: 50px; border-radius: 18px; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.4rem; }
+    .kpi-icon { width: 50px; height: 50px; border-radius: 18px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
 
     .panel { display: none; }
     .panel.active { display: block; animation: fadeIn 0.3s ease; }
@@ -396,25 +391,25 @@
 </head>
 <body>
 
-  <!-- LOGIN SCREEN -->
+  <!-- LOGIN SCREEN (NO PRE-FILLED CREDENTIALS) -->
   <div id="authOverlay">
     <div class="login-card">
       <div style="width: 80px; height: 80px; background: var(--bg); border-radius: 50%; border: 3px solid var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary);">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.5-2 4.5-5 9-3-4.5-5-6.5-5-9a5 5 0 0 1 5-5z"/><circle cx="12" cy="7" r="1.5"/><path d="M9 16c-3 1.5-5 3-5 5h16c0-2-2-3.5-5-5"/></svg>
       </div>
       <h2>AMUTAN GROUPS</h2>
-      <p>Multi-Unit Enterprise Operations & AI Management</p>
+      <p>Poultry Farm Operations & Biometric Management</p>
 
-      <form onsubmit="handleLogin(event)">
+      <form onsubmit="handleLogin(event)" autocomplete="off">
         <div class="form-group" style="text-align: left; margin-bottom: 1.2rem;">
           <label>Username</label>
-          <input type="text" id="loginUser" class="form-control" placeholder="Enter username" required autocomplete="username" value="amutan">
+          <input type="text" id="loginUser" class="form-control" placeholder="Enter username" required autocomplete="off">
         </div>
         <div class="form-group" style="text-align: left; margin-bottom: 1.8rem;">
           <label>Password</label>
-          <input type="password" id="loginPass" class="form-control" placeholder="Enter password" required autocomplete="current-password" value="1234">
+          <input type="password" id="loginPass" class="form-control" placeholder="Enter password" required autocomplete="new-password">
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem;">Enter Enterprise Portal</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem;">Enter Poultry Farm Portal</button>
       </form>
     </div>
   </div>
@@ -425,7 +420,7 @@
     <div class="drawer-header">
       <div class="drawer-brand">
         <h3>AMUTAN</h3>
-        <small>Enterprise Portal</small>
+        <small>Poultry Portal</small>
       </div>
       <button class="close-btn" onclick="toggleDrawer()">✕</button>
     </div>
@@ -441,10 +436,10 @@
       </div>
 
       <div class="nav-section">
-        <span class="nav-section-title">Production & Stock</span>
-        <button class="nav-link" id="navYieldBtn" onclick="switchNav('yieldPanel', this)"><span class="icon-box">🥚</span> Yield & Harvest Collection</button>
-        <button class="nav-link" id="navFeedBtn" onclick="switchNav('feedPanel', this)"><span class="icon-box">🌾</span> Feed & Inputs Stock</button>
-        <button class="nav-link" id="navHealthBtn" onclick="switchNav('healthPanel', this)"><span class="icon-box">🩺</span> Health & Mortality Log</button>
+        <span class="nav-section-title">Production & Rations</span>
+        <button class="nav-link" onclick="switchNav('eggPanel', this)"><span class="icon-box">🥚</span> Daily Egg Collection</button>
+        <button class="nav-link" onclick="switchNav('feedPanel', this)"><span class="icon-box">🌾</span> Feed Stock & Intake</button>
+        <button class="nav-link" onclick="switchNav('mortalityPanel', this)"><span class="icon-box">🩺</span> Flock Mortality & Health</button>
       </div>
 
       <div class="nav-section">
@@ -462,7 +457,7 @@
     </div>
 
     <div class="drawer-footer">
-      <button class="btn btn-secondary" onclick="goToUnitSelection()" style="width: 100%; padding: 0.75rem;">Switch Enterprise Division</button>
+      <button class="btn btn-secondary" onclick="goToUnitSelection()" style="width: 100%; padding: 0.75rem;">Switch Poultry Division</button>
       <button class="btn btn-danger-solid" onclick="logout()" style="width: 100%; padding: 0.75rem;">Sign Out</button>
     </div>
   </div>
@@ -477,7 +472,7 @@
         <div class="brand-wrap">
           <div class="brand-text">
             <h1>AMUTAN GROUPS</h1>
-            <small>Tirupur District | Poultry & Coconut Estates</small>
+            <small>Tirupur District | Poultry Breeder & Hatchery Estates</small>
           </div>
         </div>
       </div>
@@ -494,11 +489,11 @@
 
     <div class="dashboard-container">
 
-      <!-- SCREEN 1: 5 OPERATIONAL UNITS -->
+      <!-- SCREEN 1: 3 POULTRY DIVISIONS ONLY -->
       <div id="unitSelectScreen">
         <div class="landing-header">
-          <h2>Select Enterprise Division</h2>
-          <p>Manage separate live records, attendance, production, and finances for Poultry & Coconut estates</p>
+          <h2>Select Poultry Division</h2>
+          <p>Manage separate live records, attendance, production, feed, and finances across all 3 poultry units[cite: 2]</p>
         </div>
 
         <div class="units-grid">
@@ -531,26 +526,6 @@
             </div>
             <button class="unit-btn">Enter Hatcheries</button>
           </div>
-
-          <!-- Unit 4 -->
-          <div class="unit-card" onclick="openUnit(4)">
-            <div>
-              <div class="unit-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div>
-              <h3>AMUTAN COCONUT FARM</h3>
-              <p>Mature Nut Harvesting, Copra Drying & Oil Grade Operations[cite: 1, 3]</p>
-            </div>
-            <button class="unit-btn">Enter Coconut Farm</button>
-          </div>
-
-          <!-- Unit 5 -->
-          <div class="unit-card" onclick="openUnit(5)">
-            <div>
-              <div class="unit-icon"><svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 7-9 11-9 11S3 18 3 11a9 9 0 0 1 9-9z"/><circle cx="12" cy="10" r="3"/></svg></div>
-              <h3>AMUTAN TENDER COCONUT FARM</h3>
-              <p>Fresh Elaneer / Tender Nut Plucking & Direct Wholesale[cite: 1, 3]</p>
-            </div>
-            <button class="unit-btn">Enter Tender Coconut Farm</button>
-          </div>
         </div>
       </div>
 
@@ -558,7 +533,7 @@
       <div id="unitWorkspaceScreen">
         <div class="workspace-banner">
           <div>
-            <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Active Division</span>
+            <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Active Poultry Division</span>
             <h2 id="currentUnitTitle">AMUTAN BREEDING FARM</h2>
           </div>
           <button class="back-btn" onclick="goToUnitSelection()">← Switch Division</button>
@@ -568,22 +543,22 @@
         <div class="kpi-grid">
           <div class="kpi-card">
             <div>
-              <span id="kpiLabel1">Hatchability % Rate</span>
-              <h3 id="kpiValue1">0%</h3>
+              <span>Hatchability % Rate</span>
+              <h3 id="kpiHatchability">0%</h3>
             </div>
             <div class="kpi-icon">🎯</div>
           </div>
           <div class="kpi-card">
             <div>
-              <span id="kpiLabel2">Total Production / Yield</span>
-              <h3 id="kpiValue2">0</h3>
+              <span>Unit Total Eggs</span>
+              <h3 id="kpiEggs">0</h3>
             </div>
-            <div class="kpi-icon">📦</div>
+            <div class="kpi-icon">🥚</div>
           </div>
           <div class="kpi-card">
             <div>
-              <span id="kpiLabel3">Feed / Input Stock</span>
-              <h3 id="kpiValue3">0 Bags</h3>
+              <span>Feed Inventory</span>
+              <h3 id="kpiFeed">0 Bags</h3>
             </div>
             <div class="kpi-icon">🌾</div>
           </div>
@@ -607,11 +582,11 @@
               </div>
               <div class="form-group">
                 <label>Job Designation</label>
-                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Climber, Caretaker[cite: 1, 2]">
+                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Flock Caretaker, Shed Supervisor[cite: 2]">
               </div>
               <div class="form-group">
-                <label>Daily / Task Wage Rate (₹)</label>
-                <input type="number" id="staffWage" class="form-control" placeholder="600">
+                <label>Daily Wage Rate (₹)</label>
+                <input type="number" id="staffWage" class="form-control" placeholder="550">
               </div>
               <button class="btn btn-primary" onclick="addWorker()">Add Worker</button>
             </div>
@@ -621,7 +596,7 @@
             <div class="card-title">
               <span>Staff Roster - <span class="unit-label-span"></span></span>
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="downloadStaffPDF()">📄 PDF</button>
+                <button class="btn btn-primary btn-sm" onclick="downloadPoultryStaffPDF()">📄 Download PDF</button>
                 <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('staffList', 'Staff_List.csv')">Export CSV</button>
               </div>
             </div>
@@ -772,127 +747,136 @@
             </div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Worker</th><th>Wage Rate</th><th>Days Present</th><th>Gross Wage</th><th>Advances</th><th>Net Payable</th><th>Actions</th></tr></thead>
+                <thead><tr><th>Worker</th><th>Daily Rate</th><th>Days Present</th><th>Gross Wage</th><th>Advances</th><th>Net Payable</th><th>Actions</th></tr></thead>
                 <tbody id="payrollList"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 6. PRODUCTION / YIELD -->
-        <div id="yieldPanel" class="panel">
+        <!-- 6. EGG PRODUCTION -->
+        <div id="eggPanel" class="panel">
           <div class="card">
-            <div class="card-title">Record Daily Production / Harvest (<span class="unit-label-span"></span>)</div>
+            <div class="card-title">Record Egg Collection & Sales (<span class="unit-label-span"></span>)</div>
             <div class="form-grid">
               <div class="form-group">
                 <label>Date</label>
-                <input type="date" id="yieldDate" class="form-control">
+                <input type="date" id="eggDate" class="form-control">
               </div>
               <div class="form-group">
-                <label>Shed / Block Plot #</label>
-                <input type="text" id="yieldLocation" class="form-control" placeholder="e.g. Shed 1 / North Plot[cite: 1, 2]">
+                <label>Shed / Pen #</label>
+                <input type="text" id="eggShed" class="form-control" placeholder="e.g. Shed 1">
               </div>
               <div class="form-group">
-                <label>Prime Grade (Hatching Eggs / Good Nuts)</label>
-                <input type="number" id="yieldGradeA" class="form-control" placeholder="10000">
+                <label>Hatching Eggs (Good)</label>
+                <input type="number" id="eggHatching" class="form-control" placeholder="12500">
               </div>
               <div class="form-group">
-                <label>Commercial / Under-Grade</label>
-                <input type="number" id="yieldGradeB" class="form-control" placeholder="400">
+                <label>Commercial / Table</label>
+                <input type="number" id="eggCommercial" class="form-control" placeholder="450">
               </div>
               <div class="form-group">
-                <label>Quantity Sold</label>
-                <input type="number" id="yieldSold" class="form-control" placeholder="10000">
+                <label>Broken / Rejection</label>
+                <input type="number" id="eggBroken" class="form-control" placeholder="80">
+              </div>
+              <div class="form-group">
+                <label>Eggs / DOC Sold</label>
+                <input type="number" id="eggSold" class="form-control" placeholder="12000">
               </div>
               <div class="form-group">
                 <label>Selling Price (₹ / unit)</label>
-                <input type="number" step="0.25" id="yieldPrice" class="form-control" placeholder="e.g. 6.50 / 25.00[cite: 1, 4]">
+                <input type="number" step="0.25" id="eggPrice" class="form-control" placeholder="6.50">
               </div>
-              <button class="btn btn-primary" onclick="addYieldLog()">Save Production & Sales</button>
+              <button class="btn btn-primary" onclick="addEggLog()">Save Production & Sales</button>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-title">Production Ledger</div>
+            <div class="card-title">Egg Production Ledger</div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Date</th><th>Location</th><th>Grade A</th><th>Under-grade</th><th>Total</th><th>Sold</th><th>Revenue</th></tr></thead>
-                <tbody id="yieldList"></tbody>
+                <thead><tr><th>Date</th><th>Shed</th><th>Hatching</th><th>Commercial</th><th>Broken</th><th>Total</th><th>Sold</th><th>Revenue</th><th>Hatch %</th></tr></thead>
+                <tbody id="eggList"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 7. FEED / INPUTS STOCK -->
+        <!-- 7. FEED INVENTORY -->
         <div id="feedPanel" class="panel">
           <div class="card">
-            <div class="card-title">Log Feed & Organic Inputs Stock (<span class="unit-label-span"></span>)</div>
+            <div class="card-title">Log Feed Stock & Daily Ration (<span class="unit-label-span"></span>)</div>
             <div class="form-grid">
               <div class="form-group">
                 <label>Date</label>
                 <input type="date" id="feedDate" class="form-control">
               </div>
               <div class="form-group">
-                <label>Variety Name</label>
-                <input type="text" id="feedTypeInput" class="form-control" placeholder="e.g. Breeder Mash / FYM Manure[cite: 1, 2]">
+                <label>Feed Variety</label>
+                <select id="feedType" class="form-control">
+                  <option value="Parent Breeder Mash">Parent Breeder Mash[cite: 2]</option>
+                  <option value="Chick Starter">Chick Starter[cite: 2]</option>
+                  <option value="Grower Mash">Grower Mash[cite: 2]</option>
+                  <option value="Layer Mash">Layer Mash[cite: 4]</option>
+                </select>
               </div>
               <div class="form-group">
                 <label>Stock Received (Bags In)</label>
                 <input type="number" id="feedIn" class="form-control" placeholder="0">
               </div>
               <div class="form-group">
-                <label>Stock Used / Applied (Bags Out)</label>
+                <label>Stock Fed / Consumed (Bags Out)</label>
                 <input type="number" id="feedOut" class="form-control" placeholder="0">
               </div>
               <div class="form-group">
-                <label>Purchase Cost (₹)</label>
+                <label>Feed Purchase Cost (₹)</label>
                 <input type="number" id="feedCost" class="form-control" placeholder="optional">
               </div>
-              <button class="btn btn-primary" onclick="addFeedLog()">Record Stock Entry</button>
+              <button class="btn btn-primary" onclick="addFeedLog()">Record Feed Entry</button>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-title">Stock History</div>
+            <div class="card-title">Feed Consumption History</div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Date</th><th>Variety</th><th>Received</th><th>Consumed</th></tr></thead>
+                <thead><tr><th>Date</th><th>Feed Variety</th><th>Received (Bags)</th><th>Fed (Bags)</th></tr></thead>
                 <tbody id="feedList"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 8. HEALTH / MORTALITY -->
-        <div id="healthPanel" class="panel">
+        <!-- 8. MORTALITY & BIRD HEALTH -->
+        <div id="mortalityPanel" class="panel">
           <div class="card">
-            <div class="card-title">Flock Health / Maintenance Log (<span class="unit-label-span"></span>)</div>
+            <div class="card-title">Flock Health & Mortality Log (<span class="unit-label-span"></span>)</div>
             <div class="form-grid">
               <div class="form-group">
                 <label>Date</label>
-                <input type="date" id="healthDate" class="form-control">
+                <input type="date" id="mortDate" class="form-control">
               </div>
               <div class="form-group">
-                <label>Shed / Pen / Plot</label>
-                <input type="text" id="healthShed" class="form-control" placeholder="e.g. Shed 2 / South Block[cite: 1, 2]">
+                <label>Shed / Pen #</label>
+                <input type="text" id="mortShed" class="form-control" placeholder="e.g. Shed 2">
               </div>
               <div class="form-group">
-                <label>Loss / Mortality Count</label>
-                <input type="number" id="healthCount" class="form-control" placeholder="0">
+                <label>Dead Birds Count</label>
+                <input type="number" id="mortCount" class="form-control" placeholder="0">
               </div>
               <div class="form-group">
-                <label>Remarks / Medication</label>
-                <input type="text" id="healthNotes" class="form-control" placeholder="e.g. Booster Given / Irrigation[cite: 1, 2]">
+                <label>Medication / Vaccination Notes</label>
+                <input type="text" id="mortNotes" class="form-control" placeholder="e.g. Lasota Booster Given[cite: 2]">
               </div>
-              <button class="btn btn-primary" onclick="addHealthLog()">Save Health Log</button>
+              <button class="btn btn-primary" onclick="addMortLog()">Record Health</button>
             </div>
           </div>
           <div class="card">
-            <div class="card-title">Health History</div>
+            <div class="card-title">Mortality Sheet</div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Date</th><th>Location</th><th>Loss Count</th><th>Remarks</th></tr></thead>
-                <tbody id="healthList"></tbody>
+                <thead><tr><th>Date</th><th>Shed</th><th>Mortality</th><th>Medication / Notes</th></tr></thead>
+                <tbody id="mortList"></tbody>
               </table>
             </div>
           </div>
@@ -905,8 +889,8 @@
             <div class="scan-mode-tabs">
               <button class="scan-tab active" id="tabModeAuto" onclick="setScanMode('AUTO')">⚡ Auto-Detect</button>
               <button class="scan-tab" id="tabModeAtt" onclick="setScanMode('ATTENDANCE')">👥 Attendance Sheet</button>
-              <button class="scan-tab" id="tabModeYield" onclick="setScanMode('YIELD')">🥚 Production Slip</button>
-              <button class="scan-tab" id="tabModeFeed" onclick="setScanMode('FEED')">🌾 Feed / Input Bill</button>
+              <button class="scan-tab" id="tabModeEgg" onclick="setScanMode('EGG')">🥚 Egg Slip</button>
+              <button class="scan-tab" id="tabModeFeed" onclick="setScanMode('FEED')">🌾 Feed Bill</button>
               <button class="scan-tab" id="tabModeExp" onclick="setScanMode('EXPENSE')">💵 Expense Cash Memo</button>
             </div>
 
@@ -946,13 +930,12 @@
                   <option value="Electricity & Diesel">Electricity & Diesel[cite: 1, 4]</option>
                   <option value="Vaccination & Medicine">Vaccines & Medicine[cite: 4]</option>
                   <option value="Maintenance & Transport">Maintenance & Transport[cite: 1, 4]</option>
-                  <option value="Fertilizer / Inputs">Fertilizer & Manure[cite: 1, 4]</option>
-                  <option value="Other">Other Expenses[cite: 1, 4]</option>
+                  <option value="Other Expenses">Other Operational Expense[cite: 4]</option>
                 </select>
               </div>
               <div class="form-group">
                 <label>Description</label>
-                <input type="text" id="expDescription" class="form-control" placeholder="e.g. Pump repair[cite: 1, 4]">
+                <input type="text" id="expDescription" class="form-control" placeholder="e.g. Brooder lamps replacement[cite: 4]">
               </div>
               <div class="form-group">
                 <label>Amount (₹)</label>
@@ -965,15 +948,15 @@
           <div class="card">
             <div class="card-title">
               <span>Unit Profit & Loss Statement (<span class="unit-label-span"></span>)</span>
-              <button class="btn btn-primary btn-sm" onclick="downloadFinancialPDF()">📄 PDF</button>
+              <button class="btn btn-primary btn-sm" onclick="downloadFinancialPDF()">📄 Download PDF</button>
             </div>
             <div class="table-responsive">
               <table>
                 <thead><tr><th>Account Component</th><th>Amount (₹)</th><th>Remarks</th></tr></thead>
                 <tbody>
-                  <tr><td><strong style="color: var(--success);">Unit Gross Sales Revenue</strong></td><td id="plGrossRevenue">₹0</td><td>From Yield / Production</td></tr>
+                  <tr><td><strong style="color: var(--success);">Unit Gross Sales Revenue</strong></td><td id="plGrossRevenue">₹0</td><td>From Egg & DOC Sales</td></tr>
                   <tr><td><strong style="color: var(--danger);">Unit Worker Payroll Wages</strong></td><td id="plPayrollExpenses">₹0</td><td>Direct Labor Cost</td></tr>
-                  <tr><td><strong style="color: var(--danger);">Farm & Inputs Operational Expenses</strong></td><td id="plFarmExpenses">₹0</td><td>Feed, electricity, logistics</td></tr>
+                  <tr><td><strong style="color: var(--danger);">Farm & Feed Operational Expenses</strong></td><td id="plFarmExpenses">₹0</td><td>Feed, power, medicines</td></tr>
                   <tr style="background: var(--bg); font-size: 1.05rem;">
                     <td><strong>UNIT NET PROFIT / LOSS</strong></td><td id="plNetBalance" style="font-weight: 900;">₹0</td><td id="plNetStatus">Break-Even</td>
                   </tr>
@@ -995,8 +978,9 @@
                 <thead><tr><th>Category</th><th>Key Metric</th><th>Unit Value</th><th>Status</th></tr></thead>
                 <tbody>
                   <tr><td><strong>Workforce</strong></td><td>Active Roster</td><td id="repWorkersAtt">0 Workers</td><td>On Shift</td></tr>
-                  <tr><td><strong>Stock</strong></td><td>Feed / Inputs Balance</td><td id="repFeedBalance">0 Bags</td><td>Warehouse</td></tr>
-                  <tr><td><strong>Production</strong></td><td>Yield & Efficiency</td><td id="repHatchabilityVal">0%</td><td>Tracked</td></tr>
+                  <tr><td><strong>Feed</strong></td><td>Warehouse Stock</td><td id="repFeedBalance">0 Bags</td><td>In Stock</td></tr>
+                  <tr><td><strong>Production</strong></td><td>Hatchability & Egg Yield</td><td id="repHatchabilityVal">0%</td><td>Hatching Quality</td></tr>
+                  <tr><td><strong>Flock Health</strong></td><td>Total Mortality</td><td id="repMortalityVal">0 Birds</td><td>Monitored</td></tr>
                   <tr><td><strong>Financials</strong></td><td>Net Profit / Loss</td><td id="repNetPLVal" style="font-weight: 900;">₹0</td><td id="repNetPLStatus">Balanced</td></tr>
                 </tbody>
               </table>
@@ -1069,11 +1053,11 @@
 
     <div class="ai-chat-body" id="aiChatBody">
       <div class="ai-msg ai-msg-bot">
-        👋 வணக்கம்! நான் <strong>அமுதன் AI</strong>. Speak or type naturally in Tamil, Hindi, or English:
+        👋 வணக்கம்! நான் <strong>அமுதன் AI</strong>. Speak or type in Tamil, Hindi, or English:
         <br><br>
         • <em>"முட்டை இருப்பு சொல்லு" / "Egg status"</em><br>
         • <em>"Scan attendance sheet" / "Face scan punch"</em><br>
-        • <em>"Switch to Coconut farm" / "Add 50 bags feed"</em><br>
+        • <em>"Switch to Hatchery" / "Add 50 bags feed"</em><br>
         • <em>"Download complete report"</em>
       </div>
     </div>
@@ -1106,11 +1090,9 @@
       currentUser: null,
       selectedUnitId: null,
       units: [
-        { id: 1, name: 'AMUTAN BREEDING FARM', type: 'POULTRY', desc: 'Parent Stock Breeder Operations[cite: 2]' },
-        { id: 2, name: 'AMUTAN FARM', type: 'POULTRY', desc: 'Commercial Poultry Operations[cite: 2]' },
-        { id: 3, name: 'AMUTAN HATCHERIES', type: 'POULTRY', desc: 'Incubation & Hatchery Facility[cite: 2]' },
-        { id: 4, name: 'AMUTAN COCONUT FARM', type: 'COCONUT', desc: 'Mature Nut & Copra Operations[cite: 1, 3]' },
-        { id: 5, name: 'AMUTAN TENDER COCONUT FARM', type: 'COCONUT', desc: 'Fresh Tender Nut Harvesting[cite: 1, 3]' }
+        { id: 1, name: 'AMUTAN BREEDING FARM', desc: 'Parent Stock Breeder Operations[cite: 2]' },
+        { id: 2, name: 'AMUTAN FARM', desc: 'Commercial Poultry Operations[cite: 2]' },
+        { id: 3, name: 'AMUTAN HATCHERIES', desc: 'Incubation & Hatchery Facility[cite: 2]' }
       ],
       users: JSON.parse(localStorage.getItem('ag_users')) || [
         { user: 'amutan', pass: '1234', role: 'MD', name: 'Amutan (MD)' },
@@ -1122,15 +1104,13 @@
         { id: 101, unitId: 1, name: 'R. Murugan', role: 'Feeder', wage: 550, faceData: null },
         { id: 102, unitId: 1, name: 'S. Kumar', role: 'Flock Caretaker', wage: 600, faceData: null },
         { id: 103, unitId: 2, name: 'P. Selvam', role: 'Shed Supervisor', wage: 700, faceData: null },
-        { id: 104, unitId: 3, name: 'M. Ramesh', role: 'Hatchery Incharge', wage: 650, faceData: null },
-        { id: 201, unitId: 4, name: 'K. Velusamy', role: 'Tree Climber', wage: 800, faceData: null },
-        { id: 202, unitId: 5, name: 'R. Senthil', role: 'Tender Harvester', wage: 850, faceData: null }
+        { id: 104, unitId: 3, name: 'M. Ramesh', role: 'Hatchery Incharge', wage: 650, faceData: null }
       ],
       attendance: JSON.parse(localStorage.getItem('ag_attendance')) || [],
       advances: JSON.parse(localStorage.getItem('ag_advances')) || [],
-      yields: JSON.parse(localStorage.getItem('ag_yields')) || [],
+      eggs: JSON.parse(localStorage.getItem('ag_eggs')) || [],
       feed: JSON.parse(localStorage.getItem('ag_feed')) || [],
-      health: JSON.parse(localStorage.getItem('ag_health')) || [],
+      mortality: JSON.parse(localStorage.getItem('ag_mortality')) || [],
       expenses: JSON.parse(localStorage.getItem('ag_expenses')) || [],
       punches: JSON.parse(localStorage.getItem('ag_camera_punches')) || []
     };
@@ -1147,28 +1127,28 @@
       localStorage.setItem('ag_workers', JSON.stringify(state.workers));
       localStorage.setItem('ag_attendance', JSON.stringify(state.attendance));
       localStorage.setItem('ag_advances', JSON.stringify(state.advances));
-      localStorage.setItem('ag_yields', JSON.stringify(state.yields));
+      localStorage.setItem('ag_eggs', JSON.stringify(state.eggs));
       localStorage.setItem('ag_feed', JSON.stringify(state.feed));
-      localStorage.setItem('ag_health', JSON.stringify(state.health));
+      localStorage.setItem('ag_mortality', JSON.stringify(state.mortality));
       localStorage.setItem('ag_expenses', JSON.stringify(state.expenses));
       localStorage.setItem('ag_camera_punches', JSON.stringify(state.punches));
 
       // Firebase Sync
-      db.ref('amutan_enterprise_records').set(state).catch(e => console.error(e));
+      db.ref('amutan_poultry_records').set(state).catch(e => console.error(e));
       renderWorkspace();
     }
 
     function syncWithFirebase() {
-      db.ref('amutan_enterprise_records').on('value', snap => {
+      db.ref('amutan_poultry_records').on('value', snap => {
         const d = snap.val();
         if (d) {
           if (d.users) state.users = d.users;
           if (d.workers) state.workers = d.workers;
           if (d.attendance) state.attendance = d.attendance;
           if (d.advances) state.advances = d.advances;
-          if (d.yields) state.yields = d.yields;
+          if (d.eggs) state.eggs = d.eggs;
           if (d.feed) state.feed = d.feed;
-          if (d.health) state.health = d.health;
+          if (d.mortality) state.mortality = d.mortality;
           if (d.expenses) state.expenses = d.expenses;
           if (d.punches) state.punches = d.punches;
           renderWorkspace();
@@ -1185,7 +1165,7 @@
 
     function switchNav(panelId, btn) {
       if (!state.selectedUnitId && panelId !== 'rolesPanel' && panelId !== 'backupPanel') {
-        alert('Please select a division first.');
+        alert('Please select a poultry division first.');
         return toggleDrawer();
       }
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -1215,6 +1195,8 @@
     function logout() {
       state.currentUser = null;
       state.selectedUnitId = null;
+      document.getElementById('loginUser').value = '';
+      document.getElementById('loginPass').value = '';
       document.getElementById('appContainer').style.display = 'none';
       document.getElementById('authOverlay').style.display = 'flex';
       if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
@@ -1244,17 +1226,6 @@
 
       document.getElementById('currentUnitTitle').innerText = unit.name;
       document.querySelectorAll('.unit-label-span').forEach(el => el.innerText = unit.name);
-
-      // Adaptive labels for Poultry vs Coconut
-      if (unit.type === 'COCONUT') {
-        document.getElementById('kpiLabel1').innerText = 'Harvest Efficiency[cite: 1]';
-        document.getElementById('kpiLabel2').innerText = 'Total Nuts Harvested[cite: 1]';
-        document.getElementById('kpiLabel3').innerText = 'Fertilizer Stock[cite: 1]';
-      } else {
-        document.getElementById('kpiLabel1').innerText = 'Hatchability % Rate[cite: 2]';
-        document.getElementById('kpiLabel2').innerText = 'Total Hatching Eggs[cite: 2]';
-        document.getElementById('kpiLabel3').innerText = 'Feed Inventory[cite: 2]';
-      }
 
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.getElementById('staffPanel').classList.add('active');
@@ -1341,49 +1312,50 @@
       persist();
     }
 
-    function addYieldLog() {
-      const date = document.getElementById('yieldDate').value;
-      const location = document.getElementById('yieldLocation').value.trim() || 'General';
-      const gradeA = parseInt(document.getElementById('yieldGradeA').value) || 0;
-      const gradeB = parseInt(document.getElementById('yieldGradeB').value) || 0;
-      const sold = parseInt(document.getElementById('yieldSold').value) || 0;
-      const price = parseFloat(document.getElementById('yieldPrice').value) || 0;
+    function addEggLog() {
+      const date = document.getElementById('eggDate').value;
+      const shed = document.getElementById('eggShed').value.trim() || 'General';
+      const hatching = parseInt(document.getElementById('eggHatching').value) || 0;
+      const commercial = parseInt(document.getElementById('eggCommercial').value) || 0;
+      const broken = parseInt(document.getElementById('eggBroken').value) || 0;
+      const sold = parseInt(document.getElementById('eggSold').value) || 0;
+      const price = parseFloat(document.getElementById('eggPrice').value) || 0;
       if (!date) return alert('Select date.');
-      state.yields.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, location, gradeA, gradeB, sold, price, revenue: sold * price });
-      document.getElementById('yieldGradeA').value = '';
-      document.getElementById('yieldGradeB').value = '';
-      document.getElementById('yieldSold').value = '';
-      document.getElementById('yieldPrice').value = '';
+      state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, hatching, commercial, broken, sold, price, revenue: sold * price });
+      document.getElementById('eggHatching').value = '';
+      document.getElementById('eggCommercial').value = '';
+      document.getElementById('eggBroken').value = '';
+      document.getElementById('eggSold').value = '';
+      document.getElementById('eggPrice').value = '';
       persist();
     }
 
     function addFeedLog() {
       const date = document.getElementById('feedDate').value;
-      const type = document.getElementById('feedTypeInput').value.trim() || 'General Ration';
+      const type = document.getElementById('feedType').value;
       const feedIn = parseInt(document.getElementById('feedIn').value) || 0;
       const feedOut = parseInt(document.getElementById('feedOut').value) || 0;
       const cost = parseFloat(document.getElementById('feedCost').value) || 0;
       if (!date) return alert('Select date.');
       state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, type, feedIn, feedOut, cost });
       if (cost > 0) {
-        state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date, category: 'Stock Purchase', description: `${feedIn} Bags of ${type}`, amount: cost });
+        state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date, category: 'Feed Purchase', description: `${feedIn} Bags of ${type}`, amount: cost });
       }
-      document.getElementById('feedTypeInput').value = '';
       document.getElementById('feedIn').value = '';
       document.getElementById('feedOut').value = '';
       document.getElementById('feedCost').value = '';
       persist();
     }
 
-    function addHealthLog() {
-      const date = document.getElementById('healthDate').value;
-      const shed = document.getElementById('healthShed').value.trim() || 'General';
-      const count = parseInt(document.getElementById('healthCount').value) || 0;
-      const notes = document.getElementById('healthNotes').value.trim() || '-';
+    function addMortLog() {
+      const date = document.getElementById('mortDate').value;
+      const shed = document.getElementById('mortShed').value.trim() || 'General';
+      const count = parseInt(document.getElementById('mortCount').value) || 0;
+      const notes = document.getElementById('mortNotes').value.trim() || '-';
       if (!date) return alert('Select date.');
-      state.health.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, notes });
-      document.getElementById('healthCount').value = '';
-      document.getElementById('healthNotes').value = '';
+      state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, notes });
+      document.getElementById('mortCount').value = '';
+      document.getElementById('mortNotes').value = '';
       persist();
     }
 
@@ -1538,8 +1510,12 @@
         unitWorkers.forEach(w => { map[w.id] = 'Present'; });
         return { type: 'ATT', title: '👥 Attendance Sheet', data: map, summary: `Marked ${Object.keys(map).length} workers present from document.` };
       }
-      if (forced === 'YIELD' || lower.includes('egg') || lower.includes('nut') || lower.includes('harvest')) {
-        return { type: 'YIELD', title: '📦 Production / Harvest Slip', data: { location: 'Block 1', gradeA: Math.round(maxNum * 0.95), gradeB: Math.round(maxNum * 0.05), sold: maxNum, price: 6.5 }, summary: `Total Yield Count: ${maxNum}` };
+      if (forced === 'EGG' || lower.includes('egg') || lower.includes('முட்டை') || lower.includes('hatch')) {
+        return { type: 'EGG', title: '🥚 Egg Production Slip', data: { shed: 'Shed 1', hatching: Math.round(maxNum * 0.95), commercial: Math.round(maxNum * 0.05), broken: 0, sold: maxNum, price: 6.5 }, summary: `Total Eggs: ${maxNum.toLocaleString()}` };
+      }
+      if (forced === 'FEED' || lower.includes('feed') || lower.includes('தீவனம்') || lower.includes('mash')) {
+        const bags = Math.min(...nums.filter(n => n > 0 && n < 500)) || 50;
+        return { type: 'FEED', title: '🌾 Feed Delivery Bill', data: { type: 'Parent Breeder Mash', feedIn: bags, feedOut: 0, cost: bags * 1850 }, summary: `${bags} Bags Mash` };
       }
       return { type: 'EXP', title: '💵 Expense Bill', data: { category: 'Other', description: 'Scanned Bill', amount: maxNum }, summary: `Expense Amount: ₹${maxNum.toLocaleString()}` };
     }
@@ -1549,8 +1525,13 @@
       const today = new Date().toISOString().slice(0, 10);
       if (parsedOcrPayload.type === 'ATT') {
         Object.keys(parsedOcrPayload.data).forEach(wId => { state.attendance.unshift({ date: today, workerId: parseInt(wId), status: 'Present' }); });
-      } else if (parsedOcrPayload.type === 'YIELD') {
-        state.yields.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data, revenue: parsedOcrPayload.data.sold * parsedOcrPayload.data.price });
+      } else if (parsedOcrPayload.type === 'EGG') {
+        state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data, revenue: parsedOcrPayload.data.sold * parsedOcrPayload.data.price });
+      } else if (parsedOcrPayload.type === 'FEED') {
+        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
+        if (parsedOcrPayload.data.cost > 0) {
+          state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date: today, category: 'Feed Purchase', description: `${parsedOcrPayload.data.feedIn} Bags Scanned`, amount: parsedOcrPayload.data.cost });
+        }
       } else if (parsedOcrPayload.type === 'EXP') {
         state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
       }
@@ -1567,7 +1548,7 @@
       const nums = cmd.match(/\d+(\.\d+)?/g) ? cmd.match(/\d+(\.\d+)?/g).map(Number) : [];
 
       if (/(feed|mash|தீவனம்)/i.test(lower) && nums[0]) {
-        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId || 1, date: new Date().toISOString().slice(0, 10), type: 'Breeder Mash', feedIn: nums[0], feedOut: 0, cost: nums[1] || nums[0] * 1850 });
+        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId || 1, date: new Date().toISOString().slice(0, 10), type: 'Parent Breeder Mash', feedIn: nums[0], feedOut: 0, cost: nums[1] || nums[0] * 1850 });
         persist();
         return isTamil ? `✅ ${nums[0]} மூட்டை தீவனம் வரவு வைக்கப்பட்டது.` : `Added ${nums[0]} bags feed.`;
       }
@@ -1575,8 +1556,9 @@
         quickMarkAll('Present'); saveBatchAttendance();
         return isTamil ? `✅ அனைத்து தொழிலாளர்களும் வருகை பதிவு செய்யப்பட்டனர்.` : `Marked all present.`;
       }
-      if (/(coconut|தென்னை)/i.test(lower)) { openUnit(4); return `Switched to Amutan Coconut Farm.`; }
+      if (/(hatchery|ஹேட்சரி)/i.test(lower)) { openUnit(3); return `Switched to Amutan Hatcheries.`; }
       if (/(breeding|ப்ரீடிங்)/i.test(lower)) { openUnit(1); return `Switched to Amutan Breeding Farm.`; }
+      if (/(farm|பண்ணை)/i.test(lower)) { openUnit(2); return `Switched to Amutan Farm.`; }
       if (/(pdf|report|அறிக்கை)/i.test(lower)) { downloadComprehensiveUnitReportPDF(); return `Downloading report PDF...`; }
 
       return `🤖 Command understood: "${cmd}". You can ask to query stock, add feeds, mark attendance, or switch divisions.`;
@@ -1633,20 +1615,20 @@
     }
 
     function downloadFinancialPDF() { downloadComprehensiveUnitReportPDF(); }
-    function downloadStaffPDF() { downloadComprehensiveUnitReportPDF(); }
+    function downloadPoultryStaffPDF() { downloadComprehensiveUnitReportPDF(); }
 
     function downloadMasterArchiveAndClearData() {
       if (state.currentUser.role !== 'MD') return alert('MD Access Only.');
       if (!confirm("Download master audit archive and clear all operational logs?")) return;
       downloadComprehensiveUnitReportPDF();
-      state.attendance = []; state.advances = []; state.yields = []; state.feed = []; state.health = []; state.expenses = []; state.punches = [];
+      state.attendance = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = []; state.punches = [];
       persist();
       alert('Master Archive downloaded and database reset for fresh cycle!');
     }
 
     function exportBackupJSON() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-      const a = document.createElement('a'); a.href = dataStr; a.download = `Amutan_FullBackup.json`; a.click();
+      const a = document.createElement('a'); a.href = dataStr; a.download = `Amutan_Poultry_FullBackup.json`; a.click();
     }
     function importBackupJSON(e) {
       const reader = new FileReader();
@@ -1665,12 +1647,15 @@
     function renderWorkspace() {
       if (!state.selectedUnitId) return;
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const unitYields = state.yields.filter(y => y.unitId === state.selectedUnitId);
+      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
       const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
       const unitExpenses = state.expenses.filter(e => e.unitId === state.selectedUnitId);
 
-      const totalYield = unitYields.reduce((s, y) => s + (y.gradeA + y.gradeB || 0), 0);
-      const totalRev = unitYields.reduce((s, y) => s + (y.revenue || 0), 0);
+      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
+      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
+      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
+      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || 0), 0);
+      
       const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
       const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
       const feedBal = feedIn - feedOut;
@@ -1683,9 +1668,9 @@
       const totalExp = unitExpenses.reduce((s, e) => s + (e.amount || 0), 0);
       const netPL = totalRev - (totalPayroll + totalExp);
 
-      document.getElementById('kpiValue1').innerText = totalYield > 0 ? `${((unitYields.reduce((s,y)=>s+y.gradeA,0)/totalYield)*100).toFixed(1)}%` : '0%';
-      document.getElementById('kpiValue2').innerText = totalYield.toLocaleString();
-      document.getElementById('kpiValue3').innerText = `${feedBal} Bags`;
+      document.getElementById('kpiHatchability').innerText = `${hatchPct}%`;
+      document.getElementById('kpiEggs').innerText = totalEggs.toLocaleString();
+      document.getElementById('kpiFeed').innerText = `${feedBal} Bags`;
       document.getElementById('kpiNetPL').innerText = `₹${netPL.toLocaleString()}`;
 
       document.getElementById('plGrossRevenue').innerText = `₹${totalRev.toLocaleString()}`;
@@ -1693,8 +1678,10 @@
       document.getElementById('plFarmExpenses').innerText = `- ₹${totalExp.toLocaleString()}`;
       document.getElementById('plNetBalance').innerText = `₹${netPL.toLocaleString()}`;
 
-      document.getElementById('repWorkersAtt').innerText = `${unitWorkers.length} Workers`;
-      document.getElementById('repFeedBalance').innerText = `${feedBal} Bags`;
+      document.getElementById('repWorkersAtt').innerText = `${unitWorkers.length} Active Staff`;
+      document.getElementById('repFeedBalance').innerText = `${feedBal} Bags In Stock`;
+      document.getElementById('repHatchabilityVal').innerText = `${hatchPct}% (${totalHatching.toLocaleString()} Hatching)`;
+      document.getElementById('repMortalityVal').innerText = `${state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0)} Birds`;
       document.getElementById('repNetPLVal').innerText = `₹${netPL.toLocaleString()}`;
 
       // Staff List
@@ -1706,7 +1693,7 @@
       enrollSelect.innerHTML = '';
 
       unitWorkers.forEach((w, i) => {
-        staffTbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.role}</td><td>₹${w.wage}</td><td><button class="btn btn-sm btn-secondary" onclick="deleteWorker(${w.id})">Remove</button></td></tr>`;
+        staffTbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.role}</td><td>₹${w.wage} / day</td><td><button class="btn btn-sm btn-secondary" onclick="deleteWorker(${w.id})">Remove</button></td></tr>`;
         advWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
         enrollSelect.innerHTML += `<option value="${w.id}">${w.name} (${w.role}) ${w.faceData ? '✔ Enrolled' : '❌ Pending'}</option>`;
       });
@@ -1726,11 +1713,13 @@
         punchTbody.innerHTML += `<tr><td>${p.time}</td><td><strong>${p.workerName}</strong></td><td>${p.match}</td><td><span class="pill pill-present">${p.status}</span></td></tr>`;
       });
 
-      // Yield List
-      const yieldTbody = document.getElementById('yieldList');
-      yieldTbody.innerHTML = '';
-      unitYields.slice(0, 6).forEach(y => {
-        yieldTbody.innerHTML += `<tr><td>${y.date}</td><td>${y.location}</td><td>${y.gradeA}</td><td>${y.gradeB}</td><td>${y.gradeA+y.gradeB}</td><td>${y.sold}</td><td>₹${y.revenue.toLocaleString()}</td></tr>`;
+      // Egg List
+      const eggTbody = document.getElementById('eggList');
+      eggTbody.innerHTML = '';
+      unitEggs.slice(0, 6).forEach(e => {
+        const tot = e.hatching + e.commercial + e.broken;
+        const pct = tot > 0 ? ((e.hatching / tot) * 100).toFixed(1) : 0;
+        eggTbody.innerHTML += `<tr><td>${e.date}</td><td>${e.shed}</td><td>${e.hatching.toLocaleString()}</td><td>${e.commercial}</td><td>${e.broken}</td><td>${tot.toLocaleString()}</td><td>${e.sold.toLocaleString()}</td><td>₹${e.revenue.toLocaleString()}</td><td>${pct}%</td></tr>`;
       });
 
       // Feed List
@@ -1758,20 +1747,20 @@
         payTbody.innerHTML += `<tr><td><strong>${w.name}</strong></td><td>₹${w.wage}</td><td>${days}</td><td>₹${gross.toLocaleString()}</td><td>- ₹${adv.toLocaleString()}</td><td><strong style="color:var(--success);">₹${Math.max(0, gross-adv).toLocaleString()}</strong></td><td><button class="btn btn-sm btn-whatsapp" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Payslip for '+${JSON.stringify(w.name)}+': Net Payable Rs.'+${Math.max(0, gross-adv)}))">WhatsApp</button></td></tr>`;
       });
 
-      // Health List
-      const healthTbody = document.getElementById('healthList');
-      healthTbody.innerHTML = '';
-      state.health.filter(h => h.unitId === state.selectedUnitId).slice(0, 6).forEach(h => {
-        healthTbody.innerHTML += `<tr><td>${h.date}</td><td>${h.shed}</td><td>${h.count}</td><td>${h.notes}</td></tr>`;
+      // Mortality List
+      const mortTbody = document.getElementById('mortList');
+      mortTbody.innerHTML = '';
+      state.mortality.filter(h => h.unitId === state.selectedUnitId).slice(0, 6).forEach(h => {
+        mortTbody.innerHTML += `<tr><td>${h.date}</td><td>${h.shed}</td><td>${h.count}</td><td>${h.notes}</td></tr>`;
       });
     }
 
     const todayStr = new Date().toISOString().slice(0, 10);
     document.getElementById('batchAttDate').value = todayStr;
     document.getElementById('advDate').value = todayStr;
-    document.getElementById('yieldDate').value = todayStr;
+    document.getElementById('eggDate').value = todayStr;
     document.getElementById('feedDate').value = todayStr;
-    document.getElementById('healthDate').value = todayStr;
+    document.getElementById('mortDate').value = todayStr;
     document.getElementById('expDate').value = todayStr;
     document.getElementById('payrollMonthFilter').value = todayStr.slice(0, 7);
   </script>
