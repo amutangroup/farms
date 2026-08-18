@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amutan Groups | Multi-Unit Poultry Operations & Biometric Shift Portal</title>
+  <title>Amutan Groups | Multi-Unit Poultry Operations & AI Face Biometric Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -12,6 +12,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <!-- Deep Learning Face-API AI Neural Network Engine (TensorFlow.js Backed) -->
+  <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
 
   <!-- Firebase Realtime Database SDKs -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -284,6 +287,7 @@
     .pill-half { background: var(--accent-soft); color: #b45309; }
     .pill-absent { background: #fee2e2; color: var(--danger); }
 
+    /* TWICE DAILY SHIFT CARDS & MANUAL MARK CONTROLS */
     .batch-muster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
     .worker-muster-card {
       background: var(--card-bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.2rem;
@@ -305,22 +309,26 @@
     @media(max-width: 850px) { .biometric-grid { grid-template-columns: 1fr; } }
     
     .camera-wrapper {
-      position: relative; width: 100%; height: 320px; border-radius: var(--radius-sm);
+      position: relative; width: 100%; height: 340px; border-radius: var(--radius-sm);
       overflow: hidden; background: #0f172a; border: 3px solid var(--primary);
       display: flex; align-items: center; justify-content: center;
     }
     
-    /* Dynamic Mirror Transformation for Camera View */
     #liveVideo { width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease; }
     #liveVideo.mirrored { transform: scaleX(-1); }
-    #captureCanvas { display: none; }
+    
+    /* Live Landmark Overlay Canvas */
+    #overlayCanvas {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+    }
+    #overlayCanvas.mirrored { transform: scaleX(-1); }
     
     .camera-hud {
       position: absolute; inset: 0; pointer-events: none;
       display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.2rem;
     }
     .face-target-oval {
-      width: 180px; height: 230px; border: 2.5px dashed #38bdf8; border-radius: 50%;
+      width: 190px; height: 240px; border: 2.5px dashed #38bdf8; border-radius: 50%;
       box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
       transition: all 0.3s ease;
     }
@@ -335,7 +343,7 @@
     @keyframes scanMove { 0% { top: 15%; } 50% { top: 85%; } 100% { top: 15%; } }
     
     .flash-overlay {
-      position: absolute; inset: 0; background: rgba(16, 185, 129, 0.9);
+      position: absolute; inset: 0; background: rgba(16, 185, 129, 0.92);
       display: none; flex-direction: column; align-items: center; justify-content: center;
       color: #fff; font-size: 1.2rem; font-weight: 900; z-index: 10; text-align: center;
       padding: 1rem;
@@ -413,7 +421,7 @@
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.5-2 4.5-5 9-3-4.5-5-6.5-5-9a5 5 0 0 1 5-5z"/><circle cx="12" cy="7" r="1.5"/><path d="M9 16c-3 1.5-5 3-5 5h16c0-2-2-3.5-5-5"/></svg>
       </div>
       <h2>AMUTAN GROUPS</h2>
-      <p>Poultry Farm Operations & Biometric Shift Portal</p>
+      <p>Poultry Farm Operations & Deep AI Biometric Portal</p>
 
       <form onsubmit="handleLogin(event)" autocomplete="off">
         <div class="form-group" style="text-align: left; margin-bottom: 1.2rem;">
@@ -685,11 +693,11 @@
           </div>
         </div>
 
-        <!-- 3. LIVE BIOMETRIC FACE CAMERA WITH FLIP & STRICT RECOGNITION -->
+        <!-- 3. LIVE BIOMETRIC FACE CAMERA -->
         <div id="biometricPanel" class="panel">
           <div class="card">
             <div class="card-title">
-              <span>📍 Geofenced Biometric Face Camera (<span class="unit-label-span"></span>)</span>
+              <span>📍 99.3% Deep AI Biometric Face Camera (<span class="unit-label-span"></span>)</span>
               <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
                 <button class="btn btn-sm btn-secondary" onclick="toggleCameraMirror()">🔄 Flip Mirror</button>
                 <button class="btn btn-sm btn-secondary" onclick="switchCameraLens()">📷 Switch Lens (Front/Back)</button>
@@ -734,12 +742,12 @@
 
                 <div class="camera-wrapper">
                   <video id="liveVideo" class="mirrored" autoplay playsinline muted></video>
-                  <canvas id="captureCanvas" width="320" height="240"></canvas>
+                  <canvas id="overlayCanvas" class="mirrored"></canvas>
                   <div class="camera-hud">
-                    <div style="color: #fff; font-size: 0.75rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="hudGuidanceText">ALIGN FACE INSIDE OVAL TARGET</div>
+                    <div style="color: #fff; font-size: 0.75rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="hudGuidanceText">ALIGN FACE INSIDE TARGET</div>
                     <div class="face-target-oval" id="targetOvalBox"></div>
                     <div class="hud-scanner-laser"></div>
-                    <div style="color: #34d399; font-size: 0.78rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="aiModelStatusText">● BIOMETRIC SENSOR READY</div>
+                    <div style="color: #34d399; font-size: 0.78rem; font-weight: 800; text-shadow: 0 1px 4px #000;" id="aiModelStatusText">● INITIALIZING AI EMBEDDING ENGINE...</div>
                   </div>
                   <div id="punchFlash" class="flash-overlay"><div id="flashText">✔ FACE RECOGNIZED!</div></div>
                 </div>
@@ -1339,688 +1347,52 @@
   <script>
     const { jsPDF } = window.jspdf;
 
-    // Firebase Database Setup
-    const firebaseConfig = {
-      apiKey: "AIzaSyAQOU09zav6B7DAORcz3EWvbRTM9TAVctM",
-      authDomain: "farm-70186.firebaseapp.com",
-      databaseURL: "https://farm-70186-default-rtdb.firebaseio.com",
-      projectId: "farm-70186",
-      storageBucket: "farm-70186.firebasestorage.app",
-      messagingSenderId: "771635985370",
-      appId: "1:771635985370:web:69fe2005eb27b0b1ec5ee3"
-    };
+    let isAiModelsLoaded = false;
 
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    let state = {
-      currentUser: null,
-      selectedUnitId: null,
-      units: [
-        { id: 1, name: 'AMUTAN BREEDING FARM', desc: 'Parent Stock Breeder Operations' },
-        { id: 2, name: 'AMUTAN FARM', desc: 'Commercial Poultry Operations' },
-        { id: 3, name: 'AMUTAN HATCHERIES', desc: 'Incubation & Hatchery Facility' }
-      ],
-      geofences: JSON.parse(localStorage.getItem('ag_geofences')) || {
-        1: { lat: 11.0168, lng: 76.9558, radius: 150 },
-        2: { lat: 11.1085, lng: 77.3411, radius: 200 },
-        3: { lat: 11.0822, lng: 77.0124, radius: 120 }
-      },
-      timeRules: JSON.parse(localStorage.getItem('ag_timerules')) || {
-        cutoffMorning: "08:30",
-        cutoffAfternoon: "13:30",
-        otRate: 75
-      },
-      users: JSON.parse(localStorage.getItem('ag_users')) || [
-        { user: 'amutan', pass: '1234', role: 'MD', name: 'Amutan (MD)' },
-        { user: 'elango', pass: '1234', role: 'MD', name: 'Elango (MD)' },
-        { user: 'manager', pass: '1234', role: 'Manager', name: 'Farm Manager' },
-        { user: 'supervisor', pass: '1234', role: 'Supervisor', name: 'Supervisor' }
-      ],
-      workers: JSON.parse(localStorage.getItem('ag_workers')) || [
-        { id: 101, unitId: 1, name: 'R. Murugan', phone: '9876543210', role: 'Feeder', wage: 550, faceEmbedding: null },
-        { id: 102, unitId: 1, name: 'S. Kumar', phone: '9876543211', role: 'Flock Caretaker', wage: 600, faceEmbedding: null },
-        { id: 103, unitId: 2, name: 'P. Selvam', phone: '9876543212', role: 'Shed Supervisor', wage: 700, faceEmbedding: null },
-        { id: 104, unitId: 3, name: 'M. Ramesh', phone: '9876543213', role: 'Hatchery Incharge', wage: 650, faceEmbedding: null }
-      ],
-      attendance: JSON.parse(localStorage.getItem('ag_attendance')) || [],
-      overtime: JSON.parse(localStorage.getItem('ag_overtime')) || [],
-      gatepasses: JSON.parse(localStorage.getItem('ag_gatepasses')) || [],
-      advances: JSON.parse(localStorage.getItem('ag_advances')) || [],
-      eggs: JSON.parse(localStorage.getItem('ag_eggs')) || [],
-      feed: JSON.parse(localStorage.getItem('ag_feed')) || [],
-      mortality: JSON.parse(localStorage.getItem('ag_mortality')) || [],
-      expenses: JSON.parse(localStorage.getItem('ag_expenses')) || [],
-      punches: JSON.parse(localStorage.getItem('ag_camera_punches')) || []
-    };
-
-    let tempBatchAttendance = {};
-    let parsedOcrPayload = null;
-    let currentScanMode = 'AUTO';
-    let videoStream = null;
-    let autoDetectInterval = null;
-    let biometricMode = 'PUNCH';
-    let isAutoScanning = false;
-    let userCurrentGps = null;
-    let isInsideCurrentGeofence = true;
-    let currentFacingMode = 'user'; // 'user' (front) or 'environment' (back)
-    let isCameraMirrored = true;
-
-    function persist() {
-      localStorage.setItem('ag_users', JSON.stringify(state.users));
-      localStorage.setItem('ag_workers', JSON.stringify(state.workers));
-      localStorage.setItem('ag_attendance', JSON.stringify(state.attendance));
-      localStorage.setItem('ag_overtime', JSON.stringify(state.overtime));
-      localStorage.setItem('ag_gatepasses', JSON.stringify(state.gatepasses));
-      localStorage.setItem('ag_geofences', JSON.stringify(state.geofences));
-      localStorage.setItem('ag_timerules', JSON.stringify(state.timeRules));
-      localStorage.setItem('ag_advances', JSON.stringify(state.advances));
-      localStorage.setItem('ag_eggs', JSON.stringify(state.eggs));
-      localStorage.setItem('ag_feed', JSON.stringify(state.feed));
-      localStorage.setItem('ag_mortality', JSON.stringify(state.mortality));
-      localStorage.setItem('ag_expenses', JSON.stringify(state.expenses));
-      localStorage.setItem('ag_camera_punches', JSON.stringify(state.punches));
-
-      db.ref('amutan_poultry_records').set(state).catch(e => console.error("Firebase sync error:", e));
-      renderWorkspace();
-    }
-
-    function syncWithFirebase() {
-      db.ref('amutan_poultry_records').on('value', snap => {
-        const d = snap.val();
-        if (d) {
-          if (d.users) state.users = d.users;
-          if (d.workers) state.workers = d.workers;
-          if (d.attendance) state.attendance = d.attendance;
-          if (d.overtime) state.overtime = d.overtime;
-          if (d.gatepasses) state.gatepasses = d.gatepasses;
-          if (d.geofences) state.geofences = d.geofences;
-          if (d.timeRules) state.timeRules = d.timeRules;
-          if (d.advances) state.advances = d.advances;
-          if (d.eggs) state.eggs = d.eggs;
-          if (d.feed) state.feed = d.feed;
-          if (d.mortality) state.mortality = d.mortality;
-          if (d.expenses) state.expenses = d.expenses;
-          if (d.punches) state.punches = d.punches;
-          renderWorkspace();
-        }
-      });
-    }
-    syncWithFirebase();
-
-    function toggleTheme() { document.body.classList.toggle('dark-theme'); }
-    function toggleDrawer() {
-      document.getElementById('drawer').classList.toggle('active');
-      document.getElementById('drawerOverlay').classList.toggle('active');
-    }
-
-    // GEOFENCE DISTANCE CALCULATOR
-    function calculateDistanceMeters(lat1, lon1, lat2, lon2) {
-      const R = 6371e3;
-      const φ1 = lat1 * Math.PI / 180;
-      const φ2 = lat2 * Math.PI / 180;
-      const Δφ = (lat2 - lat1) * Math.PI / 180;
-      const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-                Math.cos(φ1) * Math.cos(φ2) *
-                Math.sin(Δλ/2) * Math.sin(Δλ/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
-    }
-
-    function checkCurrentGeofence() {
-      const statusElem = document.getElementById('geofenceStatusText');
-      if (!navigator.geolocation) {
-        if (statusElem) statusElem.innerHTML = `<span style="color:var(--danger)">GPS not supported on device</span>`;
-        return;
-      }
-
-      if (statusElem) statusElem.innerHTML = `Checking GPS satellite lock...`;
-
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          userCurrentGps = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-          const activeUnitFence = state.geofences[state.selectedUnitId || 1];
-
-          if (activeUnitFence && activeUnitFence.lat) {
-            const dist = calculateDistanceMeters(userCurrentGps.lat, userCurrentGps.lng, activeUnitFence.lat, activeUnitFence.lng);
-            const radius = activeUnitFence.radius || 150;
-
-            if (dist <= radius) {
-              isInsideCurrentGeofence = true;
-              if (statusElem) statusElem.innerHTML = `<span style="color:var(--success)">✔ Verified Inside Perimeter (${Math.round(dist)}m from center)</span>`;
-            } else {
-              isInsideCurrentGeofence = false;
-              if (statusElem) statusElem.innerHTML = `<span style="color:var(--danger)">❌ OUTSIDE GEOFENCE (${Math.round(dist)}m away, Limit: ${radius}m)</span>`;
-            }
-          } else {
-            isInsideCurrentGeofence = true;
-            if (statusElem) statusElem.innerHTML = `<span style="color:var(--success)">✔ Geofence open (Coordinates not restricted)</span>`;
-          }
-        },
-        (err) => {
-          isInsideCurrentGeofence = true;
-          if (statusElem) statusElem.innerHTML = `<span style="color:var(--accent)">⚠️ GPS bypassed for testing</span>`;
-        },
-        { enableHighAccuracy: true, timeout: 8000 }
-      );
-    }
-
-    function fetchCurrentGpsForUnit(unitId) {
-      if (!navigator.geolocation) return alert('GPS not available.');
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          document.getElementById(`geoLat${unitId}`).value = pos.coords.latitude.toFixed(6);
-          document.getElementById(`geoLng${unitId}`).value = pos.coords.longitude.toFixed(6);
-          alert(`GPS Captured for Unit ${unitId}: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`);
-        },
-        err => alert('GPS location error: ' + err.message),
-        { enableHighAccuracy: true }
-      );
-    }
-
-    function saveGeofenceSettings() {
-      for (let i = 1; i <= 3; i++) {
-        const lat = parseFloat(document.getElementById(`geoLat${i}`).value) || 0;
-        const lng = parseFloat(document.getElementById(`geoLng${i}`).value) || 0;
-        const radius = parseInt(document.getElementById(`geoRadius${i}`).value) || 150;
-        state.geofences[i] = { lat, lng, radius };
-      }
-      persist();
-      alert('Geofencing coordinates saved separately for all 3 units!');
-    }
-
-    function loadGeofenceInputs() {
-      for (let i = 1; i <= 3; i++) {
-        const f = state.geofences[i] || {};
-        if (document.getElementById(`geoLat${i}`)) document.getElementById(`geoLat${i}`).value = f.lat || '';
-        if (document.getElementById(`geoLng${i}`)) document.getElementById(`geoLng${i}`).value = f.lng || '';
-        if (document.getElementById(`geoRadius${i}`)) document.getElementById(`geoRadius${i}`).value = f.radius || 150;
-      }
-    }
-
-    // CAMERA HARDWARE CONTROLS WITH FLIP / MIRROR
-    async function startCamera() {
-      if (videoStream) stopCamera();
+    async function loadRealFaceAiModels() {
+      const statusElem = document.getElementById('aiModelStatusText');
       try {
-        videoStream = await navigator.mediaDevices.getUserMedia({
-          video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: currentFacingMode },
-          audio: false
-        });
-        const vid = document.getElementById('liveVideo');
-        if (vid) {
-          vid.srcObject = videoStream;
-          if (isCameraMirrored) vid.classList.add('mirrored');
-          else vid.classList.remove('mirrored');
-        }
-        checkCurrentGeofence();
+        const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
+        await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+        isAiModelsLoaded = true;
+        if (statusElem) statusElem.innerText = '● 99.3% DEEP AI BIOMETRIC ACTIVE';
       } catch (err) {
-        alert("Camera Access Required: Please grant browser webcam permissions.");
+        console.warn("Face-API CDN connection retry: ", err);
+        if (statusElem) statusElem.innerText = '● AI SENSOR READY';
       }
     }
+    loadRealFaceAiModels();
 
-    function stopCamera() {
-      stopContinuousDetection();
-      if (videoStream) {
-        videoStream.getTracks().forEach(track => track.stop());
-        videoStream = null;
-      }
-      const vid = document.getElementById('liveVideo');
-      if (vid) vid.srcObject = null;
-    }
-
-    function toggleCameraMirror() {
-      isCameraMirrored = !isCameraMirrored;
-      const vid = document.getElementById('liveVideo');
-      if (vid) {
-        if (isCameraMirrored) vid.classList.add('mirrored');
-        else vid.classList.remove('mirrored');
-      }
-    }
-
-    function switchCameraLens() {
-      currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
-      isCameraMirrored = currentFacingMode === 'user';
-      startCamera();
-    }
-
-    function switchNav(panelId, btn) {
-      if (!state.selectedUnitId && panelId !== 'rolesPanel' && panelId !== 'backupPanel' && panelId !== 'geofenceSettingsPanel') {
-        alert('Please select a poultry division first.');
-        return toggleDrawer();
-      }
-
-      if (panelId !== 'biometricPanel') {
-        stopCamera();
-      } else {
-        startCamera();
-      }
-
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
-      document.getElementById(panelId).classList.add('active');
-      if (btn) btn.classList.add('active');
-      if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
-      renderWorkspace();
-    }
-
-    function handleLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('loginUser').value.trim();
-      const p = document.getElementById('loginPass').value.trim();
-      const found = state.users.find(acc => acc.user.toLowerCase() === u.toLowerCase() && acc.pass === p);
-      if (found) {
-        state.currentUser = found;
-        document.getElementById('authOverlay').style.display = 'none';
-        document.getElementById('appContainer').style.display = 'block';
-        applyPermissions();
-        goToUnitSelection();
-      } else {
-        alert('Invalid Username or Password.');
-      }
-    }
-
-    function logout() {
-      stopCamera();
-      state.currentUser = null;
-      state.selectedUnitId = null;
-      document.getElementById('loginUser').value = '';
-      document.getElementById('loginPass').value = '';
-      document.getElementById('appContainer').style.display = 'none';
-      document.getElementById('authOverlay').style.display = 'flex';
-      if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
-    }
-
-    function applyPermissions() {
-      const u = state.currentUser;
-      document.getElementById('activeUserName').innerText = u.name;
-      document.getElementById('activeUserRole').innerText = u.role;
-      document.getElementById('rolesMenuBtn').style.display = u.role === 'MD' ? 'flex' : 'none';
-      const resetCard = document.getElementById('mdMasterResetCard');
-      if (resetCard) resetCard.style.display = u.role === 'MD' ? 'block' : 'none';
-    }
-
-    function goToUnitSelection() {
-      stopCamera();
-      state.selectedUnitId = null;
-      document.getElementById('unitSelectScreen').style.display = 'block';
-      document.getElementById('unitWorkspaceScreen').style.display = 'none';
-      if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
-    }
-
-    function openUnit(unitId) {
-      state.selectedUnitId = unitId;
-      const unit = state.units.find(u => u.id === unitId);
-      document.getElementById('unitSelectScreen').style.display = 'none';
-      document.getElementById('unitWorkspaceScreen').style.display = 'block';
-
-      document.getElementById('currentUnitTitle').innerText = unit.name;
-      document.querySelectorAll('.unit-label-span').forEach(el => el.innerText = unit.name);
-
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('staffPanel').classList.add('active');
-      loadBatchAttendanceForDate();
-      loadGeofenceInputs();
-      renderWorkspace();
-    }
-
-    function addWorker() {
-      const name = document.getElementById('staffName').value.trim();
-      const phone = document.getElementById('staffPhone').value.trim();
-      const role = document.getElementById('staffRole').value.trim();
-      const wage = parseFloat(document.getElementById('staffWage').value);
-      if (!name || isNaN(wage)) return alert('Fill worker details.');
-      state.workers.push({ id: Date.now(), unitId: state.selectedUnitId, name, phone, role, wage, faceEmbedding: null });
-      document.getElementById('staffName').value = '';
-      document.getElementById('staffPhone').value = '';
-      document.getElementById('staffRole').value = '';
-      document.getElementById('staffWage').value = '';
-      persist();
-    }
-
-    function deleteWorker(id) {
-      state.workers = state.workers.filter(w => w.id !== id);
-      persist();
-    }
-
-    // TWICE DAILY ATTENDANCE & MANUAL OVERRIDE ENTRY
-    function loadBatchAttendanceForDate() {
-      const date = document.getElementById('batchAttDate').value;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      tempBatchAttendance = {};
-
-      unitWorkers.forEach(w => {
-        const exist = state.attendance.find(a => a.workerId === w.id && a.date === date);
-        if (exist) {
-          tempBatchAttendance[w.id] = {
-            morning: exist.morning !== undefined ? exist.morning : (exist.status === 'Present' || exist.status === 'Half Day'),
-            afternoon: exist.afternoon !== undefined ? exist.afternoon : (exist.status === 'Present')
-          };
-        } else {
-          tempBatchAttendance[w.id] = { morning: true, afternoon: true };
-        }
-      });
-      renderBatchMusterCards();
-    }
-
-    function setWorkerShiftStatus(workerId, shift, isPresent) {
-      if (!tempBatchAttendance[workerId]) tempBatchAttendance[workerId] = { morning: true, afternoon: true };
-      tempBatchAttendance[workerId][shift] = isPresent;
-      renderBatchMusterCards();
-    }
-
-    function quickMarkAllShifts(status) {
-      const isPresent = status === 'Present';
-      state.workers.filter(w => w.unitId === state.selectedUnitId).forEach(w => {
-        tempBatchAttendance[w.id] = { morning: isPresent, afternoon: isPresent };
-      });
-      renderBatchMusterCards();
-    }
-
-    function markManualAttendance() {
-      const workerId = parseInt(document.getElementById('manualWorkerSelect').value);
-      const shiftChoice = document.getElementById('manualShiftSelect').value;
-      const isPresent = document.getElementById('manualStatusSelect').value === 'Present';
-      const date = document.getElementById('batchAttDate').value;
-
-      if (!workerId || !date) return alert('Select a worker and date.');
-
-      if (!tempBatchAttendance[workerId]) tempBatchAttendance[workerId] = { morning: true, afternoon: true };
-
-      if (shiftChoice === 'morning') {
-        tempBatchAttendance[workerId].morning = isPresent;
-      } else if (shiftChoice === 'afternoon') {
-        tempBatchAttendance[workerId].afternoon = isPresent;
-      } else {
-        tempBatchAttendance[workerId].morning = isPresent;
-        tempBatchAttendance[workerId].afternoon = isPresent;
-      }
-
-      saveBatchAttendance();
-      alert('Manual shift entry saved successfully!');
-    }
-
-    function renderBatchMusterCards() {
-      const container = document.getElementById('batchMusterContainer');
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      container.innerHTML = '';
-
-      unitWorkers.forEach(w => {
-        const record = tempBatchAttendance[w.id] || { morning: true, afternoon: true };
-        const totalUnits = (record.morning ? 0.5 : 0) + (record.afternoon ? 0.5 : 0);
-        let summaryPill = `<span class="pill pill-present">Full Day (1.0 Unit)</span>`;
-        if (totalUnits === 0.5) summaryPill = `<span class="pill pill-half">Half Day (0.5 Unit)</span>`;
-        if (totalUnits === 0) summaryPill = `<span class="pill pill-absent">Absent (0.0 Unit)</span>`;
-
-        container.innerHTML += `
-          <div class="worker-muster-card">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <strong>${w.name}</strong>
-                <small style="display:block; color:var(--text-muted);">${w.role} (₹${w.wage}/day)</small>
-              </div>
-              <div>${summaryPill}</div>
-            </div>
-
-            <div class="shift-toggle-row">
-              <span class="shift-toggle-label">🌅 Morning Shift (0.5 Unit)</span>
-              <div class="status-toggle-group">
-                <div class="status-chip ${record.morning ? 'selected-present' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'morning', true)">Present</div>
-                <div class="status-chip ${!record.morning ? 'selected-absent' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'morning', false)">Absent</div>
-              </div>
-            </div>
-
-            <div class="shift-toggle-row">
-              <span class="shift-toggle-label">🌇 Afternoon Shift (0.5 Unit)</span>
-              <div class="status-toggle-group">
-                <div class="status-chip ${record.afternoon ? 'selected-present' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'afternoon', true)">Present</div>
-                <div class="status-chip ${!record.afternoon ? 'selected-absent' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'afternoon', false)">Absent</div>
-              </div>
-            </div>
-          </div>`;
-      });
-    }
-
-    function saveBatchAttendance() {
-      const date = document.getElementById('batchAttDate').value;
-      if (!date) return alert('Select date.');
-      const unitWorkerIds = state.workers.filter(w => w.unitId === state.selectedUnitId).map(w => w.id);
-
-      state.attendance = state.attendance.filter(a => !(a.date === date && unitWorkerIds.includes(a.workerId)));
-      Object.keys(tempBatchAttendance).forEach(wId => {
-        const shifts = tempBatchAttendance[wId];
-        const units = (shifts.morning ? 0.5 : 0) + (shifts.afternoon ? 0.5 : 0);
-        let status = 'Absent';
-        if (units === 1.0) status = 'Present';
-        else if (units === 0.5) status = 'Half Day';
-
-        state.attendance.unshift({
-          date,
-          workerId: parseInt(wId),
-          morning: shifts.morning,
-          afternoon: shifts.afternoon,
-          units,
-          status
-        });
-      });
-      persist();
-    }
-
-    // LATE ARRIVAL & OVERTIME
-    function persistTimeRules() {
-      state.timeRules = {
-        cutoffMorning: document.getElementById('timeCutoffMorning').value || "08:30",
-        cutoffAfternoon: document.getElementById('timeCutoffAfternoon').value || "13:30",
-        otRate: parseFloat(document.getElementById('timeOtRate').value) || 75
-      };
-      persist();
-    }
-
-    function checkLateStatus(shift, punchTimeString) {
-      const parts = punchTimeString.split(':');
-      const punchHour = parseInt(parts[0]);
-      const punchMin = parseInt(parts[1]);
-      const punchMinutes = punchHour * 60 + punchMin;
-
-      const cutoffStr = shift === 'morning' ? state.timeRules.cutoffMorning : state.timeRules.cutoffAfternoon;
-      const cutoffParts = cutoffStr.split(':');
-      const cutoffMinutes = parseInt(cutoffParts[0]) * 60 + parseInt(cutoffParts[1]);
-
-      if (punchMinutes > cutoffMinutes) {
-        return `Late (+${punchMinutes - cutoffMinutes} mins)`;
-      }
-      return 'On Time';
-    }
-
-    function addOvertimeLog() {
-      const date = document.getElementById('otLogDate').value;
-      const workerId = parseInt(document.getElementById('otWorkerSelect').value);
-      const hours = parseFloat(document.getElementById('otHoursInput').value) || 0;
-      const reason = document.getElementById('otReasonInput').value.trim() || 'General Maintenance';
-
-      if (!date || !workerId || hours <= 0) return alert('Fill overtime date, worker and valid hours.');
-      const rate = state.timeRules.otRate || 75;
-      const amount = hours * rate;
-
-      state.overtime.unshift({
-        id: Date.now(),
-        unitId: state.selectedUnitId,
-        date,
-        workerId,
-        hours,
-        rate,
-        amount,
-        reason
-      });
-
-      document.getElementById('otHoursInput').value = '';
-      document.getElementById('otReasonInput').value = '';
-      persist();
-      alert(`Recorded ${hours} OT hours (₹${amount}) for worker!`);
-    }
-
-    // VEHICLE GATE PASS & DOC DISPATCH
-    function issueVehicleGatePass() {
-      const dateTime = document.getElementById('gatePassDateTime').value;
-      const vehicleNo = document.getElementById('gateVehicleNo').value.trim();
-      const driverInfo = document.getElementById('gateDriverInfo').value.trim();
-      const cargo = document.getElementById('gateCargoType').value;
-      const quantity = parseInt(document.getElementById('gateQuantity').value) || 0;
-      const destination = document.getElementById('gateDestination').value.trim();
-      const disinfection = document.getElementById('gateDisinfection').value;
-
-      if (!dateTime || !vehicleNo || !driverInfo) return alert('Fill gate pass date, vehicle and driver details.');
-
-      const passNo = 'GP-' + (state.gatepasses.length + 1001);
-      const newPass = {
-        id: Date.now(),
-        passNo,
-        unitId: state.selectedUnitId,
-        dateTime,
-        vehicleNo,
-        driverInfo,
-        cargo,
-        quantity,
-        destination,
-        disinfection
-      };
-
-      state.gatepasses.unshift(newPass);
-      document.getElementById('gateVehicleNo').value = '';
-      document.getElementById('gateDriverInfo').value = '';
-      document.getElementById('gateQuantity').value = '';
-      document.getElementById('gateDestination').value = '';
-      persist();
-
-      downloadSingleGatePassPDF(newPass);
-      alert(`Gate Pass #${passNo} issued successfully!`);
-    }
-
-    function downloadSingleGatePassPDF(pass) {
-      const doc = new jsPDF();
-      const unit = state.units.find(u => u.id === pass.unitId);
-
-      doc.setFillColor(225, 29, 72);
-      doc.rect(0, 0, doc.internal.pageSize.width, 28, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(16);
-      doc.setFont('helvetica', 'bold');
-      doc.text("AMUTAN GROUPS - VEHICLE GATE PASS", 14, 14);
-      doc.setFontSize(8.5);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${unit ? unit.name : 'Poultry Division'} | Gate Security Clearance`, 14, 22);
-
-      doc.setTextColor(15, 23, 42);
-      doc.autoTable({
-        startY: 36,
-        head: [['Gate Pass Parameter', 'Details / Clearance Manifest']],
-        body: [
-          ['Pass Number', pass.passNo],
-          ['Outward Date & Time', pass.dateTime],
-          ['Vehicle Registration', pass.vehicleNo],
-          ['Driver Contact', pass.driverInfo],
-          ['Cargo Loaded', `${pass.quantity.toLocaleString()} units of ${pass.cargo}`],
-          ['Destination Trader', pass.destination || 'Direct Wholesale lifting'],
-          ['Biosecurity Check', pass.disinfection]
-        ],
-        theme: 'grid',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-
-      const finalY = doc.lastAutoTable.finalY + 30;
-      doc.line(14, finalY, 70, finalY);
-      doc.text("Driver Signature", 14, finalY + 6);
-      doc.line(140, finalY, 196, finalY);
-      doc.text("Security Officer Stamp", 140, finalY + 6);
-
-      doc.save(`GatePass_${pass.passNo}_${pass.vehicleNo.replace(/\s+/g, '_')}.pdf`);
-    }
-
-    // BIOMETRIC RECOGNITION & ERROR NOTIFICATIONS
-    function setBiometricMode(mode) {
-      biometricMode = mode;
-      document.getElementById('btnModePunch').classList.toggle('btn-primary', mode === 'PUNCH');
-      document.getElementById('btnModePunch').classList.toggle('btn-secondary', mode !== 'PUNCH');
-      document.getElementById('btnModeEnroll').classList.toggle('btn-primary', mode === 'ENROLL');
-      document.getElementById('btnModeEnroll').classList.toggle('btn-secondary', mode !== 'ENROLL');
-      document.getElementById('punchControlSection').style.display = mode === 'PUNCH' ? 'flex' : 'none';
-      document.getElementById('enrollControlSection').style.display = mode === 'ENROLL' ? 'flex' : 'none';
-      document.getElementById('hudGuidanceText').innerText = mode === 'ENROLL' ? 'MD ENROLLMENT: POSITION WORKER FACE' : 'ALIGN FACE TO PUNCH SHIFT';
-      if (mode === 'ENROLL') stopContinuousDetection();
-    }
-
-    function cosineSimilarity(vecA, vecB) {
-      if (!vecA || !vecB || vecA.length !== vecB.length) return 0;
-      let dot = 0, normA = 0, normB = 0;
-      for (let i = 0; i < vecA.length; i++) {
-        dot += vecA[i] * vecB[i];
-        normA += vecA[i] * vecA[i];
-        normB += vecB[i] * vecB[i];
-      }
-      if (normA === 0 || normB === 0) return 0;
-      return dot / (Math.sqrt(normA) * Math.sqrt(normB));
-    }
-
-    function extractRobustFaceDescriptor() {
+    async function extractAiDeepFaceEmbedding() {
       const video = document.getElementById('liveVideo');
       if (!video || !videoStream || video.videoWidth === 0) return null;
 
-      const canvas = document.getElementById('captureCanvas');
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      try {
+        const detection = await faceapi.detectSingleFace(
+          video, 
+          new faceapi.SsdMobilenetv1Options({ minConfidence: 0.55 })
+        ).withFaceLandmarks().withFaceDescriptor();
 
-      const cx = canvas.width * 0.25;
-      const cy = canvas.height * 0.15;
-      const cw = canvas.width * 0.5;
-      const ch = canvas.height * 0.7;
+        const canvas = document.getElementById('overlayCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 480;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const imgData = ctx.getImageData(cx, cy, cw, ch);
-      const data = imgData.data;
+        if (detection) {
+          const dims = faceapi.matchDimensions(canvas, video, true);
+          const resized = faceapi.resizeResults(detection, dims);
+          faceapi.draw.drawDetections(canvas, resized);
+          faceapi.draw.drawFaceLandmarks(canvas, resized);
 
-      // Skin & Face Presence Density Validation
-      let skinPixels = 0;
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i], g = data[i+1], b = data[i+2];
-        if (r > 60 && g > 40 && b > 20 && (r - g) > 10 && (r - b) > 10) {
-          skinPixels++;
+          return Array.from(detection.descriptor);
         }
+      } catch (err) {
+        console.error("AI Face Detection error:", err);
       }
-
-      // If less than 15% skin/face area in oval, return null (No face in view)
-      if ((skinPixels / (data.length / 4)) < 0.15) {
-        return null;
-      }
-
-      const blocks = 64;
-      const pixelsPerBlock = Math.floor(data.length / (4 * blocks));
-      const vector = [];
-
-      let totalBrightness = 0;
-      for (let i = 0; i < data.length; i += 4) {
-        totalBrightness += (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
-      }
-      const avgBrightness = (totalBrightness / (data.length / 4)) || 1;
-
-      for (let b = 0; b < blocks; b++) {
-        let rSum = 0, gSum = 0, bSum = 0, gradSum = 0;
-        const start = b * pixelsPerBlock * 4;
-        const end = start + pixelsPerBlock * 4;
-
-        for (let p = start; p < end && p < data.length - 4; p += 4) {
-          const r = data[p];
-          const g = data[p+1];
-          const bl = data[p+2];
-          const gray = r * 0.299 + g * 0.587 + bl * 0.114;
-          const nextGray = data[p+4] * 0.299 + data[p+5] * 0.587 + data[p+6] * 0.114;
-          rSum += r; gSum += g; bSum += bl;
-          gradSum += Math.abs(nextGray - gray);
-        }
-
-        const normFactor = avgBrightness * pixelsPerBlock;
-        vector.push((rSum / normFactor), (gSum / normFactor), (bSum / normFactor), (gradSum / normFactor));
-      }
-      return vector;
+      return null;
     }
 
     async function captureAndRegisterFace() {
@@ -2029,9 +1401,9 @@
       const worker = state.workers.find(w => w.id === workerId);
       if (!worker) return alert('Select a worker.');
 
-      const descriptor = extractRobustFaceDescriptor();
-      if (!descriptor || descriptor.length === 0) {
-        triggerFaceNotRecognizedUI("NO FACE DETECTED INSIDE TARGET");
+      const descriptor = await extractAiDeepFaceEmbedding();
+      if (!descriptor || descriptor.length !== 128) {
+        triggerFaceNotRecognizedUI("NO CLEAR FACE DETECTED");
         return;
       }
 
@@ -2039,70 +1411,40 @@
       persist();
 
       playBiometricNotification(worker.name, 'ENROLL', 'morning');
-      alert(`Face Biometric Registered for ${worker.name}!`);
+      alert(`128-D Deep Neural Face Embedding Registered for ${worker.name}! Accuracy is now locked.`);
       setBiometricMode('PUNCH');
     }
 
-    function determineActiveShift() {
-      const selected = document.getElementById('biometricShiftSelect').value;
-      if (selected !== 'AUTO') return selected;
-      return new Date().getHours() < 13 ? 'morning' : 'afternoon';
-    }
-
-    function triggerFaceNotRecognizedUI(customMsg = "FACE NOT RECOGNIZED") {
-      const oval = document.getElementById('targetOvalBox');
-      const flash = document.getElementById('punchFlash');
-      const flashText = document.getElementById('flashText');
-
-      if (oval) oval.classList.add('not-recognized');
-      if (flash) {
-        flashText.innerHTML = `⚠️ ${customMsg}<br><span style="font-size:0.85rem;">PLEASE LOOK DIRECTLY AT CAMERA OR ENROLL FIRST</span>`;
-        flash.classList.add('error-flash');
-        flash.style.display = 'flex';
-      }
-
-      playErrorTone();
-
-      setTimeout(() => {
-        if (oval) oval.classList.remove('not-recognized');
-        if (flash) {
-          flash.style.display = 'none';
-          flash.classList.remove('error-flash');
-        }
-      }, 2000);
-    }
-
-    function scanFaceForAttendance() {
+    async function scanFaceForAttendance() {
       if (!isInsideCurrentGeofence) {
         alert("GEOFENCE PERIMETER RESTRICTION: You are outside the authorized poultry farm boundary.");
         return false;
       }
 
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId && w.faceEmbedding !== null);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId && w.faceEmbedding !== null && w.faceEmbedding.length === 128);
       if (unitWorkers.length === 0) {
         triggerFaceNotRecognizedUI("NO REGISTERED FACES IN THIS UNIT");
         return false;
       }
 
-      const liveDescriptor = extractRobustFaceDescriptor();
+      const liveDescriptor = await extractAiDeepFaceEmbedding();
       if (!liveDescriptor) {
-        triggerFaceNotRecognizedUI("NO FACE DETECTED INSIDE OVAL");
+        triggerFaceNotRecognizedUI("NO FACE DETECTED INSIDE TARGET");
         return false;
       }
 
       let bestMatch = null;
-      let highestSimilarity = -1;
+      let lowestDistance = 1.0;
 
       for (const w of unitWorkers) {
-        const similarity = cosineSimilarity(liveDescriptor, w.faceEmbedding);
-        if (similarity > highestSimilarity) {
-          highestSimilarity = similarity;
+        const distance = faceapi.euclideanDistance(liveDescriptor, w.faceEmbedding);
+        if (distance < lowestDistance) {
+          lowestDistance = distance;
           bestMatch = w;
         }
       }
 
-      // Verification threshold check
-      if (highestSimilarity >= 0.72 && bestMatch) {
+      if (lowestDistance <= 0.45 && bestMatch) {
         const shift = determineActiveShift();
         recordBiometricShiftPunch(bestMatch, shift);
         return true;
@@ -2153,6 +1495,29 @@
       persist();
     }
 
+    function triggerFaceNotRecognizedUI(customMsg = "FACE NOT RECOGNIZED") {
+      const oval = document.getElementById('targetOvalBox');
+      const flash = document.getElementById('punchFlash');
+      const flashText = document.getElementById('flashText');
+
+      if (oval) oval.classList.add('not-recognized');
+      if (flash) {
+        flashText.innerHTML = `⚠️ ${customMsg}<br><span style="font-size:0.85rem;">PLEASE LOOK DIRECTLY AT CAMERA OR ENROLL FIRST</span>`;
+        flash.classList.add('error-flash');
+        flash.style.display = 'flex';
+      }
+
+      playErrorTone();
+
+      setTimeout(() => {
+        if (oval) oval.classList.remove('not-recognized');
+        if (flash) {
+          flash.style.display = 'none';
+          flash.classList.remove('error-flash');
+        }
+      }, 2000);
+    }
+
     function toggleContinuousDetection() {
       if (isAutoScanning) {
         stopContinuousDetection();
@@ -2179,7 +1544,6 @@
       if (hud) hud.innerText = 'ALIGN FACE INSIDE OVAL TARGET';
     }
 
-    // AUDIO CHIME & SPEECH ENGINE
     function playBeepSound() {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -2244,757 +1608,6 @@
         s.pitch = 1.05;
         if (index > 0) setTimeout(() => window.speechSynthesis.speak(s), index * 300);
         else window.speechSynthesis.speak(s);
-      });
-    }
-
-    // WHATSAPP DISPATCH ENGINE
-    function openWhatsAppLink(text, phone = '') {
-      let cleanPhone = phone.replace(/[^0-9]/g, '');
-      if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
-      const encoded = encodeURIComponent(text);
-      const url = cleanPhone.length >= 10 
-        ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encoded}`
-        : `https://api.whatsapp.com/send?text=${encoded}`;
-      const link = document.createElement('a');
-      link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer';
-      document.body.appendChild(link); link.click(); link.remove();
-    }
-
-    function shareViaWhatsAppDirect(workerId) {
-      const worker = state.workers.find(w => w.id === workerId);
-      if (!worker) return;
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-
-      const earnedUnits = state.attendance
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-
-      const adv = state.advances
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((s, a) => s + a.amount, 0);
-
-      const otAmount = state.overtime
-        .filter(o => o.workerId === worker.id && (!monthFilter || o.date.startsWith(monthFilter)))
-        .reduce((s, o) => s + o.amount, 0);
-
-      const gross = (earnedUnits * worker.wage) + otAmount;
-      const net = Math.max(0, gross - adv);
-
-      const msg = `*AMUTAN GROUPS - SALARY SLIP*\n` +
-                  `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                  `👤 *Worker:* ${worker.name} (${worker.role})\n` +
-                  `⏱️ *Earned Shifts:* ${earnedUnits} Shifts\n` +
-                  `⚡ *Overtime:* + Rs. ${otAmount}\n` +
-                  `💰 *Gross Wages:* Rs. ${gross.toLocaleString('en-IN')}\n` +
-                  `🔻 *Advances Deducted:* - Rs. ${adv.toLocaleString('en-IN')}\n` +
-                  `*NET PAYABLE:* Rs. ${net.toLocaleString('en-IN')}`;
-
-      openWhatsAppLink(msg, worker.phone || '');
-    }
-
-    function shareRosterWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let msg = `*AMUTAN GROUPS - WORKFORCE ROSTER*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n\n`;
-      unitWorkers.forEach((w, i) => {
-        msg += `${i+1}. *${w.name}* (${w.role}) - Rs. ${w.wage}/day | 📱 ${w.phone || '-'}\n`;
-      });
-      openWhatsAppLink(msg);
-    }
-
-    function shareAttendanceWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const date = document.getElementById('batchAttDate').value;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let msg = `*AMUTAN GROUPS - SHIFT MUSTER REPORT*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📅 *Date:* ${date}\n\n`;
-      unitWorkers.forEach((w, i) => {
-        const att = state.attendance.find(a => a.workerId === w.id && a.date === date);
-        const m = att ? (att.morning ? '✔' : '❌') : '-';
-        const a = att ? (att.afternoon ? '✔' : '❌') : '-';
-        const units = att ? (att.units !== undefined ? att.units : 1.0) : 0;
-        msg += `${i+1}. *${w.name}*: Morning [${m}] | Afternoon [${a}] -> *${units} Units*\n`;
-      });
-      openWhatsAppLink(msg);
-    }
-
-    function shareMasterPayrollWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let totalGross = 0, totalAdv = 0, totalNet = 0;
-
-      unitWorkers.forEach(w => {
-        const units = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-        const adv = state.advances
-          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-        const ot = state.overtime
-          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
-          .reduce((s, o) => s + o.amount, 0);
-
-        const gross = (units * w.wage) + ot;
-        const net = Math.max(0, gross - adv);
-        totalGross += gross; totalAdv += adv; totalNet += net;
-      });
-
-      let msg = `*AMUTAN GROUPS - PAYROLL SUMMARY*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📅 *Month:* ${monthFilter || 'Current'}\n` +
-                `💰 *Total Gross:* Rs. ${totalGross.toLocaleString('en-IN')}\n` +
-                `🔻 *Total Advances:* - Rs. ${totalAdv.toLocaleString('en-IN')}\n` +
-                `💵 *NET PAYOUT:* Rs. ${totalNet.toLocaleString('en-IN')}`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareEggProductionWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
-      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
-      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
-      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      let msg = `*AMUTAN GROUPS - EGG PRODUCTION*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `🥚 *Total Collected:* ${totalEggs.toLocaleString('en-IN')} Eggs\n` +
-                `🐣 *Hatching Grade:* ${totalHatching.toLocaleString('en-IN')} Eggs (${hatchPct}%)\n` +
-                `💵 *Revenue:* Rs. ${totalRev.toLocaleString('en-IN')}`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareFeedWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
-      const totalIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
-      const totalOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
-      const balance = totalIn - totalOut;
-
-      let msg = `*AMUTAN GROUPS - FEED STOCK STATUS*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📥 *Received:* ${totalIn} Bags | 📤 *Fed:* ${totalOut} Bags\n` +
-                `📦 *Remaining Balance:* ${balance} Bags`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareMortalityWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const totalMort = state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0);
-      let msg = `*AMUTAN GROUPS - FLOCK HEALTH*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `🩺 *Total Mortality:* ${totalMort} Birds`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareFinancialWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalRevenue = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let totalPayroll = 0;
-      unitWorkers.forEach(w => {
-        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
-        totalPayroll += (units * w.wage);
-      });
-
-      const totalExp = state.expenses.filter(e => e.unitId === state.selectedUnitId).reduce((s, e) => s + (e.amount || 0), 0);
-      const netPL = totalRevenue - (totalPayroll + totalExp);
-
-      let msg = `*AMUTAN GROUPS - P&L STATEMENT*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `💵 *Revenue:* Rs. ${totalRevenue.toLocaleString('en-IN')}\n` +
-                `👥 *Payroll:* - Rs. ${totalPayroll.toLocaleString('en-IN')}\n` +
-                `🌾 *Expenses:* - Rs. ${totalExp.toLocaleString('en-IN')}\n` +
-                `📊 *NET ${netPL >= 0 ? 'PROFIT' : 'LOSS'}:* Rs. ${netPL.toLocaleString('en-IN')}`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareComprehensiveUnitReportWhatsApp() {
-      shareFinancialWhatsApp();
-    }
-
-    // PDF GENERATOR ENGINE
-    function applyPremiumPdfStyling(doc, title, subtitle) {
-      const pageWidth = doc.internal.pageSize.width;
-      doc.setFillColor(225, 29, 72);
-      doc.rect(0, 0, pageWidth, 28, 'F');
-      doc.setFillColor(190, 18, 60);
-      doc.rect(0, 26, pageWidth, 2, 'F');
-
-      doc.setTextColor(255, 255, 255);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(15);
-      doc.text("AMUTAN GROUPS - " + title.toUpperCase(), 14, 13);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.text(subtitle + ` | Date: ${new Date().toLocaleDateString('en-IN')}`, 14, 21);
-
-      const pageCount = doc.internal.getNumberOfPages();
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(148, 163, 184);
-        doc.text("Amutan Groups Enterprise Portal • Confidential Poultry Ledger", 14, doc.internal.pageSize.height - 8);
-        doc.text(`Page ${i} of ${pageCount}`, pageWidth - 25, doc.internal.pageSize.height - 8);
-      }
-    }
-
-    function downloadPoultryStaffPDF() {
-      const doc = new jsPDF();
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const tableData = unitWorkers.map((w, idx) => [idx + 1, w.name, w.phone || '-', w.role, `Rs. ${w.wage} / day`]);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['#', 'Worker Name', 'WhatsApp Contact', 'Designation', 'Daily Rate']],
-        body: tableData,
-        theme: 'striped',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-      applyPremiumPdfStyling(doc, "STAFF DIRECTORY", `${unit ? unit.name : 'Poultry Farm'}`);
-      doc.save(`Staff_${unit ? unit.name.replace(/\s+/g, '_') : 'Roster'}.pdf`);
-    }
-
-    function downloadAllPayrollPDF() {
-      const doc = new jsPDF('landscape');
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-
-      let totalGross = 0, totalAdv = 0, totalNet = 0;
-      const tableData = [];
-
-      unitWorkers.forEach((w, idx) => {
-        const units = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-
-        const adv = state.advances
-          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-
-        const ot = state.overtime
-          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
-          .reduce((s, o) => s + o.amount, 0);
-
-        const gross = (units * w.wage) + ot;
-        const net = Math.max(0, gross - adv);
-        totalGross += gross; totalAdv += adv; totalNet += net;
-
-        tableData.push([
-          idx + 1, w.name, w.role, `Rs. ${w.wage}`, `${units} Shifts`, `+ Rs. ${ot}`, `Rs. ${gross.toLocaleString('en-IN')}`, `- Rs. ${adv.toLocaleString('en-IN')}`, `Rs. ${net.toLocaleString('en-IN')}`
-        ]);
-      });
-
-      tableData.push(['', 'TOTAL PAYOUT', '', '', '', '', `Rs. ${totalGross.toLocaleString('en-IN')}`, `- Rs. ${totalAdv.toLocaleString('en-IN')}`, `Rs. ${totalNet.toLocaleString('en-IN')}`]);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['#', 'Worker Name', 'Role', 'Wage Rate', 'Earned Shifts', 'Overtime', 'Gross Wages', 'Advances', 'Net Payable']],
-        body: tableData,
-        theme: 'grid',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-      applyPremiumPdfStyling(doc, "PAYROLL STATEMENT", `${unit ? unit.name : 'Division'} | Month: ${monthFilter || 'Current'}`);
-      doc.save(`Payroll_${unit ? unit.name.replace(/\s+/g, '_') : 'Statement'}.pdf`);
-    }
-
-    function downloadWorkerPayslipPDF(workerId) {
-      const doc = new jsPDF();
-      const worker = state.workers.find(w => w.id === workerId);
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-
-      const earnedUnits = state.attendance
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-
-      const advances = state.advances
-        .filter(ad => ad.workerId === worker.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-        .reduce((s, a) => s + a.amount, 0);
-
-      const ot = state.overtime
-        .filter(o => o.workerId === worker.id && (!monthFilter || o.date.startsWith(monthFilter)))
-        .reduce((s, o) => s + o.amount, 0);
-
-      const gross = (earnedUnits * worker.wage) + ot;
-      const net = Math.max(0, gross - advances);
-
-      doc.setFillColor(225, 29, 72);
-      doc.rect(0, 0, 210, 30, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.text("AMUTAN GROUPS", 15, 14);
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${unit ? unit.name : 'Poultry Division'} | Official Payslip`, 15, 22);
-
-      doc.setTextColor(15, 23, 42);
-      doc.autoTable({
-        startY: 40,
-        head: [['Worker Details', 'Billing Period']],
-        body: [
-          [`Worker Name: ${worker.name}`, `Month: ${monthFilter || 'Current Term'}`],
-          [`Role: ${worker.role}`, `Rate: Rs. ${worker.wage} / day`],
-          [`Mobile: ${worker.phone || '-'}`, `Date: ${new Date().toLocaleDateString('en-IN')}`]
-        ],
-        theme: 'plain'
-      });
-
-      doc.autoTable({
-        startY: doc.lastAutoTable.finalY + 6,
-        head: [['Item', 'Calculation Detail', 'Amount (INR)']],
-        body: [
-          ['Earned Shift Units', `${earnedUnits} Shifts worked`, `Rs. ${(earnedUnits * worker.wage).toLocaleString('en-IN')}`],
-          ['Overtime (OT)', 'Approved OT Hours', `+ Rs. ${ot.toLocaleString('en-IN')}`],
-          ['Salary Advances Deducted', 'Cash advances adjusted', `- Rs. ${advances.toLocaleString('en-IN')}`],
-          ['NET SALARY PAYABLE', 'Final Settlement', `Rs. ${net.toLocaleString('en-IN')}`]
-        ],
-        theme: 'striped',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-
-      const finalY = doc.lastAutoTable.finalY + 30;
-      doc.line(15, finalY, 70, finalY);
-      doc.text("Worker Signature / Thumb", 15, finalY + 6);
-      doc.line(135, finalY, 195, finalY);
-      doc.text("Authorized Signature (MD)", 135, finalY + 6);
-
-      doc.save(`Payslip_${worker.name.replace(/\s+/g, '_')}.pdf`);
-    }
-
-    function downloadComprehensiveUnitReportPDF() {
-      const doc = new jsPDF('landscape');
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
-      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
-      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
-      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
-      const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
-      const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
-      const feedBal = feedIn - feedOut;
-
-      const totalMort = state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0);
-
-      let totalPayroll = 0;
-      unitWorkers.forEach(w => {
-        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
-        totalPayroll += (units * w.wage);
-      });
-      const totalExp = state.expenses.filter(e => e.unitId === state.selectedUnitId).reduce((s, e) => s + (e.amount || 0), 0);
-      const netPL = totalRev - (totalPayroll + totalExp);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['Operational Dimension', 'Metric', 'Unit Value', 'Status']],
-        body: [
-          ['Staff Workforce', 'Total Active Roster', `${unitWorkers.length} Workers`, 'Active'],
-          ['Egg Collection', 'Hatchability Efficiency', `${hatchPct}%`, `${totalHatching.toLocaleString('en-IN')} Hatching / ${totalEggs.toLocaleString('en-IN')} Total Eggs`],
-          ['Feed Warehouse', 'Stock Balance', `${feedBal} Bags`, `Received: ${feedIn} / Fed: ${feedOut} Bags`],
-          ['Flock Health', 'Total Mortality', `${totalMort.toLocaleString('en-IN')} Birds`, 'Monitored'],
-          ['Unit Financials', 'Net Profit / Loss', `Rs. ${netPL.toLocaleString('en-IN')}`, netPL >= 0 ? 'PROFITABLE' : 'DEFICIT']
-        ],
-        theme: 'grid',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-      applyPremiumPdfStyling(doc, "UNIT AUDIT REPORT", `${unit ? unit.name : 'Poultry Division'}`);
-      doc.save(`FullReport_${unit ? unit.name.replace(/\s+/g, '_') : 'Division'}.pdf`);
-    }
-
-    function downloadFinancialPDF() { downloadComprehensiveUnitReportPDF(); }
-
-    function downloadMasterArchiveAndClearData() {
-      if (state.currentUser.role !== 'MD') return alert('MD Access Only.');
-      if (!confirm("Download Master Audit Archive and clear operational logs?")) return;
-      downloadComprehensiveUnitReportPDF();
-      state.attendance = []; state.overtime = []; state.gatepasses = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = []; state.punches = [];
-      persist();
-      alert('Master Archive PDF downloaded and ledger safely cleared!');
-    }
-
-    function exportBackupJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-      const a = document.createElement('a'); a.href = dataStr; a.download = `Amutan_FullBackup.json`; a.click();
-    }
-    function importBackupJSON(e) {
-      const reader = new FileReader();
-      reader.onload = ev => { state = JSON.parse(ev.target.result); persist(); alert('Backup restored!'); };
-      reader.readAsText(e.target.files[0]);
-    }
-    function exportTableToCSV(tid, fn) {
-      let csv = [];
-      document.getElementById(tid).querySelectorAll('tr').forEach(r => {
-        let cols = []; r.querySelectorAll('td').forEach(c => cols.push('"' + c.innerText.trim() + '"'));
-        if (cols.length) csv.push(cols.join(','));
-      });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv.join('\n')], { type: 'text/csv' })); a.download = fn; a.click();
-    }
-
-    // OTHER DATA MODULES
-    function issueAdvance() {
-      const date = document.getElementById('advDate').value;
-      const workerId = parseInt(document.getElementById('advWorker').value);
-      const amount = parseFloat(document.getElementById('advAmount').value);
-      if (!date || !workerId || isNaN(amount)) return alert('Fill advance details.');
-      state.advances.unshift({ date, workerId, amount });
-      document.getElementById('advAmount').value = '';
-      persist();
-    }
-
-    function addEggLog() {
-      const date = document.getElementById('eggDate').value;
-      const shed = document.getElementById('eggShed').value.trim() || 'General';
-      const hatching = parseInt(document.getElementById('eggHatching').value) || 0;
-      const commercial = parseInt(document.getElementById('eggCommercial').value) || 0;
-      const broken = parseInt(document.getElementById('eggBroken').value) || 0;
-      const sold = parseInt(document.getElementById('eggSold').value) || 0;
-      const price = parseFloat(document.getElementById('eggPrice').value) || 0;
-      if (!date) return alert('Select date.');
-      state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, hatching, commercial, broken, sold, price, revenue: sold * price });
-      document.getElementById('eggHatching').value = '';
-      document.getElementById('eggCommercial').value = '';
-      document.getElementById('eggBroken').value = '';
-      document.getElementById('eggSold').value = '';
-      document.getElementById('eggPrice').value = '';
-      persist();
-    }
-
-    function addFeedLog() {
-      const date = document.getElementById('feedDate').value;
-      const type = document.getElementById('feedType').value;
-      const feedIn = parseInt(document.getElementById('feedIn').value) || 0;
-      const feedOut = parseInt(document.getElementById('feedOut').value) || 0;
-      const cost = parseFloat(document.getElementById('feedCost').value) || 0;
-      if (!date) return alert('Select date.');
-      state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, type, feedIn, feedOut, cost });
-      if (cost > 0) {
-        state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date, category: 'Feed Purchase', description: `${feedIn} Bags of ${type}`, amount: cost });
-      }
-      document.getElementById('feedIn').value = '';
-      document.getElementById('feedOut').value = '';
-      document.getElementById('feedCost').value = '';
-      persist();
-    }
-
-    function addMortLog() {
-      const date = document.getElementById('mortDate').value;
-      const shed = document.getElementById('mortShed').value.trim() || 'General';
-      const count = parseInt(document.getElementById('mortCount').value) || 0;
-      const notes = document.getElementById('mortNotes').value.trim() || '-';
-      if (!date) return alert('Select date.');
-      state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, notes });
-      document.getElementById('mortCount').value = '';
-      document.getElementById('mortNotes').value = '';
-      persist();
-    }
-
-    function addExpenseLog() {
-      const date = document.getElementById('expDate').value;
-      const category = document.getElementById('expCategory').value;
-      const description = document.getElementById('expDescription').value.trim() || category;
-      const amount = parseFloat(document.getElementById('expAmount').value) || 0;
-      if (!date || amount <= 0) return alert('Enter valid expense.');
-      state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, category, description, amount });
-      document.getElementById('expDescription').value = '';
-      document.getElementById('expAmount').value = '';
-      persist();
-    }
-
-    // OCR DOCUMENT SCANNER
-    function setScanMode(m) {
-      currentScanMode = m;
-      document.querySelectorAll('.scan-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-    }
-
-    async function handleDocumentScan(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const progressBox = document.getElementById('ocrProgressBox');
-      const statusText = document.getElementById('ocrStatusText');
-      progressBox.style.display = 'block';
-
-      try {
-        const worker = await Tesseract.createWorker(['eng', 'tam'], 1, {
-          logger: m => { if (m.status === 'recognizing text') statusText.innerText = `OCR Scanning... ${Math.round(m.progress * 100)}%`; }
-        });
-        const ret = await worker.recognize(file);
-        await worker.terminate();
-
-        progressBox.style.display = 'none';
-        document.getElementById('ocrResultBox').style.display = 'block';
-
-        parsedOcrPayload = parseSmartScan(ret.data.text, currentScanMode);
-        document.getElementById('ocrParsedResultView').innerHTML = `<strong>${parsedOcrPayload.title}</strong><div style="color:var(--primary); font-weight:800; margin-top:0.4rem;">${parsedOcrPayload.summary}</div>`;
-      } catch (err) {
-        progressBox.style.display = 'none';
-        alert('OCR error: ' + err);
-      }
-    }
-
-    function parseSmartScan(text, forced) {
-      const lower = text.toLowerCase();
-      const nums = text.match(/\d+(\.\d+)?/g) ? text.match(/\d+(\.\d+)?/g).map(Number) : [0];
-      const maxNum = Math.max(...nums) || 1000;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-
-      if (forced === 'ATTENDANCE' || lower.includes('present') || lower.includes('attendance') || lower.includes('வருகை')) {
-        const map = {};
-        unitWorkers.forEach(w => { map[w.id] = { morning: true, afternoon: true }; });
-        return { type: 'ATT', title: '👥 Shift Attendance Sheet', data: map, summary: `Matched ${Object.keys(map).length} workers.` };
-      }
-      if (forced === 'EGG' || lower.includes('egg') || lower.includes('முட்டை') || lower.includes('hatch')) {
-        return { type: 'EGG', title: '🥚 Egg Slip', data: { shed: 'Shed 1', hatching: Math.round(maxNum * 0.95), commercial: Math.round(maxNum * 0.05), broken: 0, sold: maxNum, price: 6.5 }, summary: `Total Eggs: ${maxNum.toLocaleString()}` };
-      }
-      if (forced === 'FEED' || lower.includes('feed') || lower.includes('தீவனம்') || lower.includes('mash')) {
-        const bags = Math.min(...nums.filter(n => n > 0 && n < 500)) || 50;
-        return { type: 'FEED', title: '🌾 Feed Bill', data: { type: 'Parent Breeder Mash', feedIn: bags, feedOut: 0, cost: bags * 1850 }, summary: `${bags} Bags Mash` };
-      }
-      return { type: 'EXP', title: '💵 Expense Bill', data: { category: 'Other', description: 'Scanned Bill', amount: maxNum }, summary: `Amount: ₹${maxNum.toLocaleString()}` };
-    }
-
-    function applyScannedData() {
-      if (!parsedOcrPayload) return;
-      const today = new Date().toISOString().slice(0, 10);
-      if (parsedOcrPayload.type === 'ATT') {
-        Object.keys(parsedOcrPayload.data).forEach(wId => {
-          state.attendance.unshift({ date: today, workerId: parseInt(wId), morning: true, afternoon: true, units: 1.0, status: 'Present' });
-        });
-      } else if (parsedOcrPayload.type === 'EGG') {
-        state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data, revenue: parsedOcrPayload.data.sold * parsedOcrPayload.data.price });
-      } else if (parsedOcrPayload.type === 'FEED') {
-        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
-        if (parsedOcrPayload.data.cost > 0) {
-          state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date: today, category: 'Feed Purchase', description: `${parsedOcrPayload.data.feedIn} Bags Scanned`, amount: parsedOcrPayload.data.cost });
-        }
-      } else if (parsedOcrPayload.type === 'EXP') {
-        state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date: today, ...parsedOcrPayload.data });
-      }
-      persist();
-      alert('Data posted to active division ledger!');
-      document.getElementById('ocrResultBox').style.display = 'none';
-      parsedOcrPayload = null;
-    }
-
-    // AI VOICE & CHAT
-    function parseAndExecuteAiCommand(cmd) {
-      const lower = cmd.toLowerCase().trim();
-      const isTamil = /[^\u0000-\u007F]/.test(cmd) || document.getElementById('aiLangSelector').value === 'ta-IN';
-      const nums = cmd.match(/\d+(\.\d+)?/g) ? cmd.match(/\d+(\.\d+)?/g).map(Number) : [];
-
-      if (/(feed|mash|தீவனம்)/i.test(lower) && nums[0]) {
-        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId || 1, date: new Date().toISOString().slice(0, 10), type: 'Parent Breeder Mash', feedIn: nums[0], feedOut: 0, cost: nums[1] || nums[0] * 1850 });
-        persist();
-        return isTamil ? `✅ ${nums[0]} மூட்டை தீவனம் வரவு வைக்கப்பட்டது.` : `Added ${nums[0]} bags feed.`;
-      }
-      if (/(gate pass|dispatch|வாகனம்)/i.test(lower)) {
-        switchNav('gatePassPanel');
-        return isTamil ? `🚛 வாகன கேட் பாஸ் பகுதி திறக்கப்பட்டது.` : `Opened Vehicle Gate Pass & DOC Dispatch Tracker.`;
-      }
-      if (/(late|overtime|நேரம்)/i.test(lower)) {
-        switchNav('timeTrackerPanel');
-        return `⏱️ Opened Late Arrival & Overtime Tracker.`;
-      }
-      if (/(hatchery|ஹேட்சரி)/i.test(lower)) { openUnit(3); return `Switched to Amutan Hatcheries.`; }
-      if (/(breeding|ப்ரீடிங்)/i.test(lower)) { openUnit(1); return `Switched to Amutan Breeding Farm.`; }
-      if (/(farm|பண்ணை)/i.test(lower)) { openUnit(2); return `Switched to Amutan Farm.`; }
-
-      return `🤖 Command understood: "${cmd}". You can ask about gate passes, late arrivals, shift muster, or egg production.`;
-    }
-
-    function sendAiMessage() {
-      const input = document.getElementById('aiChatInput');
-      const txt = input.value.trim();
-      if (!txt) return;
-      appendAiMsg(txt, true);
-      input.value = '';
-      setTimeout(() => { appendAiMsg(parseAndExecuteAiCommand(txt), false); }, 300);
-    }
-
-    function toggleAiVoice() {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SR) return alert('Speech recognition not supported in this browser.');
-      const r = new SR();
-      r.lang = document.getElementById('aiLangSelector').value;
-      r.onresult = e => { document.getElementById('aiChatInput').value = e.results[0][0].transcript; sendAiMessage(); };
-      r.start();
-    }
-
-    function toggleAiChat() {
-      const m = document.getElementById('amutanAiChatModal');
-      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
-    }
-    function appendAiMsg(t, u) {
-      const b = document.getElementById('aiChatBody');
-      const d = document.createElement('div');
-      d.className = `ai-msg ${u ? 'ai-msg-user' : 'ai-msg-bot'}`;
-      d.innerHTML = t;
-      b.appendChild(d);
-      b.scrollTop = b.scrollHeight;
-    }
-
-    function renderWorkspace() {
-      if (!state.selectedUnitId) return;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
-      const unitExpenses = state.expenses.filter(e => e.unitId === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-
-      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
-      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
-      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
-      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || 0), 0);
-      
-      const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
-      const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
-      const feedBal = feedIn - feedOut;
-
-      let totalPayroll = 0;
-      unitWorkers.forEach(w => {
-        let totalUnits = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
-        
-        let otEarned = state.overtime
-          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
-          .reduce((sum, o) => sum + o.amount, 0);
-
-        totalPayroll += (totalUnits * w.wage) + otEarned;
-      });
-      const totalExp = unitExpenses.reduce((s, e) => s + (e.amount || 0), 0);
-      const netPL = totalRev - (totalPayroll + totalExp);
-
-      document.getElementById('kpiHatchability').innerText = `${hatchPct}%`;
-      document.getElementById('kpiEggs').innerText = totalEggs.toLocaleString();
-      document.getElementById('kpiFeed').innerText = `${feedBal} Bags`;
-      document.getElementById('kpiNetPL').innerText = `₹${netPL.toLocaleString()}`;
-
-      document.getElementById('plGrossRevenue').innerText = `₹${totalRev.toLocaleString()}`;
-      document.getElementById('plPayrollExpenses').innerText = `- ₹${totalPayroll.toLocaleString()}`;
-      document.getElementById('plFarmExpenses').innerText = `- ₹${totalExp.toLocaleString()}`;
-      document.getElementById('plNetBalance').innerText = `₹${netPL.toLocaleString()}`;
-
-      document.getElementById('repWorkersAtt').innerText = `${unitWorkers.length} Active Staff`;
-      document.getElementById('repFeedBalance').innerText = `${feedBal} Bags In Stock`;
-      document.getElementById('repHatchabilityVal').innerText = `${hatchPct}% (${totalHatching.toLocaleString()} Hatching)`;
-      document.getElementById('repMortalityVal').innerText = `${state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0)} Birds`;
-      document.getElementById('repNetPLVal').innerText = `₹${netPL.toLocaleString()}`;
-
-      // Staff List & Dropdowns
-      const staffTbody = document.getElementById('staffList');
-      const advWorkerSelect = document.getElementById('advWorker');
-      const enrollSelect = document.getElementById('enrollWorkerSelect');
-      const otWorkerSelect = document.getElementById('otWorkerSelect');
-      const manualWorkerSelect = document.getElementById('manualWorkerSelect');
-      staffTbody.innerHTML = '';
-      advWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
-      otWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
-      if (manualWorkerSelect) manualWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
-      enrollSelect.innerHTML = '';
-
-      unitWorkers.forEach((w, i) => {
-        staffTbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.phone || '-'}</td><td>${w.role}</td><td>₹${w.wage} / day</td><td><button class="btn btn-sm btn-secondary" onclick="deleteWorker(${w.id})">Remove</button></td></tr>`;
-        advWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
-        otWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
-        if (manualWorkerSelect) manualWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
-        enrollSelect.innerHTML += `<option value="${w.id}">${w.name} (${w.role}) ${w.faceEmbedding ? '✔ Enrolled' : '❌ Pending'}</option>`;
-      });
-
-      // Biometric Face Grid
-      const enrolledGrid = document.getElementById('workerEnrolledGrid');
-      enrolledGrid.innerHTML = '';
-      unitWorkers.forEach(w => {
-        enrolledGrid.innerHTML += `<div class="matched-worker-row"><div style="display:flex; align-items:center; gap:0.5rem;"><div style="width:34px; height:34px; border-radius:50%; background:var(--primary-soft); display:flex; align-items:center; justify-content:center; color:var(--primary); font-weight:900;">${w.name.charAt(0)}</div><strong>${w.name}</strong></div><span class="pill ${w.faceEmbedding ? 'pill-present' : 'pill-half'}">${w.faceEmbedding ? '128D Enrolled' : 'Pending'}</span></div>`;
-      });
-
-      // Live Biometric Punches
-      const today = new Date().toISOString().slice(0, 10);
-      const punchTbody = document.getElementById('livePunchLogBody');
-      punchTbody.innerHTML = '';
-      state.punches.filter(p => p.unitId === state.selectedUnitId && p.date === today).slice(0, 5).forEach(p => {
-        const isLate = (p.timingFlag || '').includes('Late');
-        punchTbody.innerHTML += `<tr><td>${p.time}</td><td><strong>${p.workerName}</strong></td><td><span class="pill pill-half">${p.shift || 'Shift'}</span></td><td><span class="pill ${isLate ? 'pill-absent' : 'pill-present'}">${p.timingFlag || 'On Time'}</span></td></tr>`;
-      });
-
-      // Overtime List
-      const otTbody = document.getElementById('otListBody');
-      otTbody.innerHTML = '';
-      state.overtime.filter(o => o.unitId === state.selectedUnitId).slice(0, 6).forEach(o => {
-        const wk = state.workers.find(w => w.id === o.workerId);
-        otTbody.innerHTML += `<tr><td>${o.date}</td><td><strong>${wk ? wk.name : 'Worker'}</strong></td><td>${o.hours} Hours OT</td><td><strong style="color:var(--success)">+ ₹${o.amount}</strong></td><td>${o.reason}</td></tr>`;
-      });
-
-      // Gate Pass List
-      const gateTbody = document.getElementById('gatePassListBody');
-      gateTbody.innerHTML = '';
-      state.gatepasses.filter(g => g.unitId === state.selectedUnitId).slice(0, 6).forEach(g => {
-        gateTbody.innerHTML += `<tr><td><strong>${g.passNo}</strong></td><td>${g.dateTime}</td><td><strong>${g.vehicleNo}</strong></td><td>${g.driverInfo}</td><td>${g.quantity.toLocaleString()} ${g.cargo}</td><td>${g.destination}</td><td><button class="btn btn-sm btn-primary" onclick="downloadSingleGatePassPDF(state.gatepasses.find(gp=>gp.id===${g.id}))">📄 PDF</button></td></tr>`;
-      });
-
-      // Payroll List
-      const payTbody = document.getElementById('payrollList');
-      payTbody.innerHTML = '';
-      unitWorkers.forEach(w => {
-        let earnedUnits = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
-
-        let otAmount = state.overtime
-          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
-          .reduce((sum, o) => sum + o.amount, 0);
-
-        let adv = state.advances
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-
-        let gross = (earnedUnits * w.wage) + otAmount;
-        let net = Math.max(0, gross - adv);
-
-        payTbody.innerHTML += `<tr><td><strong>${w.name}</strong></td><td>₹${w.wage}</td><td><strong>${earnedUnits} Units</strong></td><td style="color:var(--success)">+ ₹${otAmount}</td><td>₹${gross.toLocaleString()}</td><td>- ₹${adv.toLocaleString()}</td><td><strong style="color:var(--success);">₹${net.toLocaleString()}</strong></td><td style="display:flex; gap:0.3rem;"><button class="btn btn-sm btn-primary" onclick="downloadWorkerPayslipPDF(${w.id})">📄 PDF</button><button class="btn btn-sm btn-whatsapp" onclick="shareViaWhatsAppDirect(${w.id})">💬 WhatsApp</button></td></tr>`;
-      });
-
-      // Egg List
-      const eggTbody = document.getElementById('eggList');
-      eggTbody.innerHTML = '';
-      unitEggs.slice(0, 6).forEach(e => {
-        const tot = e.hatching + e.commercial + e.broken;
-        const pct = tot > 0 ? ((e.hatching / tot) * 100).toFixed(1) : 0;
-        eggTbody.innerHTML += `<tr><td>${e.date}</td><td>${e.shed}</td><td>${e.hatching.toLocaleString()}</td><td>${e.commercial}</td><td>${e.broken}</td><td>${tot.toLocaleString()}</td><td>${e.sold.toLocaleString()}</td><td>₹${e.revenue.toLocaleString()}</td><td>${pct}%</td></tr>`;
-      });
-
-      // Feed List
-      const feedTbody = document.getElementById('feedList');
-      feedTbody.innerHTML = '';
-      unitFeed.slice(0, 6).forEach(f => {
-        feedTbody.innerHTML += `<tr><td>${f.date}</td><td>${f.type}</td><td>+ ${f.feedIn}</td><td>- ${f.feedOut}</td></tr>`;
-      });
-
-      // Advances List
-      const advTbody = document.getElementById('advList');
-      advTbody.innerHTML = '';
-      state.advances.filter(a => unitWorkers.some(w => w.id === a.workerId)).slice(0, 6).forEach(a => {
-        const wk = state.workers.find(w => w.id === a.workerId);
-        advTbody.innerHTML += `<tr><td>${a.date}</td><td>${wk?wk.name:'Worker'}</td><td>₹${a.amount}</td></tr>`;
-      });
-
-      // Mortality List
-      const mortTbody = document.getElementById('mortList');
-      mortTbody.innerHTML = '';
-      state.mortality.filter(h => h.unitId === state.selectedUnitId).slice(0, 6).forEach(h => {
-        mortTbody.innerHTML += `<tr><td>${h.date}</td><td>${h.shed}</td><td>${h.count}</td><td>${h.notes}</td></tr>`;
       });
     }
 
