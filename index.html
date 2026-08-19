@@ -52,27 +52,18 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: 0.3s ease; }
 
-    /* =========================================================
-       EXACT AMUTAN GROUP LOGO CANVAS COMPONENT
-       ========================================================= */
-    .amutan-brand-emblem {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
     .brand-title-text {
       font-family: 'Cinzel', serif;
       font-weight: 800;
       letter-spacing: 0.14em;
-      color: #1a1e24;
+      color: var(--primary);
       line-height: 1;
     }
     .brand-sub-text {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 900;
       letter-spacing: 0.38em;
-      color: #1a1e24;
+      color: var(--text-muted);
       margin-top: 4px;
       padding-left: 0.38em;
     }
@@ -235,6 +226,121 @@
       display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--bg);
     }
     .photo-preview-box img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* =========================================================
+       HIGH-EFFICIENCY ATTENDANCE MUSTER MATRIX STYLES
+       ========================================================= */
+    .att-stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .att-stat-pill {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+    .att-stat-pill span {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .att-stat-pill strong {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .att-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      background: var(--bg);
+      padding: 0.9rem 1.1rem;
+      border-radius: 16px;
+      border: 1.5px solid var(--border);
+      margin-bottom: 1.2rem;
+    }
+
+    .shift-toggle-btn {
+      padding: 0.4rem 0.85rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .shift-toggle-btn.present {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #86efac;
+    }
+    .shift-toggle-btn.absent {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fca5a5;
+    }
+    .shift-toggle-btn:hover {
+      transform: scale(1.04);
+    }
+
+    .quick-preset-group {
+      display: flex;
+      gap: 0.3rem;
+      background: var(--bg);
+      padding: 0.25rem;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      width: fit-content;
+    }
+    .quick-preset-btn {
+      padding: 0.3rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: 0.15s;
+    }
+    .quick-preset-btn:hover {
+      background: var(--card-bg);
+      color: var(--text);
+    }
+    .quick-preset-btn.active-preset {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .autosave-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--success);
+      background: #dcfce7;
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+      border: 1px solid #86efac;
+    }
+    .autosave-badge.saving {
+      color: var(--accent-gold);
+      background: #fef3c7;
+      border-color: #fde68a;
+    }
   </style>
 </head>
 <body>
@@ -244,24 +350,9 @@
        ========================================================= -->
   <div id="authOverlay">
     <div class="login-card">
-      <div class="amutan-brand-emblem" style="margin-bottom: 1.5rem;">
-        <svg width="150" height="135" viewBox="0 0 260 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Top Comb / Crest -->
-          <path d="M 125 58 C 120 34 138 22 152 24 C 164 26 166 40 164 48 C 174 34 192 36 196 50 C 205 48 214 58 206 74 C 196 68 184 66 172 70" fill="#6c111e"/>
-          <!-- Tail Feathers (Left Side) -->
-          <path d="M 46 62 C 60 56 94 76 112 96 C 90 92 60 105 46 128 C 64 110 50 84 46 62 Z" fill="#6c111e"/>
-          <path d="M 64 98 C 82 88 108 104 120 114 C 98 114 78 128 70 140 C 80 128 70 110 64 98 Z" fill="#6c111e"/>
-          <!-- Outer Main Rooster Outline -->
-          <path d="M 148 48 C 194 54 216 84 206 130 C 196 176 156 206 118 192 C 82 178 70 138 88 94 C 102 62 124 46 148 48 Z" stroke="#6c111e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="#ffffff"/>
-          <!-- Inner Golden Ochre Wing -->
-          <path d="M 124 100 C 146 80 178 90 182 106 C 186 120 164 152 138 168 C 100 188 56 192 64 176 C 72 158 98 122 124 100 Z" fill="#c08628" stroke="#6c111e" stroke-width="8" stroke-linejoin="round"/>
-          <!-- Wing Separation Curve -->
-          <path d="M 120 106 C 132 130 114 156 90 170" stroke="#6c111e" stroke-width="5" stroke-linecap="round"/>
-          <!-- Curved Eye -->
-          <path d="M 168 76 C 168 68 178 64 184 72 C 178 75 174 78 168 76 Z" fill="#1a1e24"/>
-        </svg>
-        <div class="brand-title-text" style="font-size: 26px; margin-top: 4px;">AMUTAN</div>
-        <div class="brand-sub-text" style="font-size: 13px;">GROUP</div>
+      <div style="margin-bottom: 2rem;">
+        <div class="brand-title-text" style="font-size: 32px;">AMUTAN</div>
+        <div class="brand-sub-text" style="font-size: 14px; color: var(--primary);">GROUP OF ENTERPRISES</div>
       </div>
 
       <form onsubmit="handleLogin(event)">
@@ -287,13 +378,9 @@
   <div class="drawer" id="drawer">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 1rem;">
       <div class="brand-wrap" onclick="goToUnitSelection()">
-        <svg width="38" height="38" viewBox="0 0 260 240" fill="none">
-          <path d="M 148 48 C 194 54 216 84 206 130 C 196 176 156 206 118 192 Z" stroke="#6c111e" stroke-width="14" fill="#fff"/>
-          <path d="M 124 100 C 146 80 178 90 182 106 C 186 120 164 152 138 168 Z" fill="#c08628" stroke="#6c111e" stroke-width="8"/>
-        </svg>
         <div>
-          <div class="brand-title-text" style="font-size: 16px;">AMUTAN</div>
-          <div class="brand-sub-text" style="font-size: 8px;">GROUP</div>
+          <div class="brand-title-text" style="font-size: 18px;">AMUTAN</div>
+          <div class="brand-sub-text" style="font-size: 9px;">GROUP</div>
         </div>
       </div>
       <button class="btn btn-secondary btn-sm" onclick="toggleDrawer()">✕</button>
@@ -339,15 +426,9 @@
           <span></span><span></span><span></span>
         </div>
         <div class="brand-wrap" onclick="goToUnitSelection()">
-          <svg width="40" height="40" viewBox="0 0 260 240" fill="none">
-            <path d="M 52 70 C 65 65 92 82 108 98 Z" fill="#6c111e"/>
-            <path d="M 130 52 C 124 38 136 24 148 26 C 158 28 162 40 160 48 Z" fill="#6c111e"/>
-            <path d="M 148 48 C 194 54 216 84 206 130 C 196 176 156 206 118 192 C 82 178 70 138 88 94 Z" stroke="#6c111e" stroke-width="12" fill="#fff"/>
-            <path d="M 124 100 C 146 80 178 90 182 106 C 186 120 164 152 138 168 Z" fill="#c08628" stroke="#6c111e" stroke-width="6"/>
-          </svg>
           <div>
-            <div class="brand-title-text" style="font-size: 18px;">AMUTAN</div>
-            <div class="brand-sub-text" style="font-size: 9px;">GROUP</div>
+            <div class="brand-title-text" style="font-size: 20px;">AMUTAN</div>
+            <div class="brand-sub-text" style="font-size: 10px;">GROUP</div>
           </div>
         </div>
       </div>
@@ -418,17 +499,75 @@
           </div>
         </div>
 
-        <!-- 2. ATTENDANCE MUSTER -->
+        <!-- 2. HIGH-EFFICIENCY ATTENDANCE MUSTER -->
         <div id="attPanel" class="panel">
           <div class="card">
             <div class="card-title">
-              <span>Shift Attendance Muster</span>
-              <button class="btn btn-primary btn-sm" onclick="saveBatchAttendance()">Save Muster</button>
+              <span>⚡ High-Speed Shift Attendance Muster Matrix</span>
+              <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+                <div id="autoSaveIndicator" class="autosave-badge">● Synced</div>
+                <button class="btn btn-whatsapp btn-sm" onclick="shareAttendanceWhatsApp()">💬 Send WhatsApp Muster</button>
+              </div>
             </div>
-            <div style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center;">
-              <input type="date" id="batchAttDate" class="form-control" style="width: auto;" onchange="loadBatchAttendanceForDate()">
+
+            <!-- Live Attendance Statistics Header -->
+            <div class="att-stats-bar">
+              <div class="att-stat-pill">
+                <span>Total Roster</span>
+                <strong id="statTotalStaff">0</strong>
+              </div>
+              <div class="att-stat-pill">
+                <span>Full Day (1.0)</span>
+                <strong id="statFullDay" style="color: #15803d;">0</strong>
+              </div>
+              <div class="att-stat-pill">
+                <span>Half Day (0.5)</span>
+                <strong id="statHalfDay" style="color: var(--accent-gold);">0</strong>
+              </div>
+              <div class="att-stat-pill">
+                <span>Absent (0.0)</span>
+                <strong id="statAbsent" style="color: var(--danger);">0</strong>
+              </div>
+              <div class="att-stat-pill">
+                <span>Total Shift Units</span>
+                <strong id="statTotalUnits" style="color: var(--primary);">0.0</strong>
+              </div>
             </div>
-            <div class="units-grid" id="batchMusterContainer"></div>
+
+            <!-- Muster Toolbar & Bulk Actions -->
+            <div class="att-toolbar">
+              <div style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
+                <label style="font-weight: 800; font-size: 0.84rem;">📅 Date:</label>
+                <input type="date" id="batchAttDate" class="form-control" style="width: auto;" onchange="loadBatchAttendanceForDate()">
+                <input type="text" id="attSearchInput" class="form-control" placeholder="🔍 Search worker or role..." style="width: 220px;" oninput="renderAttendanceTable()">
+              </div>
+
+              <!-- Instant Bulk Fill Presets -->
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span style="font-size: 0.76rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Bulk Presets:</span>
+                <button class="btn btn-success btn-sm" onclick="bulkSetAllMuster('full')">Mark All Full Day (1.0)</button>
+                <button class="btn btn-secondary btn-sm" onclick="bulkSetAllMuster('morning')">Morning Only (0.5)</button>
+                <button class="btn btn-secondary btn-sm" onclick="bulkSetAllMuster('afternoon')">Afternoon Only (0.5)</button>
+                <button class="btn btn-danger btn-sm" onclick="bulkSetAllMuster('absent')">Clear / All Absent</button>
+              </div>
+            </div>
+
+            <!-- Attendance Fast Table Matrix -->
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">#</th>
+                    <th>Worker Details</th>
+                    <th style="text-align: center;">🌅 Morning Shift</th>
+                    <th style="text-align: center;">🌇 Afternoon Shift</th>
+                    <th style="text-align: center;">Quick One-Click Status</th>
+                    <th style="text-align: right;">Total Units</th>
+                  </tr>
+                </thead>
+                <tbody id="attendanceMatrixBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -677,7 +816,7 @@
         color: '#6c111e'
       },
       users: JSON.parse(localStorage.getItem('ag_users')) || [
-        { user: 'admin', pass: 'admin123', role: 'Admin', name: 'Master Admin' },
+        { user: 'admin', pass: '1234', role: 'Admin', name: 'Master Admin' },
         { user: 'amutan', pass: '1234', role: 'MD', name: 'Amutan (MD)' },
         { user: 'manager', pass: '1234', role: 'Manager', name: 'Farm Manager' }
       ],
@@ -691,6 +830,13 @@
       mortality: JSON.parse(localStorage.getItem('ag_mortality')) || [],
       expenses: JSON.parse(localStorage.getItem('ag_expenses')) || []
     };
+
+    // Guarantee admin pass is updated to 1234
+    const adminAcc = state.users.find(u => u.user.toLowerCase() === 'admin');
+    if (adminAcc) {
+      adminAcc.pass = '1234';
+      localStorage.setItem('ag_users', JSON.stringify(state.users));
+    }
 
     let tempBatchAttendance = {};
     let tempVehiclePhotoBase64 = null;
@@ -820,7 +966,7 @@
         goToUnitSelection();
         setTimeout(initSignaturePad, 300);
       } else {
-        alert('Invalid credentials. Hint: Username: admin, Password: admin123');
+        alert('Invalid credentials. (Hint: admin / 1234)');
       }
     }
 
@@ -853,11 +999,6 @@
           <div class="unit-card" onclick="openUnit(${u.id})">
             <span class="unit-badge">Division #${u.id}</span>
             <div>
-              <svg width="54" height="54" viewBox="0 0 260 240" style="margin-bottom: 0.8rem;" fill="none">
-                <path d="M 52 70 C 65 65 92 82 108 98 Z" fill="#6c111e"/>
-                <path d="M 148 48 C 194 54 216 84 206 130 C 196 176 156 206 118 192 Z" stroke="#6c111e" stroke-width="12" fill="#fff"/>
-                <path d="M 124 100 C 146 80 178 90 182 106 C 186 120 164 152 138 168 Z" fill="#c08628" stroke="#6c111e" stroke-width="6"/>
-              </svg>
               <h3 style="color: var(--primary); margin-bottom: 0.4rem;">${u.name}</h3>
               <p style="font-size: 0.84rem; color: var(--text-muted);">${u.desc}</p>
             </div>
@@ -940,41 +1081,166 @@
       persist();
     }
 
+    /* =========================================================
+       HIGH-EFFICIENCY ATTENDANCE MATRIX LOGIC
+       ========================================================= */
     function loadBatchAttendanceForDate() {
       const date = document.getElementById('batchAttDate').value || new Date().toISOString().slice(0, 10);
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
       tempBatchAttendance = {};
+      
       unitWorkers.forEach(w => {
         const exist = state.attendance.find(a => a.workerId === w.id && a.date === date);
-        tempBatchAttendance[w.id] = exist ? { morning: exist.morning, afternoon: exist.afternoon } : { morning: true, afternoon: true };
+        if (exist) {
+          tempBatchAttendance[w.id] = { 
+            morning: exist.morning !== undefined ? exist.morning : (exist.units > 0),
+            afternoon: exist.afternoon !== undefined ? exist.afternoon : (exist.units === 1.0)
+          };
+        } else {
+          // Defaults to full day present for quick verification
+          tempBatchAttendance[w.id] = { morning: true, afternoon: true };
+        }
       });
-      renderBatchMuster();
+      renderAttendanceTable();
     }
 
-    function renderBatchMuster() {
-      const container = document.getElementById('batchMusterContainer');
+    function renderAttendanceTable() {
+      const tb = document.getElementById('attendanceMatrixBody');
+      const searchQuery = (document.getElementById('attSearchInput')?.value || '').toLowerCase().trim();
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      container.innerHTML = '';
+      const filtered = unitWorkers.filter(w => 
+        w.name.toLowerCase().includes(searchQuery) || (w.role && w.role.toLowerCase().includes(searchQuery))
+      );
+
+      tb.innerHTML = '';
+
+      let totalStaff = unitWorkers.length;
+      let fullDayCount = 0;
+      let halfDayCount = 0;
+      let absentCount = 0;
+      let totalUnitsSum = 0;
+
+      const mVal = state.formulas.morningUnit || 0.5;
+      const aVal = state.formulas.afternoonUnit || 0.5;
+
       unitWorkers.forEach(w => {
-        const rec = tempBatchAttendance[w.id] || { morning: true, afternoon: true };
-        container.innerHTML += `
-          <div class="card" style="padding: 1rem; margin-bottom: 0;">
-            <strong>${w.name}</strong> <small>(${w.role})</small>
-            <div style="display:flex; gap:0.5rem; margin-top:0.8rem;">
-              <button class="btn btn-sm ${rec.morning ? 'btn-success' : 'btn-secondary'}" onclick="toggleMusterShift(${w.id}, 'morning')">🌅 Morning</button>
-              <button class="btn btn-sm ${rec.afternoon ? 'btn-success' : 'btn-secondary'}" onclick="toggleMusterShift(${w.id}, 'afternoon')">🌇 Afternoon</button>
-            </div>
-          </div>
+        const rec = tempBatchAttendance[w.id] || { morning: false, afternoon: false };
+        const u = (rec.morning ? mVal : 0) + (rec.afternoon ? aVal : 0);
+        totalUnitsSum += u;
+        if (u === 1.0) fullDayCount++;
+        else if (u > 0) halfDayCount++;
+        else absentCount++;
+      });
+
+      // Update Top Live Metrics
+      document.getElementById('statTotalStaff').innerText = totalStaff;
+      document.getElementById('statFullDay').innerText = fullDayCount;
+      document.getElementById('statHalfDay').innerText = halfDayCount;
+      document.getElementById('statAbsent').innerText = absentCount;
+      document.getElementById('statTotalUnits').innerText = totalUnitsSum.toFixed(1);
+
+      if (filtered.length === 0) {
+        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 2rem; color: var(--text-muted);">No workers registered or matching search.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach((w, idx) => {
+        const rec = tempBatchAttendance[w.id] || { morning: false, afternoon: false };
+        const units = (rec.morning ? mVal : 0) + (rec.afternoon ? aVal : 0);
+
+        let unitBadge = `<span style="font-weight:900; color: #15803d; background:#dcfce7; padding: 0.25rem 0.6rem; border-radius: 8px;">1.0 Unit</span>`;
+        if (units === 0.5) unitBadge = `<span style="font-weight:900; color: #b45309; background:#fef3c7; padding: 0.25rem 0.6rem; border-radius: 8px;">0.5 Unit</span>`;
+        if (units === 0) unitBadge = `<span style="font-weight:900; color: #b91c1c; background:#fee2e2; padding: 0.25rem 0.6rem; border-radius: 8px;">0.0 Absent</span>`;
+
+        tb.innerHTML += `
+          <tr>
+            <td>${idx + 1}</td>
+            <td>
+              <strong>${w.name}</strong>
+              <small style="display:block; color:var(--text-muted); font-size:0.75rem;">${w.role || 'Staff'} • ₹${w.wage}/day</small>
+            </td>
+            
+            <!-- Morning Shift Direct Toggle -->
+            <td style="text-align: center;">
+              <button class="shift-toggle-btn ${rec.morning ? 'present' : 'absent'}" onclick="toggleShift(${w.id}, 'morning')">
+                ${rec.morning ? '✔ Present (0.5)' : '✕ Absent (0.0)'}
+              </button>
+            </td>
+
+            <!-- Afternoon Shift Direct Toggle -->
+            <td style="text-align: center;">
+              <button class="shift-toggle-btn ${rec.afternoon ? 'present' : 'absent'}" onclick="toggleShift(${w.id}, 'afternoon')">
+                ${rec.afternoon ? '✔ Present (0.5)' : '✕ Absent (0.0)'}
+              </button>
+            </td>
+
+            <!-- Fast One-Click Presets -->
+            <td style="text-align: center;">
+              <div class="quick-preset-group" style="margin: 0 auto;">
+                <button class="quick-preset-btn ${units === 1.0 ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'full')" title="Full Day">Full</button>
+                <button class="quick-preset-btn ${units === 0.5 && rec.morning ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'morning')" title="Morning Only">Morn</button>
+                <button class="quick-preset-btn ${units === 0.5 && rec.afternoon ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'afternoon')" title="Afternoon Only">Aft</button>
+                <button class="quick-preset-btn ${units === 0 ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'absent')" title="Absent">Off</button>
+              </div>
+            </td>
+
+            <!-- Units Counter -->
+            <td style="text-align: right;">
+              ${unitBadge}
+            </td>
+          </tr>
         `;
       });
     }
 
-    function toggleMusterShift(wId, shift) {
+    function toggleShift(wId, shift) {
+      if (!tempBatchAttendance[wId]) tempBatchAttendance[wId] = { morning: true, afternoon: true };
       tempBatchAttendance[wId][shift] = !tempBatchAttendance[wId][shift];
-      renderBatchMuster();
+      triggerAutoSaveAttendance();
+      renderAttendanceTable();
     }
 
-    function saveBatchAttendance() {
+    function setWorkerPreset(wId, mode) {
+      if (mode === 'full') tempBatchAttendance[wId] = { morning: true, afternoon: true };
+      else if (mode === 'morning') tempBatchAttendance[wId] = { morning: true, afternoon: false };
+      else if (mode === 'afternoon') tempBatchAttendance[wId] = { morning: false, afternoon: true };
+      else if (mode === 'absent') tempBatchAttendance[wId] = { morning: false, afternoon: false };
+      
+      triggerAutoSaveAttendance();
+      renderAttendanceTable();
+    }
+
+    function bulkSetAllMuster(mode) {
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      unitWorkers.forEach(w => {
+        if (mode === 'full') tempBatchAttendance[w.id] = { morning: true, afternoon: true };
+        else if (mode === 'morning') tempBatchAttendance[w.id] = { morning: true, afternoon: false };
+        else if (mode === 'afternoon') tempBatchAttendance[w.id] = { morning: false, afternoon: true };
+        else if (mode === 'absent') tempBatchAttendance[w.id] = { morning: false, afternoon: false };
+      });
+      triggerAutoSaveAttendance();
+      renderAttendanceTable();
+    }
+
+    let saveTimeout = null;
+    function triggerAutoSaveAttendance() {
+      const indicator = document.getElementById('autoSaveIndicator');
+      if (indicator) {
+        indicator.classList.add('saving');
+        indicator.innerText = '⟳ Saving...';
+      }
+
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        saveBatchAttendanceSilent();
+        if (indicator) {
+          indicator.classList.remove('saving');
+          indicator.innerText = '● Synced';
+        }
+      }, 400);
+    }
+
+    function saveBatchAttendanceSilent() {
       const date = document.getElementById('batchAttDate').value || new Date().toISOString().slice(0, 10);
       const mUnit = state.formulas.morningUnit || 0.5;
       const aUnit = state.formulas.afternoonUnit || 0.5;
@@ -987,8 +1253,38 @@
         const units = (s.morning ? mUnit : 0) + (s.afternoon ? aUnit : 0);
         state.attendance.unshift({ date, workerId: parseInt(wId), morning: s.morning, afternoon: s.afternoon, units });
       });
+
       persist();
-      alert('Attendance muster saved successfully!');
+    }
+
+    function saveBatchAttendance() {
+      saveBatchAttendanceSilent();
+      alert('Attendance muster saved & synced!');
+    }
+
+    function shareAttendanceWhatsApp() {
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const date = document.getElementById('batchAttDate').value || new Date().toISOString().slice(0, 10);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+
+      let msg = `*AMUTAN GROUP - DAILY MUSTER REPORT*\n` +
+                `🏢 *Division:* ${unit ? unit.name : 'Poultry Unit'}\n` +
+                `📅 *Date:* ${date}\n\n`;
+
+      let totalUnits = 0;
+      unitWorkers.forEach((w, i) => {
+        const rec = tempBatchAttendance[w.id] || { morning: false, afternoon: false };
+        const u = (rec.morning ? 0.5 : 0) + (rec.afternoon ? 0.5 : 0);
+        totalUnits += u;
+        const m = rec.morning ? '✔' : '❌';
+        const a = rec.afternoon ? '✔' : '❌';
+        msg += `${i+1}. *${w.name}*: M:[${m}] A:[${a}] ➔ *${u} Units*\n`;
+      });
+
+      msg += `\n*TOTAL WORKFORCE ON SHIFT:* ${totalUnits} Units`;
+
+      const encoded = encodeURIComponent(msg);
+      window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
     }
 
     function addOvertimeLog() {
