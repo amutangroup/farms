@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Amutan Groups | Poultry Operations & Enterprise Management Portal</title>
+  <title>Amutan Group | Poultry Enterprise Management & Operations Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- PDF Generation Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -18,538 +18,335 @@
 
   <style>
     :root {
-      --primary: #e11d48;
-      --primary-dark: #be123c;
-      --primary-gradient: linear-gradient(135deg, #fb7185 0%, #e11d48 50%, #be123c 100%);
-      --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      --success-gradient: linear-gradient(135deg, #34d399 0%, #059669 100%);
-      --ai-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
-      --primary-soft: #ffe4e6;
-      --accent: #f59e0b;
-      --accent-soft: #fef3c7;
-      --bg: #fff1f2;
-      --card-bg: rgba(255, 255, 255, 0.96);
-      --text: #0f172a;
+      --primary: #881326;
+      --primary-dark: #630c1a;
+      --primary-light: #b91c1c;
+      --accent: #d97706;
+      --accent-gold: #f59e0b;
+      --primary-gradient: linear-gradient(135deg, #a81c34 0%, #881326 50%, #5b0a17 100%);
+      --accent-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      --card-gradient: linear-gradient(145deg, #ffffff 0%, #fff7f7 100%);
+      --ai-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #c026d3 100%);
+      --bg: #fbf7f7;
+      --card-bg: #ffffff;
+      --text: #1e1e24;
       --text-muted: #64748b;
-      --border: #fecdd3;
-      --success: #10b981;
-      --danger: #ef4444;
+      --border: #f3d5d9;
+      --success: #059669;
+      --danger: #dc2626;
       --whatsapp: #25d366;
-      --radius: 24px;
-      --radius-sm: 14px;
-      --shadow-sm: 0 4px 14px rgba(225, 29, 72, 0.06);
-      --shadow-md: 0 12px 28px rgba(225, 29, 72, 0.1);
-      --shadow-lg: 0 22px 48px rgba(225, 29, 72, 0.15);
-      --glow: 0 0 20px rgba(244, 63, 94, 0.25);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow-sm: 0 4px 14px rgba(136, 19, 38, 0.05);
+      --shadow-md: 0 10px 25px rgba(136, 19, 38, 0.08);
+      --shadow-lg: 0 20px 45px rgba(136, 19, 38, 0.12);
     }
 
     body.dark-theme {
-      --bg: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.96);
+      --bg: #0f1117;
+      --card-bg: #181b24;
       --text: #f8fafc;
       --text-muted: #94a3b8;
-      --border: #334155;
-      --primary-soft: rgba(225, 29, 72, 0.2);
-      --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 22px 48px rgba(0, 0, 0, 0.6);
+      --border: #2e3545;
+      --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 22px 48px rgba(0, 0, 0, 0.7);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Nunito', 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    h1, h2, h3, .brand-font { font-family: 'Outfit', sans-serif; letter-spacing: -0.02em; }
     body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background 0.3s ease, color 0.3s ease; }
 
     /* =========================================================
-       ULTRA-ATTRACTIVE MODERN GLASSMORPHISM LOGIN PAGE
+       VECTOR AMUTAN LOGO SYSTEM
+       ========================================================= */
+    .amutan-logo-svg {
+      display: inline-block;
+      vertical-align: middle;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+    }
+
+    /* =========================================================
+       LOGIN PAGE
        ========================================================= */
     #authOverlay {
       position: fixed; inset: 0;
-      background: radial-gradient(circle at 10% 20%, #ffe4e6 0%, #fecdd3 35%, #fda4af 75%, #fb7185 100%);
-      display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1.2rem;
+      background: radial-gradient(circle at top left, #fff1f2 0%, #fde2e4 40%, #edd3d6 100%);
+      display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1.5rem;
       overflow-y: auto;
     }
-
-    /* Ambient animated blurred orbs in login background */
-    .login-orb-1, .login-orb-2 {
-      position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; opacity: 0.6;
-    }
-    .login-orb-1 { width: 340px; height: 340px; background: #f43f5e; top: -50px; left: -50px; animation: floatOrb 8s infinite alternate ease-in-out; }
-    .login-orb-2 { width: 380px; height: 380px; background: #fbbf24; bottom: -60px; right: -60px; animation: floatOrb 10s infinite alternate-reverse ease-in-out; }
-    @keyframes floatOrb { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(35px) scale(1.08); } }
-
     .login-card {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(24px);
       width: 100%; max-width: 440px;
-      padding: 2.6rem 2.2rem; border-radius: 36px;
-      box-shadow: 0 25px 60px rgba(190, 18, 60, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      padding: 2.8rem 2.2rem; border-radius: 32px;
+      box-shadow: 0 24px 60px rgba(136, 19, 38, 0.15), 0 0 0 1px #fff inset;
       text-align: center; position: relative; z-index: 10;
-      animation: loginPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes loginPop { from { opacity: 0; transform: scale(0.92) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-    .login-badge {
-      display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.9rem;
-      border-radius: 20px; background: var(--primary-soft); color: var(--primary);
-      font-size: 0.76rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px;
-      margin-bottom: 1.2rem; border: 1.5px solid #fecdd3;
-    }
-
-    .login-icon-wrap {
-      width: 80px; height: 80px;
-      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
-      border-radius: 26px; border: 2.5px solid #fda4af;
+    .login-logo-wrap {
+      width: 110px; height: 110px; margin: 0 auto 1.2rem;
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1.2rem; color: var(--primary);
-      box-shadow: 0 12px 24px rgba(225, 29, 72, 0.15);
+      background: #ffffff; border-radius: 28px;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-sm);
     }
-    .login-icon-wrap svg { width: 42px; height: 42px; }
-
-    .login-card h2 {
-      font-size: 1.85rem; font-weight: 900; color: var(--primary); letter-spacing: -0.8px; line-height: 1.15;
+    .login-brand-title {
+      font-size: 1.7rem; font-weight: 900; color: var(--primary);
+      letter-spacing: 0.05em; text-transform: uppercase;
     }
-    .login-card p {
-      font-size: 0.9rem; color: var(--text-muted); font-weight: 700; margin-top: 0.35rem; margin-bottom: 2rem;
-    }
-
-    .login-input-group {
-      position: relative; margin-bottom: 1.2rem; text-align: left;
-    }
-    .login-input-group label {
-      display: block; font-size: 0.82rem; font-weight: 800; color: var(--text); margin-bottom: 0.4rem;
-    }
-    .login-input-wrapper {
-      position: relative; display: flex; align-items: center;
-    }
-    .login-input-icon {
-      position: absolute; left: 14px; font-size: 1.1rem; color: var(--primary); pointer-events: none;
-    }
-    .login-input-control {
-      width: 100%; padding: 0.88rem 1rem 0.88rem 2.8rem;
-      border: 2px solid #e2e8f0; border-radius: 16px;
-      font-size: 0.92rem; font-weight: 700; outline: none;
-      background: #ffffff; color: var(--text); transition: all 0.25s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    }
-    .login-input-control:focus {
-      border-color: var(--primary); box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.12);
+    .login-brand-sub {
+      font-size: 0.82rem; font-weight: 800; color: var(--accent);
+      letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1.8rem;
     }
 
-    .login-submit-btn {
-      width: 100%; padding: 0.95rem; margin-top: 0.8rem;
-      border: none; border-radius: 18px;
-      background: var(--primary-gradient); color: #ffffff;
-      font-size: 1rem; font-weight: 900; letter-spacing: 0.3px;
-      cursor: pointer; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.35);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    .form-group { text-align: left; margin-bottom: 1.1rem; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 800; color: var(--text); margin-bottom: 0.35rem; }
+    .form-control {
+      width: 100%; padding: 0.82rem 1rem; border: 2px solid var(--border); border-radius: var(--radius-sm);
+      font-size: 0.88rem; font-weight: 700; outline: none; background: var(--card-bg); color: var(--text); transition: 0.2s;
     }
-    .login-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(225, 29, 72, 0.45); }
-    .login-submit-btn:active { transform: scale(0.98); }
+    .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(136, 19, 38, 0.1); }
+
+    .btn {
+      padding: 0.82rem 1.4rem; border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 800;
+      cursor: pointer; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s ease;
+    }
+    .btn-primary { background: var(--primary-gradient); color: #fff; box-shadow: var(--shadow-sm); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-whatsapp { background: var(--whatsapp); color: #fff; }
+    .btn-secondary { background: #f1f5f9; color: var(--text); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-gold { background: var(--accent-gradient); color: #fff; }
+    .btn-sm { padding: 0.45rem 0.85rem; font-size: 0.78rem; border-radius: 10px; }
 
     /* =========================================================
-       APP HEADER & DRAWER STYLES
+       HEADER & NAVIGATION
        ========================================================= */
     header {
       background: var(--card-bg);
-      backdrop-filter: blur(14px);
-      padding: 0.85rem 1.4rem;
+      backdrop-filter: blur(12px);
+      padding: 0.75rem 1.5rem;
       position: sticky; top: 0; z-index: 90;
       display: flex; justify-content: space-between; align-items: center;
       border-bottom: 2px solid var(--border);
       box-shadow: var(--shadow-sm);
     }
     .header-left { display: flex; align-items: center; gap: 1rem; }
-    
     .menu-trigger {
-      background: var(--card-bg); border: 2px solid var(--border); width: 44px; height: 44px;
-      border-radius: 14px; display: flex; flex-direction: column; justify-content: center;
-      align-items: center; gap: 5px; cursor: pointer; transition: all 0.25s ease;
-      box-shadow: var(--shadow-sm); flex-shrink: 0;
+      background: var(--bg); border: 2px solid var(--border); width: 44px; height: 44px;
+      border-radius: 12px; display: flex; flex-direction: column; justify-content: center;
+      align-items: center; gap: 5px; cursor: pointer; transition: 0.2s;
     }
-    .menu-trigger:hover { transform: scale(1.06); border-color: var(--primary); box-shadow: var(--glow); }
-    .menu-trigger span { width: 20px; height: 3px; background: var(--primary); border-radius: 4px; }
-    
-    .brand-wrap { display: flex; align-items: center; gap: 0.6rem; }
-    .brand-text h1 { font-size: 1.15rem; font-weight: 900; color: var(--primary); line-height: 1.1; }
-    .brand-text small { color: var(--text-muted); font-size: 0.72rem; font-weight: 700; display: block; }
+    .menu-trigger span { width: 22px; height: 3px; background: var(--primary); border-radius: 3px; }
+    .brand-wrap { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+    .brand-text h1 { font-size: 1.15rem; font-weight: 900; color: var(--primary); line-height: 1.1; letter-spacing: 0.05em; }
+    .brand-text small { color: var(--accent); font-size: 0.7rem; font-weight: 800; display: block; letter-spacing: 0.15em; }
 
-    .header-right { display: flex; align-items: center; gap: 0.6rem; }
-    .theme-toggle-btn {
-      background: var(--card-bg); border: 2px solid var(--border); padding: 0.45rem 0.75rem;
-      border-radius: 18px; font-weight: 800; font-size: 0.8rem; cursor: pointer; color: var(--text);
-    }
+    .header-right { display: flex; align-items: center; gap: 0.75rem; }
     .user-pill {
-      display: flex; align-items: center; gap: 0.6rem; background: var(--card-bg);
-      padding: 0.35rem 0.8rem; border-radius: 30px; border: 2px solid var(--border); box-shadow: var(--shadow-sm);
+      display: flex; align-items: center; gap: 0.6rem; background: var(--bg);
+      padding: 0.35rem 0.9rem; border-radius: 30px; border: 2px solid var(--border);
     }
     .role-badge {
-      background: var(--primary-soft); color: var(--primary); padding: 0.2rem 0.6rem;
-      border-radius: 20px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-    }
-
-    .drawer-overlay {
-      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(8px); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-    }
-    .drawer-overlay.active { opacity: 1; pointer-events: all; }
-
-    .drawer {
-      position: fixed; top: 0; left: -360px; width: 320px; max-width: 85vw; height: 100vh;
-      background: var(--card-bg); z-index: 110; padding: 1.2rem 1rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25); transition: left 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex; flex-direction: column; border-top-right-radius: 32px; border-bottom-right-radius: 32px;
-      overflow: hidden;
-    }
-    .drawer.active { left: 0; }
-
-    .drawer-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 0.9rem; border-bottom: 1.5px solid var(--border); margin-bottom: 0.8rem; flex-shrink: 0;
-    }
-    .drawer-brand h3 { font-size: 1.15rem; font-weight: 900; color: var(--primary); }
-    .drawer-brand small { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; display: block; }
-    .close-btn {
-      background: var(--bg); border: 2px solid var(--border); font-size: 1.1rem; font-weight: 900;
-      color: var(--primary); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; transition: all 0.2s;
-    }
-    .close-btn:hover { background: var(--primary); color: #fff; transform: scale(1.05); }
-
-    .drawer-scroll-body {
-      flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
-      padding-right: 0.2rem; display: flex; flex-direction: column; gap: 1.2rem;
-    }
-    .drawer-scroll-body::-webkit-scrollbar { width: 4px; }
-    .drawer-scroll-body::-webkit-scrollbar-thumb { background: #fda4af; border-radius: 10px; }
-
-    .nav-section { display: flex; flex-direction: column; gap: 0.35rem; }
-    .nav-section-title {
-      font-size: 0.7rem; font-weight: 900; color: #94a3b8; text-transform: uppercase;
-      letter-spacing: 0.8px; padding-left: 0.8rem; margin-bottom: 0.2rem;
-    }
-
-    .nav-link {
-      display: flex; align-items: center; gap: 0.8rem; padding: 0.72rem 0.9rem;
-      border-radius: 14px; border: none; background: transparent; font-size: 0.88rem;
-      font-weight: 800; color: var(--text-muted); cursor: pointer; transition: all 0.2s ease; text-align: left;
-    }
-    .nav-link .icon-box {
-      width: 30px; height: 30px; border-radius: 10px; background: var(--primary-soft);
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s ease; color: var(--primary); flex-shrink: 0;
-    }
-    .nav-link:hover { background: var(--primary-soft); color: var(--primary); transform: translateX(4px); }
-    .nav-link.active {
-      background: var(--primary-gradient); color: #fff; box-shadow: 0 6px 16px rgba(225, 29, 72, 0.25);
-    }
-    .nav-link.active .icon-box { background: rgba(255, 255, 255, 0.25); color: #fff; }
-
-    .drawer-footer {
-      padding-top: 0.9rem; border-top: 1.5px solid var(--border);
-      display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0;
+      background: var(--primary-gradient); color: #fff; padding: 0.2rem 0.6rem;
+      border-radius: 20px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase;
     }
 
     /* =========================================================
-       DASHBOARD & WORKSPACE STYLES
+       DRAWER NAVIGATION
        ========================================================= */
-    .dashboard-container { max-width: 1240px; margin: 1.5rem auto; padding: 0 1rem; }
-
-    #unitSelectScreen { display: block; }
-    .landing-header { text-align: center; margin-bottom: 2rem; margin-top: 0.5rem; }
-    .landing-header h2 { font-size: 2rem; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
-    .landing-header p { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; margin-top: 0.2rem; }
-
-    .units-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem;
+    .drawer-overlay {
+      position: fixed; inset: 0; background: rgba(15, 17, 23, 0.5);
+      backdrop-filter: blur(4px); z-index: 100; opacity: 0; pointer-events: none; transition: 0.3s;
     }
+    .drawer-overlay.active { opacity: 1; pointer-events: all; }
+    .drawer {
+      position: fixed; top: 0; left: -340px; width: 310px; height: 100vh;
+      background: var(--card-bg); z-index: 110; padding: 1.2rem;
+      box-shadow: var(--shadow-lg); transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    .drawer.active { left: 0; }
+    .drawer-scroll-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+    .nav-section-title { font-size: 0.7rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .nav-link {
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.9rem;
+      border-radius: var(--radius-sm); border: none; background: transparent; font-size: 0.88rem;
+      font-weight: 800; color: var(--text-muted); cursor: pointer; transition: 0.2s; width: 100%; text-align: left;
+    }
+    .nav-link:hover, .nav-link.active { background: #fff1f2; color: var(--primary); }
+    .nav-link.active { font-weight: 900; }
+
+    /* =========================================================
+       DASHBOARD & UNIT SELECTION
+       ========================================================= */
+    .dashboard-container { max-width: 1280px; margin: 1.5rem auto; padding: 0 1.2rem; }
+    .landing-header { text-align: center; margin: 1.5rem 0 2rem; }
+    .landing-header h2 { font-size: 2rem; font-weight: 900; color: var(--primary); }
+    .landing-header p { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; margin-top: 0.3rem; }
+
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
     .unit-card {
-      background: var(--card-bg); border-radius: var(--radius); border: 2.5px solid var(--border);
-      padding: 2.2rem 1.6rem; text-align: center; cursor: pointer; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .unit-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
-    
-    .unit-icon {
-      width: 78px; height: 78px; border-radius: 50%; background: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.2rem; border: 3px solid var(--border); box-shadow: var(--shadow-sm); color: var(--primary);
-    }
-    .unit-icon svg { width: 40px; height: 40px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-    .unit-card h3 { font-size: 1.25rem; font-weight: 900; color: var(--text); margin-bottom: 0.35rem; }
-    .unit-card p { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.4; }
-    .unit-btn {
-      background: var(--primary-gradient); color: #fff; border: none; padding: 0.8rem 1.8rem;
-      border-radius: 30px; font-weight: 800; font-size: 0.9rem; cursor: pointer; box-shadow: var(--shadow-sm);
-      width: 100%; max-width: 220px;
-    }
-
-    #unitWorkspaceScreen { display: none; }
-    .workspace-banner {
-      background: var(--card-bg); border: 2.5px solid var(--border); border-radius: var(--radius);
-      padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 1.5rem; box-shadow: var(--shadow-sm); flex-wrap: wrap; gap: 1rem;
-    }
-    .workspace-banner h2 { font-size: 1.35rem; font-weight: 900; color: var(--primary); }
-    .back-btn {
-      background: var(--bg); color: var(--primary); border: 2px solid var(--border);
-      padding: 0.55rem 1.2rem; border-radius: 20px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
-    }
-    .back-btn:hover { background: var(--primary); color: #fff; }
-
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-    .kpi-card {
       background: var(--card-bg); border-radius: var(--radius); border: 2px solid var(--border);
-      padding: 1.2rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between;
+      padding: 1.8rem; text-align: center; cursor: pointer; transition: 0.3s;
+      box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; position: relative;
     }
-    .kpi-card span { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .kpi-card h3 { font-size: 1.5rem; font-weight: 900; color: var(--primary); margin-top: 0.15rem; }
-    .kpi-icon { width: 44px; height: 44px; border-radius: 14px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
-
-    .panel { display: none; }
-    .panel.active { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
+    .unit-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .unit-badge { position: absolute; top: 12px; right: 12px; font-size: 0.7rem; font-weight: 800; color: var(--text-muted); background: var(--bg); padding: 0.2rem 0.6rem; border-radius: 8px; }
+    
     .card {
       background: var(--card-bg); border-radius: var(--radius);
-      border: 2.5px solid var(--border); box-shadow: var(--shadow-sm);
+      border: 2px solid var(--border); box-shadow: var(--shadow-sm);
       padding: 1.6rem; margin-bottom: 1.5rem;
     }
     .card-title { font-size: 1.15rem; font-weight: 900; color: var(--text); margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
 
-    .toolbar { display: flex; gap: 0.6rem; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; }
-    .search-input {
-      flex: 1; min-width: 200px; padding: 0.75rem 1.1rem; border-radius: 16px; border: 2px solid var(--border);
-      font-weight: 700; font-size: 0.88rem; outline: none; background: var(--card-bg); color: var(--text);
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .kpi-card {
+      background: var(--card-bg); border-radius: var(--radius); border: 2px solid var(--border);
+      padding: 1.2rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between;
     }
+    .kpi-card span { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    .kpi-card h3 { font-size: 1.5rem; font-weight: 900; color: var(--primary); margin-top: 0.15rem; }
 
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end; }
-    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
-    .form-group label { font-size: 0.82rem; font-weight: 800; color: var(--text); }
-    .form-control {
-      padding: 0.78rem 0.95rem; border: 2px solid #cbd5e1; border-radius: var(--radius-sm);
-      font-size: 0.88rem; font-weight: 700; outline: none; background: var(--card-bg); color: var(--text); transition: all 0.2s ease;
-      width: 100%;
-    }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; align-items: end; }
+    .table-responsive { overflow-x: auto; border-radius: var(--radius-sm); }
+    table { width: 100%; border-collapse: collapse; background: var(--card-bg); }
+    th { background: #fff1f2; color: var(--primary); font-weight: 900; font-size: 0.8rem; text-transform: uppercase; padding: 0.9rem; text-align: left; }
+    td { padding: 0.9rem; border-top: 1px solid var(--border); font-size: 0.88rem; font-weight: 700; }
+    
+    .panel { display: none; }
+    .panel.active { display: block; }
 
-    .btn {
-      padding: 0.75rem 1.4rem; border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 800;
-      cursor: pointer; border: none; display: inline-flex; align-items: center; justify-content: center;
-      gap: 0.5rem; transition: all 0.2s ease;
-    }
-    .btn-primary { background: var(--primary-gradient); color: #fff; box-shadow: var(--shadow-sm); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .btn-success { background: var(--success-gradient); color: #fff; }
-    .btn-whatsapp { background: var(--whatsapp); color: #fff; font-weight: 800; }
-    .btn-whatsapp:hover { background: #1ebd59; transform: translateY(-2px); }
-    .btn-ai { background: var(--ai-gradient); color: #fff; font-weight: 800; }
-    .btn-secondary { background: var(--bg); color: var(--primary); font-weight: 800; }
-    .btn-danger-solid { background: var(--danger); color: #fff; }
-    .btn-sm { padding: 0.42rem 0.8rem; font-size: 0.8rem; border-radius: 12px; }
-
-    .table-responsive { overflow-x: auto; border-radius: var(--radius-sm); -webkit-overflow-scrolling: touch; }
-    table { width: 100%; border-collapse: collapse; margin-top: 0.4rem; background: var(--card-bg); }
-    th {
-      background: var(--primary-soft); color: var(--primary); font-weight: 900;
-      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;
-      padding: 0.95rem 0.85rem; text-align: left; white-space: nowrap;
-    }
-    td { padding: 0.95rem 0.85rem; border-top: 1px solid var(--border); font-size: 0.88rem; font-weight: 700; color: var(--text); }
-
-    .pill { padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 800; display: inline-block; white-space: nowrap; }
-    .pill-present { background: #dcfce7; color: var(--success); }
-    .pill-half { background: var(--accent-soft); color: #b45309; }
-    .pill-absent { background: #fee2e2; color: var(--danger); }
-
-    /* =========================================================
-       RESPONSIVE MUSTER & MOBILE TWEAKS
-       ========================================================= */
-    .batch-muster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .worker-muster-card {
-      background: var(--card-bg); border: 2px solid var(--border); border-radius: 18px; padding: 1.1rem;
-      display: flex; flex-direction: column; gap: 0.75rem; box-shadow: var(--shadow-sm);
-    }
-    .shift-toggle-row {
-      display: flex; flex-direction: column; gap: 0.3rem; background: var(--bg); padding: 0.55rem; border-radius: 12px; border: 1px solid var(--border);
-    }
-    .shift-toggle-label { font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-    .status-toggle-group { display: flex; gap: 0.3rem; }
-    .status-chip {
-      flex: 1; padding: 0.4rem; border-radius: 8px; font-size: 0.75rem; font-weight: 800;
-      border: 1.5px solid #cbd5e1; background: var(--card-bg); cursor: pointer; text-align: center; color: var(--text);
-    }
-    .status-chip.selected-present { background: #dcfce7; border-color: var(--success); color: var(--success); }
-    .status-chip.selected-absent { background: #fee2e2; border-color: var(--danger); color: var(--danger); }
-
-    /* Floating AI Widget Mobile Bounds */
-    #amutanAiFab {
-      position: fixed; bottom: 20px; right: 20px; z-index: 999;
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--ai-gradient); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.45);
-      transition: all 0.3s ease; border: 2px solid #fff;
-    }
-    #amutanAiChatModal {
-      position: fixed; bottom: 86px; right: 20px; z-index: 1000;
-      width: 380px; max-width: calc(100vw - 32px); height: 520px; max-height: 80vh;
-      background: var(--card-bg); border: 2.5px solid var(--border); border-radius: 28px;
-      box-shadow: var(--shadow-lg); display: none; flex-direction: column; overflow: hidden;
-      backdrop-filter: blur(20px);
-    }
-    .ai-chat-header {
-      background: var(--ai-gradient); color: #fff; padding: 0.85rem 1.1rem;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .ai-chat-body {
-      flex: 1; overflow-y: auto; padding: 0.9rem; display: flex; flex-direction: column; gap: 0.75rem;
-    }
-    .ai-msg {
-      max-width: 88%; padding: 0.7rem 0.9rem; border-radius: 16px; font-size: 0.85rem; font-weight: 700; line-height: 1.4;
-    }
-    .ai-msg-bot { background: var(--bg); color: var(--text); border: 1.5px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
-    .ai-msg-user { background: var(--primary-gradient); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; }
-    .ai-chat-footer {
-      padding: 0.75rem; border-top: 1.5px solid var(--border); display: flex; gap: 0.4rem; background: var(--card-bg); align-items: center;
-    }
-    .ai-chat-input {
-      flex: 1; padding: 0.6rem 0.85rem; border-radius: 20px; border: 1.5px solid var(--border);
-      outline: none; font-size: 0.85rem; font-weight: 700; background: var(--bg); color: var(--text);
-    }
-    .ai-lang-select {
-      background: var(--bg); border: 1.5px solid var(--border); border-radius: 14px;
-      font-size: 0.75rem; font-weight: 800; color: var(--text); padding: 0.3rem 0.5rem; outline: none;
-    }
-
-    /* Strict Mobile Screen Enhancements */
-    @media (max-width: 768px) {
-      header { padding: 0.75rem 1rem; }
-      .brand-text small { display: none; }
-      .user-pill { padding: 0.3rem 0.6rem; }
-      .dashboard-container { padding: 0 0.8rem; margin: 1rem auto; }
-      .landing-header h2 { font-size: 1.65rem; }
-      .unit-card { padding: 1.8rem 1.2rem; }
-      .card { padding: 1.2rem; }
-      .form-grid { grid-template-columns: 1fr; }
-      .kpi-grid { grid-template-columns: 1fr 1fr; }
+    /* Admin Formula Box */
+    .formula-badge {
+      background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 1rem;
+      font-family: monospace; font-size: 0.9rem; margin-bottom: 1rem; color: #334155;
     }
   </style>
 </head>
 <body>
 
-  <!-- ULTRA-ATTRACTIVE MODERN LOGIN OVERLAY -->
+  <!-- =========================================================
+       LOGIN OVERLAY
+       ========================================================= -->
   <div id="authOverlay">
-    <div class="login-orb-1"></div>
-    <div class="login-orb-2"></div>
-    
     <div class="login-card">
-      <div class="login-badge">Enterprise Edition</div>
-      
-      <div class="login-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2a5 5 0 0 1 5 5c0 2.5-2 4.5-5 9-3-4.5-5-6.5-5-9a5 5 0 0 1 5-5z"/>
-          <circle cx="12" cy="7" r="1.5"/>
-          <path d="M9 16c-3 1.5-5 3-5 5h16c0-2-2-3.5-5-5"/>
+      <div class="login-logo-wrap">
+        <!-- SVG Vector of Amutan Logo -->
+        <svg class="amutan-logo-svg" width="80" height="80" viewBox="0 0 200 200">
+          <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Crest / Crown -->
+            <path d="M90 35 C100 20, 120 20, 130 35 C135 30, 145 35, 148 45 C155 45, 160 55, 150 65" fill="#881326" stroke="#881326" stroke-width="4"/>
+            <!-- Tail Feathers -->
+            <path d="M40 70 C60 65, 80 80, 85 100 C65 95, 45 105, 35 125 C45 105, 30 85, 40 70 Z" fill="#881326" stroke="#881326" stroke-width="4"/>
+            <!-- Main Outer Rooster Outline -->
+            <path d="M125 45 C165 65, 155 125, 130 145 C100 165, 60 140, 75 100 C80 80, 100 50, 125 45 Z" stroke="#881326" stroke-width="9"/>
+            <!-- Golden Wing / Body Interior -->
+            <path d="M85 110 C95 85, 125 80, 135 90 C120 120, 95 135, 65 140 C75 130, 80 120, 85 110 Z" fill="#d97706" stroke="#881326" stroke-width="6"/>
+            <!-- Eye -->
+            <ellipse cx="130" cy="72" rx="4" ry="5" fill="#1e1e24"/>
+          </g>
         </svg>
       </div>
 
-      <h2>AMUTAN GROUPS</h2>
-      <p>Poultry Farm Operations & Shift Management Portal</p>
+      <div class="login-brand-title">AMUTAN</div>
+      <div class="login-brand-sub">GROUP</div>
 
-      <form onsubmit="handleLogin(event)" autocomplete="off">
-        <div class="login-input-group">
-          <label>Username / Login ID</label>
-          <div class="login-input-wrapper">
-            <span class="login-input-icon">👤</span>
-            <input type="text" id="loginUser" class="login-input-control" placeholder="Enter username" required autocomplete="off">
-          </div>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Username / Account ID</label>
+          <input type="text" id="loginUser" class="form-control" placeholder="e.g. admin, amutan, manager" required autocomplete="off">
         </div>
-
-        <div class="login-input-group">
+        <div class="form-group">
           <label>Password</label>
-          <div class="login-input-wrapper">
-            <span class="login-input-icon">🔒</span>
-            <input type="password" id="loginPass" class="login-input-control" placeholder="Enter password" required autocomplete="new-password">
-          </div>
+          <input type="password" id="loginPass" class="form-control" placeholder="••••••••" required>
         </div>
-
-        <button type="submit" class="login-submit-btn">
-          <span>Sign In to Dashboard</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          Secure Sign In →
         </button>
       </form>
     </div>
   </div>
 
-  <!-- DRAWER -->
+  <!-- =========================================================
+       DRAWER
+       ========================================================= -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
   <div class="drawer" id="drawer">
-    <div class="drawer-header">
-      <div class="drawer-brand">
-        <h3>AMUTAN</h3>
-        <small>Poultry Portal</small>
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 1rem;">
+      <div class="brand-wrap" onclick="goToUnitSelection()">
+        <svg class="amutan-logo-svg" width="36" height="36" viewBox="0 0 200 200">
+          <path d="M125 45 C165 65, 155 125, 130 145 C100 165, 60 140, 75 100 Z" stroke="#881326" stroke-width="12" fill="none"/>
+          <path d="M85 110 C95 85, 125 80, 135 90 C120 120, 95 135, 65 140 Z" fill="#d97706" stroke="#881326" stroke-width="6"/>
+        </svg>
+        <div class="brand-text">
+          <h1>AMUTAN</h1>
+          <small>PORTAL</small>
+        </div>
       </div>
-      <button class="close-btn" onclick="toggleDrawer()">✕</button>
+      <button class="btn btn-secondary btn-sm" onclick="toggleDrawer()">✕</button>
     </div>
 
     <div class="drawer-scroll-body">
-      <div class="nav-section">
-        <span class="nav-section-title">Workforce & Operations</span>
-        <button class="nav-link active" onclick="switchNav('staffPanel', this)"><span class="icon-box">👥</span> Staff Directory</button>
-        <button class="nav-link" onclick="switchNav('attPanel', this)"><span class="icon-box">⚡</span> Shift Muster & Attendance</button>
-        <button class="nav-link" onclick="switchNav('timeTrackerPanel', this)"><span class="icon-box">⏱️</span> Late Arrival & Overtime</button>
-        <button class="nav-link" onclick="switchNav('advPanel', this)"><span class="icon-box">💰</span> Advance Salary Ledger</button>
-        <button class="nav-link" onclick="switchNav('payrollPanel', this)"><span class="icon-box">📄</span> Monthly Payroll & PDF</button>
-      </div>
+      <span class="nav-section-title">Operations</span>
+      <button class="nav-link active" onclick="switchNav('staffPanel', this)">👥 Staff & Workers</button>
+      <button class="nav-link" onclick="switchNav('attPanel', this)">⚡ Muster Attendance</button>
+      <button class="nav-link" onclick="switchNav('timeTrackerPanel', this)">⏱️ Overtime & Logs</button>
+      <button class="nav-link" onclick="switchNav('advPanel', this)">💰 Salary Advances</button>
+      <button class="nav-link" onclick="switchNav('payrollPanel', this)">📄 Payroll & Payslips</button>
 
-      <div class="nav-section">
-        <span class="nav-section-title">Production & Logistics</span>
-        <button class="nav-link" onclick="switchNav('eggPanel', this)"><span class="icon-box">🥚</span> Daily Egg Collection</button>
-        <button class="nav-link" onclick="switchNav('feedPanel', this)"><span class="icon-box">🌾</span> Feed Stock & Intake</button>
-        <button class="nav-link" onclick="switchNav('mortalityPanel', this)"><span class="icon-box">🩺</span> Flock Mortality & Health</button>
-        <button class="nav-link" onclick="switchNav('gatePassPanel', this)"><span class="icon-box">🚛</span> Gate Pass & DOC Dispatch</button>
-      </div>
+      <span class="nav-section-title">Production & Stock</span>
+      <button class="nav-link" onclick="switchNav('eggPanel', this)">🥚 Egg Collection & Sales</button>
+      <button class="nav-link" onclick="switchNav('feedPanel', this)">🌾 Feed Stock & Intake</button>
+      <button class="nav-link" onclick="switchNav('mortalityPanel', this)">🩺 Flock Health & Vaccine</button>
+      <button class="nav-link" onclick="switchNav('gatePassPanel', this)">🚛 Vehicle Gate Pass</button>
 
-      <div class="nav-section">
-        <span class="nav-section-title">Financials & Reports</span>
-        <button class="nav-link" onclick="switchNav('financePanel', this)"><span class="icon-box">💵</span> Unit P&L Statement</button>
-        <button class="nav-link" onclick="switchNav('reportHubPanel', this)"><span class="icon-box">📊</span> Comprehensive Unit Report</button>
-      </div>
+      <span class="nav-section-title">Financials</span>
+      <button class="nav-link" onclick="switchNav('financePanel', this)">💵 Unit P&L Statement</button>
 
-      <div class="nav-section">
-        <span class="nav-section-title">System & Security</span>
-        <button class="nav-link" id="rolesMenuBtn" onclick="switchNav('rolesPanel', this)"><span class="icon-box">🛡️</span> Role & User Access</button>
-        <button class="nav-link" onclick="switchNav('backupPanel', this)"><span class="icon-box">💾</span> Cloud Backup & Sync</button>
+      <!-- ADMIN ONLY SECTION -->
+      <div id="adminNavSection" style="display: none;">
+        <span class="nav-section-title" style="color: var(--primary);">Master Admin Controls</span>
+        <button class="nav-link" onclick="switchNav('adminPanel', this)" style="color: var(--primary); font-weight: 900;">⚙️ Admin Master Settings</button>
       </div>
     </div>
 
-    <div class="drawer-footer">
-      <button class="btn btn-secondary" onclick="goToUnitSelection()" style="width: 100%; padding: 0.75rem;">Switch Poultry Division</button>
-      <button class="btn btn-danger-solid" onclick="logout()" style="width: 100%; padding: 0.75rem;">Sign Out</button>
+    <div style="padding-top: 1rem; border-top: 2px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem;">
+      <button class="btn btn-secondary" onclick="goToUnitSelection()" style="width: 100%;">Switch Poultry Unit</button>
+      <button class="btn btn-danger" onclick="logout()" style="width: 100%;">Sign Out</button>
     </div>
   </div>
 
-  <!-- MAIN APP -->
+  <!-- =========================================================
+       MAIN APPLICATION
+       ========================================================= -->
   <div id="appContainer" style="display: none;">
     <header>
       <div class="header-left">
-        <div class="menu-trigger" id="mainMenuTrigger" onclick="toggleDrawer()">
+        <div class="menu-trigger" onclick="toggleDrawer()">
           <span></span><span></span><span></span>
         </div>
-        <div class="brand-wrap">
+        <div class="brand-wrap" onclick="goToUnitSelection()">
+          <svg class="amutan-logo-svg" width="38" height="38" viewBox="0 0 200 200">
+            <path d="M90 35 C100 20, 120 20, 130 35 C135 30, 145 35, 148 45 C155 45, 160 55, 150 65" fill="#881326"/>
+            <path d="M40 70 C60 65, 80 80, 85 100 C65 95, 45 105, 35 125 Z" fill="#881326"/>
+            <path d="M125 45 C165 65, 155 125, 130 145 C100 165, 60 140, 75 100 Z" stroke="#881326" stroke-width="10" fill="none"/>
+            <path d="M85 110 C95 85, 125 80, 135 90 C120 120, 95 135, 65 140 Z" fill="#d97706" stroke="#881326" stroke-width="6"/>
+          </svg>
           <div class="brand-text">
-            <h1>AMUTAN GROUPS</h1>
-            <small>Tirupur District | Poultry Breeder & Hatchery Estates</small>
+            <h1>AMUTAN</h1>
+            <small>GROUP</small>
           </div>
         </div>
       </div>
 
       <div class="header-right">
-        <button class="theme-toggle-btn" onclick="toggleTheme()">🌓</button>
+        <button class="btn btn-secondary btn-sm" onclick="toggleTheme()">🌓</button>
         <div class="user-pill">
-          <strong id="activeUserName" style="font-size: 0.84rem;">Amutan</strong>
-          <span class="role-badge" id="activeUserRole">MD</span>
+          <strong id="activeUserName" style="font-size: 0.84rem;">Admin</strong>
+          <span class="role-badge" id="activeUserRole">Admin</span>
         </div>
         <button class="btn btn-secondary btn-sm" onclick="logout()">Exit</button>
       </div>
@@ -557,640 +354,258 @@
 
     <div class="dashboard-container">
 
-      <!-- SCREEN 1: 3 POULTRY DIVISIONS -->
+      <!-- SCREEN 1: DYNAMIC UNIT SELECTOR -->
       <div id="unitSelectScreen">
         <div class="landing-header">
-          <h2>Select Poultry Division</h2>
-          <p>Manage live records, shift muster, feeds, and finances across all 3 units</p>
+          <h2>Select Operational Unit</h2>
+          <p>Access records, shift muster, feeds, and finances across units or add a new division</p>
         </div>
 
-        <div class="units-grid">
-          <!-- Unit 1 -->
-          <div class="unit-card" onclick="openUnit(1)">
-            <div>
-              <div class="unit-icon"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 2.5-2 4.5-5 9-3-4.5-5-6.5-5-9a5 5 0 0 1 5-5z"/><circle cx="12" cy="7" r="1.5"/><path d="M9 16c-3 1.5-5 3-5 5h16c0-2-2-3.5-5-5"/></svg></div>
-              <h3>AMUTAN BREEDING FARM</h3>
-              <p>Parent Stock Breeder Operations, Breeder Mash & Hatching Eggs</p>
+        <div class="card" style="margin-bottom: 2rem;">
+          <div class="card-title">➕ Add New Poultry Division / Unit</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Unit Name</label>
+              <input type="text" id="newUnitName" class="form-control" placeholder="e.g. Amutan Breeder Farm 4">
             </div>
-            <button class="unit-btn">Enter Division</button>
-          </div>
-
-          <!-- Unit 2 -->
-          <div class="unit-card" onclick="openUnit(2)">
-            <div>
-              <div class="unit-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-              <h3>AMUTAN FARM</h3>
-              <p>Commercial Poultry Sheds, Table Eggs, Broiler/Layer Rearing</p>
+            <div class="form-group">
+              <label>Description / Scope</label>
+              <input type="text" id="newUnitDesc" class="form-control" placeholder="e.g. Broiler Rearing Sheds">
             </div>
-            <button class="unit-btn">Enter Division</button>
-          </div>
-
-          <!-- Unit 3 -->
-          <div class="unit-card" onclick="openUnit(3)">
-            <div>
-              <div class="unit-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" rx="7" ry="9" cy="13"/><path d="M12 4c2 3 2 6 0 9"/></svg></div>
-              <h3>AMUTAN HATCHERIES</h3>
-              <p>Setter, Candling, Incubation & Day Old Chick (DOC) Dispatches</p>
-            </div>
-            <button class="unit-btn">Enter Division</button>
+            <button class="btn btn-primary" onclick="addNewUnit()">Create Unit</button>
           </div>
         </div>
+
+        <div class="units-grid" id="unitsGridContainer"></div>
       </div>
 
-      <!-- SCREEN 2: ACTIVE UNIT WORKSPACE -->
-      <div id="unitWorkspaceScreen">
-        <div class="workspace-banner">
+      <!-- SCREEN 2: ACTIVE WORKSPACE -->
+      <div id="unitWorkspaceScreen" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
           <div>
-            <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Active Poultry Division</span>
-            <h2 id="currentUnitTitle">AMUTAN BREEDING FARM</h2>
+            <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent); text-transform: uppercase;">Active Division</span>
+            <h2 id="currentUnitTitle" style="color: var(--primary);">Unit Workspace</h2>
           </div>
-          <button class="back-btn" onclick="goToUnitSelection()">← Switch Division</button>
+          <button class="btn btn-secondary" onclick="goToUnitSelection()">← Switch Unit</button>
         </div>
 
-        <!-- GAUGES / KPIS -->
+        <!-- KPIS -->
         <div class="kpi-grid">
-          <div class="kpi-card">
-            <div>
-              <span>Hatchability %</span>
-              <h3 id="kpiHatchability">0%</h3>
-            </div>
-            <div class="kpi-icon">🎯</div>
-          </div>
-          <div class="kpi-card">
-            <div>
-              <span>Total Eggs</span>
-              <h3 id="kpiEggs">0</h3>
-            </div>
-            <div class="kpi-icon">🥚</div>
-          </div>
-          <div class="kpi-card">
-            <div>
-              <span>Feed Stock</span>
-              <h3 id="kpiFeed">0 Bags</h3>
-            </div>
-            <div class="kpi-icon">🌾</div>
-          </div>
-          <div class="kpi-card">
-            <div>
-              <span>Net Profit / Loss</span>
-              <h3 id="kpiNetPL">₹0</h3>
-            </div>
-            <div class="kpi-icon">💰</div>
-          </div>
+          <div class="kpi-card"><div><span>Hatchability</span><h3 id="kpiHatchability">0%</h3></div><div style="font-size: 1.5rem;">🎯</div></div>
+          <div class="kpi-card"><div><span>Total Eggs</span><h3 id="kpiEggs">0</h3></div><div style="font-size: 1.5rem;">🥚</div></div>
+          <div class="kpi-card"><div><span>Feed Balance</span><h3 id="kpiFeed">0 Bags</h3></div><div style="font-size: 1.5rem;">🌾</div></div>
+          <div class="kpi-card"><div><span>Net Balance</span><h3 id="kpiNetPL">₹0</h3></div><div style="font-size: 1.5rem;">💰</div></div>
         </div>
 
-        <!-- 1. STAFF DIRECTORY -->
+        <!-- 1. STAFF -->
         <div id="staffPanel" class="panel active">
           <div class="card">
-            <div class="card-title">Register Worker Under <span class="unit-label-span"></span></div>
+            <div class="card-title">Add Staff Member</div>
             <div class="form-grid">
-              <div class="form-group">
-                <label>Worker Full Name</label>
-                <input type="text" id="staffName" class="form-control" placeholder="Full Name">
-              </div>
-              <div class="form-group">
-                <label>WhatsApp Phone Number</label>
-                <input type="text" id="staffPhone" class="form-control" placeholder="e.g. 9876543210">
-              </div>
-              <div class="form-group">
-                <label>Job Designation</label>
-                <input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Caretaker, Supervisor">
-              </div>
-              <div class="form-group">
-                <label>Full Day Wage Rate (₹)</label>
-                <input type="number" id="staffWage" class="form-control" placeholder="550">
-              </div>
+              <div class="form-group"><label>Worker Name</label><input type="text" id="staffName" class="form-control" placeholder="Full Name"></div>
+              <div class="form-group"><label>Phone</label><input type="text" id="staffPhone" class="form-control" placeholder="Phone Number"></div>
+              <div class="form-group"><label>Role</label><input type="text" id="staffRole" class="form-control" placeholder="e.g. Feeder, Incharge"></div>
+              <div class="form-group"><label>Daily Rate (₹)</label><input type="number" id="staffWage" class="form-control" placeholder="600"></div>
               <button class="btn btn-primary" onclick="addWorker()">Add Worker</button>
             </div>
           </div>
-
           <div class="card">
             <div class="card-title">
-              <span>Staff Roster - <span class="unit-label-span"></span></span>
-              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="downloadPoultryStaffPDF()">📄 PDF</button>
-                <button class="btn btn-whatsapp btn-sm" onclick="shareRosterWhatsApp()">💬 Share Roster</button>
-                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('staffList', 'Staff_List.csv')">CSV</button>
-              </div>
-            </div>
-            <div class="toolbar">
-              <input type="text" class="search-input" id="staffSearch" placeholder="Search worker..." oninput="renderWorkspace()">
+              <span>Staff List</span>
+              <button class="btn btn-primary btn-sm" onclick="exportStaffPDF()">📄 Export PDF</button>
             </div>
             <div class="table-responsive">
               <table>
-                <thead>
-                  <tr><th>#</th><th>Name</th><th>WhatsApp Phone</th><th>Designation</th><th>Daily Rate</th><th>Action</th></tr>
-                </thead>
+                <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Role</th><th>Daily Rate</th><th>Action</th></tr></thead>
                 <tbody id="staffList"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 2. TWICE DAILY MUSTER & MANUAL ATTENDANCE -->
+        <!-- 2. ATTENDANCE MUSTER -->
         <div id="attPanel" class="panel">
           <div class="card">
             <div class="card-title">
-              <span>⚡ Twice Daily Attendance Muster (Morning 0.5 + Afternoon 0.5)</span>
-              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-success btn-sm" onclick="quickMarkAllShifts('Present')">Mark All Full Day</button>
-                <button class="btn btn-primary btn-sm" onclick="saveBatchAttendance()">Save Muster</button>
-              </div>
+              <span>Shift Attendance Muster</span>
+              <button class="btn btn-primary btn-sm" onclick="saveBatchAttendance()">Save Muster</button>
             </div>
-            
-            <div style="margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
-              <label style="font-weight: 800; font-size: 0.88rem;">Muster Date:</label>
+            <div style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center;">
               <input type="date" id="batchAttDate" class="form-control" style="width: auto;" onchange="loadBatchAttendanceForDate()">
-              <button class="btn btn-whatsapp btn-sm" onclick="shareAttendanceWhatsApp()">💬 Send Daily Muster on WhatsApp</button>
             </div>
-
-            <!-- MANUAL INDIVIDUAL ENTRY FORM -->
-            <div style="background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 1.2rem; margin-bottom: 1.5rem;">
-              <div style="font-weight: 900; color: var(--primary); margin-bottom: 0.8rem; font-size: 0.95rem;">✍️ Manual Single Worker Attendance Punch</div>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Select Worker</label>
-                  <select id="manualWorkerSelect" class="form-control"></select>
-                </div>
-                <div class="form-group">
-                  <label>Shift</label>
-                  <select id="manualShiftSelect" class="form-control">
-                    <option value="morning">Morning Shift (0.5 Unit)</option>
-                    <option value="afternoon">Afternoon Shift (0.5 Unit)</option>
-                    <option value="both">Full Day (Both Shifts - 1.0 Unit)</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Status</label>
-                  <select id="manualStatusSelect" class="form-control">
-                    <option value="Present">Present</option>
-                    <option value="Absent">Absent</option>
-                  </select>
-                </div>
-                <button class="btn btn-primary" onclick="markManualAttendance()">✔ Mark Entry</button>
-              </div>
-            </div>
-
-            <div class="batch-muster-grid" id="batchMusterContainer"></div>
+            <div class="units-grid" id="batchMusterContainer"></div>
           </div>
         </div>
 
-        <!-- 3. LATE ARRIVAL & OVERTIME (OT) TRACKER -->
+        <!-- 3. OVERTIME -->
         <div id="timeTrackerPanel" class="panel">
           <div class="card">
-            <div class="card-title">
-              <span>⏱️ Shift Timing, Late Cutoffs & Overtime Ledger (<span class="unit-label-span"></span>)</span>
-            </div>
-            
-            <div class="form-grid" style="margin-bottom: 1.5rem;">
-              <div class="form-group">
-                <label>Morning Shift Cutoff Time</label>
-                <input type="time" id="timeCutoffMorning" class="form-control" value="08:30" onchange="persistTimeRules()">
-              </div>
-              <div class="form-group">
-                <label>Afternoon Shift Cutoff Time</label>
-                <input type="time" id="timeCutoffAfternoon" class="form-control" value="13:30" onchange="persistTimeRules()">
-              </div>
-              <div class="form-group">
-                <label>Overtime Hourly Rate (₹ / hr)</label>
-                <input type="number" id="timeOtRate" class="form-control" value="75" onchange="persistTimeRules()">
-              </div>
-            </div>
-
-            <div class="card-title" style="font-size: 1rem;">Log Manual Overtime (OT) Hours</div>
-            <div class="form-grid" style="margin-bottom: 1.5rem;">
-              <div class="form-group">
-                <label>Date</label>
-                <input type="date" id="otLogDate" class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Worker</label>
-                <select id="otWorkerSelect" class="form-control"></select>
-              </div>
-              <div class="form-group">
-                <label>OT Hours Worked</label>
-                <input type="number" step="0.5" id="otHoursInput" class="form-control" placeholder="2.5">
-              </div>
-              <div class="form-group">
-                <label>Reason / Work Description</label>
-                <input type="text" id="otReasonInput" class="form-control" placeholder="e.g. Night flock loading / Shed spray">
-              </div>
-              <button class="btn btn-primary" onclick="addOvertimeLog()">Record Overtime</button>
-            </div>
-
-            <div class="card-title" style="font-size: 1rem; border-top: 1px solid var(--border); padding-top: 1rem;">
-              <span>Overtime Log</span>
-              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('otListBody', 'Overtime_Log.csv')">Export CSV</button>
-            </div>
-            <div class="table-responsive">
-              <table>
-                <thead><tr><th>Date</th><th>Worker</th><th>Hours</th><th>Total Earned (₹)</th><th>Remarks</th></tr></thead>
-                <tbody id="otListBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. VEHICLE GATE PASS & DOC DISPATCH TRACKER -->
-        <div id="gatePassPanel" class="panel">
-          <div class="card">
-            <div class="card-title">
-              <span>🚛 Issue Vehicle Gate Pass & DOC / Egg Dispatch (<span class="unit-label-span"></span>)</span>
-            </div>
-
+            <div class="card-title">Log Worker Overtime</div>
             <div class="form-grid">
-              <div class="form-group">
-                <label>Date & Time</label>
-                <input type="datetime-local" id="gatePassDateTime" class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Vehicle Number</label>
-                <input type="text" id="gateVehicleNo" class="form-control" placeholder="e.g. TN 38 BX 4512">
-              </div>
-              <div class="form-group">
-                <label>Driver Name & Phone</label>
-                <input type="text" id="gateDriverInfo" class="form-control" placeholder="Driver Name / Mobile">
-              </div>
-              <div class="form-group">
-                <label>Dispatch Cargo Name / Type</label>
-                <input type="text" id="gateCargoType" class="form-control" placeholder="e.g. DOC Chicks, Hatching Eggs, Manure">
-              </div>
-              <div class="form-group">
-                <label>Quantity (Chicks / Crates / Trays / Bags)</label>
-                <input type="number" id="gateQuantity" class="form-control" placeholder="12000">
-              </div>
-              <div class="form-group">
-                <label>Destination / Trader Name</label>
-                <input type="text" id="gateDestination" class="form-control" placeholder="e.g. Coimbatore Broilers / Trader">
-              </div>
-              <div class="form-group">
-                <label>Security & Disinfection Remarks</label>
-                <input type="text" id="gateDisinfection" class="form-control" placeholder="e.g. Wheel-dip done, Sanitized">
-              </div>
-              <button class="btn btn-primary" onclick="issueVehicleGatePass()">Issue Gate Pass</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span>Gate Passes & Vehicle Movement Log</span>
-              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('gatePassListBody', 'GatePasses.csv')">Export CSV</button>
-            </div>
-            <div class="table-responsive">
-              <table>
-                <thead><tr><th>Pass #</th><th>Date & Time</th><th>Vehicle #</th><th>Driver</th><th>Cargo & Quantity</th><th>Destination</th><th>Action</th></tr></thead>
-                <tbody id="gatePassListBody"></tbody>
-              </table>
+              <div class="form-group"><label>Date</label><input type="date" id="otLogDate" class="form-control"></div>
+              <div class="form-group"><label>Worker</label><select id="otWorkerSelect" class="form-control"></select></div>
+              <div class="form-group"><label>OT Hours</label><input type="number" step="0.5" id="otHoursInput" class="form-control" placeholder="2"></div>
+              <div class="form-group"><label>Reason</label><input type="text" id="otReasonInput" class="form-control" placeholder="Night flock shift"></div>
+              <button class="btn btn-primary" onclick="addOvertimeLog()">Record OT</button>
             </div>
           </div>
         </div>
 
-        <!-- 5. ADVANCES -->
+        <!-- 4. ADVANCES -->
         <div id="advPanel" class="panel">
           <div class="card">
-            <div class="card-title">Issue Cash Advance Under <span class="unit-label-span"></span></div>
+            <div class="card-title">Record Advance Given</div>
             <div class="form-grid">
-              <div class="form-group">
-                <label>Date</label>
-                <input type="date" id="advDate" class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Worker</label>
-                <select id="advWorker" class="form-control"></select>
-              </div>
-              <div class="form-group">
-                <label>Advance Amount (₹)</label>
-                <input type="number" id="advAmount" class="form-control" placeholder="1000">
-              </div>
-              <button class="btn btn-primary" onclick="issueAdvance()">Record Advance</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span>Advances Deductions Log</span>
-              <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('advList', 'Advances.csv')">Export CSV</button>
-            </div>
-            <div class="table-responsive">
-              <table>
-                <thead><tr><th>Date</th><th>Worker</th><th>Amount Given</th></tr></thead>
-                <tbody id="advList"></tbody>
-              </table>
+              <div class="form-group"><label>Date</label><input type="date" id="advDate" class="form-control"></div>
+              <div class="form-group"><label>Worker</label><select id="advWorker" class="form-control"></select></div>
+              <div class="form-group"><label>Amount (₹)</label><input type="number" id="advAmount" class="form-control" placeholder="1000"></div>
+              <button class="btn btn-primary" onclick="issueAdvance()">Save Advance</button>
             </div>
           </div>
         </div>
 
-        <!-- 6. PAYROLL -->
+        <!-- 5. PAYROLL -->
         <div id="payrollPanel" class="panel">
           <div class="card">
             <div class="card-title">
-              <span>Monthly Payroll & Payslips (<span class="unit-label-span"></span>)</span>
-              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-success btn-sm" onclick="downloadAllPayrollPDF()">📄 Master PDF</button>
-                <button class="btn btn-whatsapp btn-sm" onclick="shareMasterPayrollWhatsApp()">💬 Summary</button>
-                <button class="btn btn-secondary btn-sm" onclick="exportTableToCSV('payrollList', 'Payroll.csv')">CSV</button>
-              </div>
-            </div>
-            <div class="toolbar">
-              <input type="month" id="payrollMonthFilter" class="form-control" onchange="renderWorkspace()">
+              <span>Monthly Payroll</span>
+              <button class="btn btn-primary btn-sm" onclick="exportPayrollPDF()">📄 Master PDF</button>
             </div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Worker</th><th>Daily Rate</th><th>Shifts (Units)</th><th>Overtime (₹)</th><th>Gross Wage</th><th>Advances</th><th>Net Payable</th><th>Actions</th></tr></thead>
+                <thead><tr><th>Worker</th><th>Rate</th><th>Shifts</th><th>OT (₹)</th><th>Gross</th><th>Advances</th><th>Net Salary</th><th>Actions</th></tr></thead>
                 <tbody id="payrollList"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- 7. EGG PRODUCTION -->
+        <!-- 6. EGG PRODUCTION -->
         <div id="eggPanel" class="panel">
           <div class="card">
-            <div class="card-title">Record Egg Collection & Sales (<span class="unit-label-span"></span>)</div>
+            <div class="card-title">Record Egg Collection</div>
             <div class="form-grid">
-              <div class="form-group">
-                <label>Date</label>
-                <input type="date" id="eggDate" class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Shed / Pen #</label>
-                <input type="text" id="eggShed" class="form-control" placeholder="e.g. Shed 1">
-              </div>
-              <div class="form-group">
-                <label>Hatching Eggs (Good)</label>
-                <input type="number" id="eggHatching" class="form-control" placeholder="12500">
-              </div>
-              <div class="form-group">
-                <label>Commercial / Table</label>
-                <input type="number" id="eggCommercial" class="form-control" placeholder="450">
-              </div>
-              <div class="form-group">
-                <label>Broken / Rejection</label>
-                <input type="number" id="eggBroken" class="form-control" placeholder="80">
-              </div>
-              <div class="form-group">
-                <label>Eggs / DOC Sold</label>
-                <input type="number" id="eggSold" class="form-control" placeholder="12000">
-              </div>
-              <div class="form-group">
-                <label>Selling Price (₹ / unit)</label>
-                <input type="number" step="0.25" id="eggPrice" class="form-control" placeholder="6.50">
-              </div>
-              <button class="btn btn-primary" onclick="addEggLog()">Save Record</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span>Egg Production Ledger</span>
-              <button class="btn btn-whatsapp btn-sm" onclick="shareEggProductionWhatsApp()">💬 Share on WhatsApp</button>
-            </div>
-            <div class="table-responsive">
-              <table>
-                <thead><tr><th>Date</th><th>Shed</th><th>Hatching</th><th>Commercial</th><th>Broken</th><th>Total</th><th>Sold</th><th>Revenue</th><th>Hatch %</th></tr></thead>
-                <tbody id="eggList"></tbody>
-              </table>
+              <div class="form-group"><label>Date</label><input type="date" id="eggDate" class="form-control"></div>
+              <div class="form-group"><label>Shed #</label><input type="text" id="eggShed" class="form-control" placeholder="Shed 1"></div>
+              <div class="form-group"><label>Hatching Eggs</label><input type="number" id="eggHatching" class="form-control" placeholder="10000"></div>
+              <div class="form-group"><label>Commercial / Table</label><input type="number" id="eggCommercial" class="form-control" placeholder="500"></div>
+              <div class="form-group"><label>Broken</label><input type="number" id="eggBroken" class="form-control" placeholder="50"></div>
+              <div class="form-group"><label>Sold</label><input type="number" id="eggSold" class="form-control" placeholder="9500"></div>
+              <div class="form-group"><label>Price / Egg (₹)</label><input type="number" step="0.1" id="eggPrice" class="form-control" placeholder="6.5"></div>
+              <button class="btn btn-primary" onclick="addEggLog()">Save Collection</button>
             </div>
           </div>
         </div>
 
-        <!-- 8. FEED INVENTORY (MANUAL ENTRIES) -->
+        <!-- 7. FEED -->
         <div id="feedPanel" class="panel">
           <div class="card">
-            <div class="card-title">Log Feed Stock & Daily Ration (<span class="unit-label-span"></span>)</div>
+            <div class="card-title">Feed Stock & Intake</div>
             <div class="form-grid">
-              <div class="form-group">
-                <label>Date</label>
-                <input type="date" id="feedDate" class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Feed Name / Variety (Manual Entry)</label>
-                <input type="text" id="feedType" class="form-control" placeholder="e.g. Parent Breeder Mash, Grower, Soya Pre-mix">
-              </div>
-              <div class="form-group">
-                <label>Stock Received (Bags In)</label>
-                <input type="number" id="feedIn" class="form-control" placeholder="0">
-              </div>
-              <div class="form-group">
-                <label>Stock Fed / Consumed (Bags Out)</label>
-                <input type="number" id="feedOut" class="form-control" placeholder="0">
-              </div>
-              <div class="form-group">
-                <label>Feed Purchase Cost (₹)</label>
-                <input type="number" id="feedCost" class="form-control" placeholder="optional">
-              </div>
-              <button class="btn btn-primary" onclick="addFeedLog()">Record Entry</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span>Feed Consumption History</span>
-              <button class="btn btn-whatsapp btn-sm" onclick="shareFeedWhatsApp()">💬 Share on WhatsApp</button>
-            </div>
-            <div class="table-responsive">
-              <table>
-                <thead><tr><th>Date</th><th>Feed Name / Variety</th><th>Received (Bags)</th><th>Fed (Bags)</th></tr></thead>
-                <tbody id="feedList"></tbody>
-              </table>
+              <div class="form-group"><label>Date</label><input type="date" id="feedDate" class="form-control"></div>
+              <div class="form-group"><label>Feed Variety</label><input type="text" id="feedType" class="form-control" placeholder="Breeder Mash"></div>
+              <div class="form-group"><label>Bags Received</label><input type="number" id="feedIn" class="form-control" placeholder="0"></div>
+              <div class="form-group"><label>Bags Fed</label><input type="number" id="feedOut" class="form-control" placeholder="0"></div>
+              <div class="form-group"><label>Cost (₹)</label><input type="number" id="feedCost" class="form-control" placeholder="optional"></div>
+              <button class="btn btn-primary" onclick="addFeedLog()">Record Feed</button>
             </div>
           </div>
         </div>
 
-        <!-- 9. MORTALITY, VACCINE & BIRD HEALTH (MANUAL ENTRIES) -->
+        <!-- 8. MORTALITY -->
         <div id="mortalityPanel" class="panel">
           <div class="card">
-            <div class="card-title">Flock Health, Mortality & Vaccine Log (<span class="unit-label-span"></span>)</div>
+            <div class="card-title">Flock Health & Mortality</div>
             <div class="form-grid">
-              <div class="form-group">
-                <label>Date</label>
-                <input type="date" id="mortDate" class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Shed / Pen #</label>
-                <input type="text" id="mortShed" class="form-control" placeholder="e.g. Shed 2, Brooder A">
-              </div>
-              <div class="form-group">
-                <label>Dead Birds Count</label>
-                <input type="number" id="mortCount" class="form-control" placeholder="0">
-              </div>
-              <div class="form-group">
-                <label>Vaccine Name (Manual Entry)</label>
-                <input type="text" id="vaccineName" class="form-control" placeholder="e.g. Lasota Booster, IBD, Mareks, ND-IB">
-              </div>
-              <div class="form-group">
-                <label>Medication / Clinical Notes</label>
-                <input type="text" id="mortNotes" class="form-control" placeholder="e.g. Given in drinking water, Vitamin D3 booster">
-              </div>
+              <div class="form-group"><label>Date</label><input type="date" id="mortDate" class="form-control"></div>
+              <div class="form-group"><label>Shed #</label><input type="text" id="mortShed" class="form-control" placeholder="Shed 1"></div>
+              <div class="form-group"><label>Mortality Count</label><input type="number" id="mortCount" class="form-control" placeholder="0"></div>
+              <div class="form-group"><label>Vaccine Name</label><input type="text" id="vaccineName" class="form-control" placeholder="Lasota"></div>
+              <div class="form-group"><label>Notes</label><input type="text" id="mortNotes" class="form-control" placeholder="Water intake normal"></div>
               <button class="btn btn-primary" onclick="addMortLog()">Record Health</button>
             </div>
           </div>
+        </div>
+
+        <!-- 9. GATE PASS -->
+        <div id="gatePassPanel" class="panel">
           <div class="card">
-            <div class="card-title">
-              <span>Mortality & Vaccination Sheet</span>
-              <button class="btn btn-whatsapp btn-sm" onclick="shareMortalityWhatsApp()">💬 Share on WhatsApp</button>
-            </div>
-            <div class="table-responsive">
-              <table>
-                <thead><tr><th>Date</th><th>Shed</th><th>Mortality</th><th>Vaccine Name</th><th>Medication / Notes</th></tr></thead>
-                <tbody id="mortList"></tbody>
-              </table>
+            <div class="card-title">Issue Vehicle Gate Pass</div>
+            <div class="form-grid">
+              <div class="form-group"><label>Date & Time</label><input type="datetime-local" id="gatePassDateTime" class="form-control"></div>
+              <div class="form-group"><label>Vehicle #</label><input type="text" id="gateVehicleNo" class="form-control" placeholder="TN 38 AB 1234"></div>
+              <div class="form-group"><label>Driver Details</label><input type="text" id="gateDriverInfo" class="form-control" placeholder="Driver Name & Phone"></div>
+              <div class="form-group"><label>Cargo</label><input type="text" id="gateCargoType" class="form-control" placeholder="DOC Chicks / Eggs"></div>
+              <div class="form-group"><label>Quantity</label><input type="number" id="gateQuantity" class="form-control" placeholder="10000"></div>
+              <div class="form-group"><label>Destination</label><input type="text" id="gateDestination" class="form-control" placeholder="Trader / Farm"></div>
+              <button class="btn btn-primary" onclick="issueVehicleGatePass()">Generate Pass</button>
             </div>
           </div>
         </div>
 
-        <!-- 10. FINANCIALS & P&L (MANUAL CATEGORIES) -->
+        <!-- 10. FINANCE -->
         <div id="financePanel" class="panel">
           <div class="card">
-            <div class="card-title">Record Farm Operational Expense (<span class="unit-label-span"></span>)</div>
+            <div class="card-title">Record Operational Expense</div>
             <div class="form-grid">
-              <div class="form-group">
-                <label>Expense Date</label>
-                <input type="date" id="expDate" class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Expense Category (Manual Entry)</label>
-                <input type="text" id="expCategory" class="form-control" placeholder="e.g. Electricity, Diesel, Tractor Hire, Labour, Disinfectant">
-              </div>
-              <div class="form-group">
-                <label>Description</label>
-                <input type="text" id="expDescription" class="form-control" placeholder="e.g. Brooder lamps, Generator fuel">
-              </div>
-              <div class="form-group">
-                <label>Amount (₹)</label>
-                <input type="number" id="expAmount" class="form-control" placeholder="2500">
-              </div>
+              <div class="form-group"><label>Date</label><input type="date" id="expDate" class="form-control"></div>
+              <div class="form-group"><label>Category</label><input type="text" id="expCategory" class="form-control" placeholder="Electricity / Fuel"></div>
+              <div class="form-group"><label>Amount (₹)</label><input type="number" id="expAmount" class="form-control" placeholder="2500"></div>
               <button class="btn btn-primary" onclick="addExpenseLog()">Add Expense</button>
             </div>
           </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span>Unit Profit & Loss Statement (<span class="unit-label-span"></span>)</span>
-              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="downloadFinancialPDF()">📄 PDF</button>
-                <button class="btn btn-whatsapp btn-sm" onclick="shareFinancialWhatsApp()">💬 WhatsApp</button>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <table>
-                <thead><tr><th>Account Component</th><th>Amount (₹)</th><th>Remarks</th></tr></thead>
-                <tbody>
-                  <tr><td><strong style="color: var(--success);">Unit Gross Sales Revenue</strong></td><td id="plGrossRevenue">₹0</td><td>From Egg & DOC Sales</td></tr>
-                  <tr><td><strong style="color: var(--danger);">Unit Worker Payroll Wages</strong></td><td id="plPayrollExpenses">₹0</td><td>Direct Labor Cost</td></tr>
-                  <tr><td><strong style="color: var(--danger);">Farm & Feed Operational Expenses</strong></td><td id="plFarmExpenses">₹0</td><td>Feed, power, medicines</td></tr>
-                  <tr style="background: var(--bg); font-size: 1.05rem;">
-                    <td><strong>UNIT NET PROFIT / LOSS</strong></td><td id="plNetBalance" style="font-weight: 900;">₹0</td><td id="plNetStatus">Break-Even</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
 
-        <!-- 11. REPORT HUB -->
-        <div id="reportHubPanel" class="panel">
-          <div class="card">
-            <div class="card-title">
-              <span>📊 Comprehensive Operational Report (<span class="unit-label-span"></span>)</span>
-              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="downloadComprehensiveUnitReportPDF()">📄 Download PDF</button>
-                <button class="btn btn-whatsapp btn-sm" onclick="shareComprehensiveUnitReportWhatsApp()">💬 Share Full Report</button>
-              </div>
+        <!-- 11. ADMIN MASTER CONTROLS -->
+        <div id="adminPanel" class="panel">
+          <div class="card" style="border-color: var(--primary);">
+            <div class="card-title" style="color: var(--primary);">⚙️ Admin Master Control: Formulas & Calculation Engine</div>
+            
+            <div class="formula-badge">
+              <strong>Active Calculation Formulas:</strong><br>
+              • Gross Wage = (Earned Shift Units × Daily Wage Rate) + (OT Hours × OT Hourly Multiplier Rate)<br>
+              • Net Wage = Gross Wage - Advance Deductions<br>
+              • Hatchability % = (Hatching Eggs / Total Eggs Collected) × 100
             </div>
-            <div class="table-responsive">
-              <table>
-                <thead><tr><th>Category</th><th>Key Metric</th><th>Unit Value</th><th>Status</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Workforce</strong></td><td>Active Roster</td><td id="repWorkersAtt">0 Workers</td><td>On Shift</td></tr>
-                  <tr><td><strong>Feed</strong></td><td>Warehouse Stock</td><td id="repFeedBalance">0 Bags</td><td>In Stock</td></tr>
-                  <tr><td><strong>Production</strong></td><td>Hatchability & Egg Yield</td><td id="repHatchabilityVal">0%</td><td>Hatching Quality</td></tr>
-                  <tr><td><strong>Flock Health</strong></td><td>Total Mortality</td><td id="repMortalityVal">0 Birds</td><td>Monitored</td></tr>
-                  <tr><td><strong>Financials</strong></td><td>Net Profit / Loss</td><td id="repNetPLVal" style="font-weight: 900;">₹0</td><td id="repNetPLStatus">Balanced</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
 
-        <!-- 12. ROLES (MD ONLY) -->
-        <div id="rolesPanel" class="panel">
-          <div class="card">
-            <div class="card-title">Create Management Account</div>
             <div class="form-grid">
-              <div class="form-group"><label>Username</label><input type="text" id="newUser" class="form-control"></div>
-              <div class="form-group"><label>Password</label><input type="text" id="newPass" class="form-control"></div>
-              <div class="form-group"><label>Role</label><select id="newRole" class="form-control"><option value="MD">Managing Director (MD)</option><option value="Manager">Farm Manager</option><option value="Supervisor">Supervisor</option></select></div>
-              <button class="btn btn-primary" onclick="createUser()">Save Account</button>
+              <div class="form-group">
+                <label>Morning Shift Unit Value</label>
+                <input type="number" step="0.1" id="cfgShiftMorning" class="form-control" value="0.5">
+              </div>
+              <div class="form-group">
+                <label>Afternoon Shift Unit Value</label>
+                <input type="number" step="0.1" id="cfgShiftAfternoon" class="form-control" value="0.5">
+              </div>
+              <div class="form-group">
+                <label>Default Overtime Hourly Multiplier (₹ / hr)</label>
+                <input type="number" id="cfgOtRate" class="form-control" value="75">
+              </div>
+              <button class="btn btn-primary" onclick="saveAdminFormulas()">Save Calculation Rules</button>
             </div>
           </div>
+
           <div class="card">
-            <div class="card-title">Active Management Accounts</div>
-            <div class="table-responsive">
-              <table><thead><tr><th>Username</th><th>Role</th><th>Action</th></tr></thead><tbody id="usersList"></tbody></table>
+            <div class="card-title">📄 PDF Header & Template Customizer</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Company Header Title</label>
+                <input type="text" id="cfgPdfHeader" class="form-control" value="AMUTAN GROUP OF ENTERPRISES">
+              </div>
+              <div class="form-group">
+                <label>PDF Subtitle / Bio</label>
+                <input type="text" id="cfgPdfSub" class="form-control" value="Poultry Operations, Breeding Farms & Hatcheries">
+              </div>
+              <div class="form-group">
+                <label>Header Primary Color (HEX)</label>
+                <input type="color" id="cfgPdfColor" class="form-control" value="#881326" style="height: 46px; padding: 4px;">
+              </div>
+              <button class="btn btn-primary" onclick="savePdfTemplateSettings()">Update PDF Template</button>
             </div>
           </div>
         </div>
 
-        <!-- 13. BACKUP & CLOUD RESET -->
-        <div id="backupPanel" class="panel">
-          <div class="card">
-            <div class="card-title">Cloud Backup & Device Sync</div>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-              <button class="btn btn-primary" onclick="exportBackupJSON()">Download Full System Backup</button>
-              <label class="btn btn-secondary" style="cursor: pointer;">Restore Backup File<input type="file" id="restoreFile" style="display: none;" onchange="importBackupJSON(event)"></label>
-            </div>
-          </div>
-
-          <div class="card" id="mdMasterResetCard" style="display: none; border-color: var(--danger); background: var(--bg);">
-            <div class="card-title" style="color: var(--danger);">⚠️ MD Exclusive: Master PDF Archive & Safe Data Reset</div>
-            <button class="btn btn-danger-solid" onclick="downloadMasterArchiveAndClearData()">📄 Download Complete Master Archive PDF & Clear All Data</button>
-          </div>
-        </div>
-
       </div>
-    </div>
-  </div>
-
-  <!-- FLOATING AMUTAN AI ASSISTANT -->
-  <div id="amutanAiFab" onclick="toggleAiChat()">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 3.36 2.07 6.24 5 7.43V20a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2.57c2.93-1.19 5-4.07 5-7.43a8 8 0 0 0-8-8z"/><line x1="9.5" y1="9" x2="9.51" y2="9"/><line x1="14.5" y1="9" x2="14.51" y2="9"/></svg>
-  </div>
-
-  <div id="amutanAiChatModal">
-    <div class="ai-chat-header">
-      <div style="display: flex; align-items: center; gap: 0.6rem;">
-        <span style="font-size: 1.3rem;">🤖</span>
-        <div>
-          <strong style="font-size: 0.95rem;">Amutan AI (அமுதன் AI)</strong>
-          <small style="display: block; font-size: 0.72rem; opacity: 0.9;">Voice & Operations Assistant</small>
-        </div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 0.4rem;">
-        <select id="aiLangSelector" class="ai-lang-select">
-          <option value="ta-IN">தமிழ்</option>
-          <option value="hi-IN">हिंदी</option>
-          <option value="en-IN">English</option>
-        </select>
-        <button style="background: transparent; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;" onclick="toggleAiChat()">✕</button>
-      </div>
-    </div>
-
-    <div class="ai-chat-body" id="aiChatBody">
-      <div class="ai-msg ai-msg-bot">
-        👋 வணக்கம்! நான் <strong>அமுதன் AI</strong>. Speak or type in Tamil, Hindi, or English:
-        <br><br>
-        • <em>"காலையில் அனைவரும் ஆஜர்" (Morning shift all present)</em><br>
-        • <em>"Vehicle gate pass DOC 12000" / "Dispatch pass"</em><br>
-        • <em>"Egg status" / "Add 50 bags feed"</em><br>
-        • <em>"Download report" / "Switch to Commercial farm"</em>
-      </div>
-    </div>
-
-    <div class="ai-chat-footer">
-      <button class="btn btn-secondary btn-sm" id="aiMicBtn" onclick="toggleAiVoice()">🎤</button>
-      <input type="text" id="aiChatInput" class="ai-chat-input" placeholder="Type naturally or speak..." onkeydown="if(event.key==='Enter') sendAiMessage()">
-      <button class="btn btn-ai btn-sm" onclick="sendAiMessage()">Send</button>
     </div>
   </div>
 
@@ -1213,28 +628,27 @@
     let state = {
       currentUser: null,
       selectedUnitId: null,
-      units: [
+      units: JSON.parse(localStorage.getItem('ag_dyn_units')) || [
         { id: 1, name: 'AMUTAN BREEDING FARM', desc: 'Parent Stock Breeder Operations' },
         { id: 2, name: 'AMUTAN FARM', desc: 'Commercial Poultry Operations' },
         { id: 3, name: 'AMUTAN HATCHERIES', desc: 'Incubation & Hatchery Facility' }
       ],
-      timeRules: JSON.parse(localStorage.getItem('ag_timerules')) || {
-        cutoffMorning: "08:30",
-        cutoffAfternoon: "13:30",
+      formulas: JSON.parse(localStorage.getItem('ag_formulas')) || {
+        morningUnit: 0.5,
+        afternoonUnit: 0.5,
         otRate: 75
       },
+      pdfSettings: JSON.parse(localStorage.getItem('ag_pdf_settings')) || {
+        headerTitle: 'AMUTAN GROUP',
+        subtitle: 'Poultry Farm Operations & Hatcheries',
+        primaryColor: '#881326'
+      },
       users: JSON.parse(localStorage.getItem('ag_users')) || [
+        { user: 'admin', pass: 'admin123', role: 'Admin', name: 'Master Admin' },
         { user: 'amutan', pass: '1234', role: 'MD', name: 'Amutan (MD)' },
-        { user: 'elango', pass: '1234', role: 'MD', name: 'Elango (MD)' },
-        { user: 'manager', pass: '1234', role: 'Manager', name: 'Farm Manager' },
-        { user: 'supervisor', pass: '1234', role: 'Supervisor', name: 'Supervisor' }
+        { user: 'manager', pass: '1234', role: 'Manager', name: 'Farm Manager' }
       ],
-      workers: JSON.parse(localStorage.getItem('ag_workers')) || [
-        { id: 101, unitId: 1, name: 'R. Murugan', phone: '9876543210', role: 'Feeder', wage: 550 },
-        { id: 102, unitId: 1, name: 'S. Kumar', phone: '9876543211', role: 'Flock Caretaker', wage: 600 },
-        { id: 103, unitId: 2, name: 'P. Selvam', phone: '9876543212', role: 'Shed Supervisor', wage: 700 },
-        { id: 104, unitId: 3, name: 'M. Ramesh', phone: '9876543213', role: 'Hatchery Incharge', wage: 650 }
-      ],
+      workers: JSON.parse(localStorage.getItem('ag_workers')) || [],
       attendance: JSON.parse(localStorage.getItem('ag_attendance')) || [],
       overtime: JSON.parse(localStorage.getItem('ag_overtime')) || [],
       gatepasses: JSON.parse(localStorage.getItem('ag_gatepasses')) || [],
@@ -1248,62 +662,35 @@
     let tempBatchAttendance = {};
 
     function persist() {
+      localStorage.setItem('ag_dyn_units', JSON.stringify(state.units));
+      localStorage.setItem('ag_formulas', JSON.stringify(state.formulas));
+      localStorage.setItem('ag_pdf_settings', JSON.stringify(state.pdfSettings));
       localStorage.setItem('ag_users', JSON.stringify(state.users));
       localStorage.setItem('ag_workers', JSON.stringify(state.workers));
       localStorage.setItem('ag_attendance', JSON.stringify(state.attendance));
       localStorage.setItem('ag_overtime', JSON.stringify(state.overtime));
       localStorage.setItem('ag_gatepasses', JSON.stringify(state.gatepasses));
-      localStorage.setItem('ag_timerules', JSON.stringify(state.timeRules));
       localStorage.setItem('ag_advances', JSON.stringify(state.advances));
       localStorage.setItem('ag_eggs', JSON.stringify(state.eggs));
       localStorage.setItem('ag_feed', JSON.stringify(state.feed));
       localStorage.setItem('ag_mortality', JSON.stringify(state.mortality));
       localStorage.setItem('ag_expenses', JSON.stringify(state.expenses));
 
-      db.ref('amutan_poultry_records').set(state).catch(e => console.error("Firebase sync error:", e));
+      db.ref('amutan_enterprise_data').set(state).catch(e => console.log("Firebase sync: ", e));
       renderWorkspace();
     }
 
-    function syncWithFirebase() {
-      db.ref('amutan_poultry_records').on('value', snap => {
+    function syncFirebase() {
+      db.ref('amutan_enterprise_data').on('value', snap => {
         const d = snap.val();
         if (d) {
-          if (d.users) state.users = d.users;
-          if (d.workers) state.workers = d.workers;
-          if (d.attendance) state.attendance = d.attendance;
-          if (d.overtime) state.overtime = d.overtime;
-          if (d.gatepasses) state.gatepasses = d.gatepasses;
-          if (d.timeRules) state.timeRules = d.timeRules;
-          if (d.advances) state.advances = d.advances;
-          if (d.eggs) state.eggs = d.eggs;
-          if (d.feed) state.feed = d.feed;
-          if (d.mortality) state.mortality = d.mortality;
-          if (d.expenses) state.expenses = d.expenses;
+          state = { ...state, ...d };
           renderWorkspace();
+          renderUnitCards();
         }
       });
     }
-    syncWithFirebase();
-
-    function toggleTheme() { document.body.classList.toggle('dark-theme'); }
-    function toggleDrawer() {
-      document.getElementById('drawer').classList.toggle('active');
-      document.getElementById('drawerOverlay').classList.toggle('active');
-    }
-
-    function switchNav(panelId, btn) {
-      if (!state.selectedUnitId && panelId !== 'rolesPanel' && panelId !== 'backupPanel') {
-        alert('Please select a poultry division first.');
-        return toggleDrawer();
-      }
-
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
-      document.getElementById(panelId).classList.add('active');
-      if (btn) btn.classList.add('active');
-      if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
-      renderWorkspace();
-    }
+    syncFirebase();
 
     function handleLogin(e) {
       e.preventDefault();
@@ -1314,52 +701,95 @@
         state.currentUser = found;
         document.getElementById('authOverlay').style.display = 'none';
         document.getElementById('appContainer').style.display = 'block';
-        applyPermissions();
+        document.getElementById('activeUserName').innerText = found.name;
+        document.getElementById('activeUserRole').innerText = found.role;
+        document.getElementById('adminNavSection').style.display = found.role === 'Admin' ? 'block' : 'none';
         goToUnitSelection();
       } else {
-        alert('Invalid Username or Password.');
+        alert('Invalid credentials. (Hint: admin / admin123)');
       }
     }
 
     function logout() {
       state.currentUser = null;
-      state.selectedUnitId = null;
-      document.getElementById('loginUser').value = '';
-      document.getElementById('loginPass').value = '';
-      document.getElementById('appContainer').style.display = 'none';
       document.getElementById('authOverlay').style.display = 'flex';
+      document.getElementById('appContainer').style.display = 'none';
       if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
     }
 
-    function applyPermissions() {
-      const u = state.currentUser;
-      document.getElementById('activeUserName').innerText = u.name;
-      document.getElementById('activeUserRole').innerText = u.role;
-      document.getElementById('rolesMenuBtn').style.display = u.role === 'MD' ? 'flex' : 'none';
-      const resetCard = document.getElementById('mdMasterResetCard');
-      if (resetCard) resetCard.style.display = u.role === 'MD' ? 'block' : 'none';
+    function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+    function toggleDrawer() {
+      document.getElementById('drawer').classList.toggle('active');
+      document.getElementById('drawerOverlay').classList.toggle('active');
     }
 
     function goToUnitSelection() {
       state.selectedUnitId = null;
       document.getElementById('unitSelectScreen').style.display = 'block';
       document.getElementById('unitWorkspaceScreen').style.display = 'none';
+      renderUnitCards();
       if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
     }
 
-    function openUnit(unitId) {
-      state.selectedUnitId = unitId;
-      const unit = state.units.find(u => u.id === unitId);
+    function renderUnitCards() {
+      const container = document.getElementById('unitsGridContainer');
+      container.innerHTML = '';
+      state.units.forEach(u => {
+        container.innerHTML += `
+          <div class="unit-card" onclick="openUnit(${u.id})">
+            <span class="unit-badge">Division #${u.id}</span>
+            <div>
+              <svg class="amutan-logo-svg" width="54" height="54" viewBox="0 0 200 200" style="margin-bottom: 0.8rem;">
+                <path d="M125 45 C165 65, 155 125, 130 145 C100 165, 60 140, 75 100 Z" stroke="#881326" stroke-width="12" fill="none"/>
+                <path d="M85 110 C95 85, 125 80, 135 90 C120 120, 95 135, 65 140 Z" fill="#d97706" stroke="#881326" stroke-width="6"/>
+              </svg>
+              <h3 style="color: var(--primary); margin-bottom: 0.4rem;">${u.name}</h3>
+              <p style="font-size: 0.84rem; color: var(--text-muted);">${u.desc}</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1.2rem;">
+              <button class="btn btn-primary btn-sm" style="flex:1;">Enter Unit →</button>
+              ${state.currentUser && state.currentUser.role === 'Admin' ? `<button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); deleteUnit(${u.id})">🗑️</button>` : ''}
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function addNewUnit() {
+      const name = document.getElementById('newUnitName').value.trim();
+      const desc = document.getElementById('newUnitDesc').value.trim();
+      if (!name) return alert('Enter a valid Unit Name.');
+      const newUnit = { id: Date.now(), name, desc: desc || 'Poultry Operations' };
+      state.units.push(newUnit);
+      document.getElementById('newUnitName').value = '';
+      document.getElementById('newUnitDesc').value = '';
+      persist();
+      renderUnitCards();
+    }
+
+    function deleteUnit(id) {
+      if (!confirm('Are you sure you want to delete this unit and its association?')) return;
+      state.units = state.units.filter(u => u.id !== id);
+      persist();
+      renderUnitCards();
+    }
+
+    function openUnit(id) {
+      state.selectedUnitId = id;
+      const unit = state.units.find(u => u.id === id);
       document.getElementById('unitSelectScreen').style.display = 'none';
       document.getElementById('unitWorkspaceScreen').style.display = 'block';
-
       document.getElementById('currentUnitTitle').innerText = unit.name;
-      document.querySelectorAll('.unit-label-span').forEach(el => el.innerText = unit.name);
-
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('staffPanel').classList.add('active');
       loadBatchAttendanceForDate();
       renderWorkspace();
+    }
+
+    function switchNav(panelId, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+      document.getElementById(panelId).classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (document.getElementById('drawer').classList.contains('active')) toggleDrawer();
     }
 
     function addWorker() {
@@ -1367,7 +797,7 @@
       const phone = document.getElementById('staffPhone').value.trim();
       const role = document.getElementById('staffRole').value.trim();
       const wage = parseFloat(document.getElementById('staffWage').value);
-      if (!name || isNaN(wage)) return alert('Fill worker details.');
+      if (!name || isNaN(wage)) return alert('Fill worker name and rate.');
       state.workers.push({ id: Date.now(), unitId: state.selectedUnitId, name, phone, role, wage });
       document.getElementById('staffName').value = '';
       document.getElementById('staffPhone').value = '';
@@ -1381,638 +811,67 @@
       persist();
     }
 
-    // ATTENDANCE MUSTER & MANUAL ENTRY
     function loadBatchAttendanceForDate() {
-      const date = document.getElementById('batchAttDate').value;
+      const date = document.getElementById('batchAttDate').value || new Date().toISOString().slice(0, 10);
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
       tempBatchAttendance = {};
-
       unitWorkers.forEach(w => {
         const exist = state.attendance.find(a => a.workerId === w.id && a.date === date);
-        if (exist) {
-          tempBatchAttendance[w.id] = {
-            morning: exist.morning !== undefined ? exist.morning : (exist.status === 'Present' || exist.status === 'Half Day'),
-            afternoon: exist.afternoon !== undefined ? exist.afternoon : (exist.status === 'Present')
-          };
-        } else {
-          tempBatchAttendance[w.id] = { morning: true, afternoon: true };
-        }
+        tempBatchAttendance[w.id] = exist ? { morning: exist.morning, afternoon: exist.afternoon } : { morning: true, afternoon: true };
       });
-      renderBatchMusterCards();
+      renderBatchMuster();
     }
 
-    function setWorkerShiftStatus(workerId, shift, isPresent) {
-      if (!tempBatchAttendance[workerId]) tempBatchAttendance[workerId] = { morning: true, afternoon: true };
-      tempBatchAttendance[workerId][shift] = isPresent;
-      renderBatchMusterCards();
-    }
-
-    function quickMarkAllShifts(status) {
-      const isPresent = status === 'Present';
-      state.workers.filter(w => w.unitId === state.selectedUnitId).forEach(w => {
-        tempBatchAttendance[w.id] = { morning: isPresent, afternoon: isPresent };
-      });
-      renderBatchMusterCards();
-    }
-
-    function markManualAttendance() {
-      const workerId = parseInt(document.getElementById('manualWorkerSelect').value);
-      const shiftChoice = document.getElementById('manualShiftSelect').value;
-      const isPresent = document.getElementById('manualStatusSelect').value === 'Present';
-      const date = document.getElementById('batchAttDate').value;
-
-      if (!workerId || !date) return alert('Select a worker and date.');
-
-      if (!tempBatchAttendance[workerId]) tempBatchAttendance[workerId] = { morning: true, afternoon: true };
-
-      if (shiftChoice === 'morning') {
-        tempBatchAttendance[workerId].morning = isPresent;
-      } else if (shiftChoice === 'afternoon') {
-        tempBatchAttendance[workerId].afternoon = isPresent;
-      } else {
-        tempBatchAttendance[workerId].morning = isPresent;
-        tempBatchAttendance[workerId].afternoon = isPresent;
-      }
-
-      saveBatchAttendance();
-      alert('Manual shift entry saved successfully!');
-    }
-
-    function renderBatchMusterCards() {
+    function renderBatchMuster() {
       const container = document.getElementById('batchMusterContainer');
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
       container.innerHTML = '';
-
       unitWorkers.forEach(w => {
-        const record = tempBatchAttendance[w.id] || { morning: true, afternoon: true };
-        const totalUnits = (record.morning ? 0.5 : 0) + (record.afternoon ? 0.5 : 0);
-        let summaryPill = `<span class="pill pill-present">Full Day (1.0 Unit)</span>`;
-        if (totalUnits === 0.5) summaryPill = `<span class="pill pill-half">Half Day (0.5 Unit)</span>`;
-        if (totalUnits === 0) summaryPill = `<span class="pill pill-absent">Absent (0.0 Unit)</span>`;
-
+        const rec = tempBatchAttendance[w.id] || { morning: true, afternoon: true };
         container.innerHTML += `
-          <div class="worker-muster-card">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <strong>${w.name}</strong>
-                <small style="display:block; color:var(--text-muted);">${w.role} (₹${w.wage}/day)</small>
-              </div>
-              <div>${summaryPill}</div>
+          <div class="card" style="padding: 1rem; margin-bottom: 0;">
+            <strong>${w.name}</strong> <small>(${w.role})</small>
+            <div style="display:flex; gap:0.5rem; margin-top:0.8rem;">
+              <button class="btn btn-sm ${rec.morning ? 'btn-success' : 'btn-secondary'}" onclick="toggleMusterShift(${w.id}, 'morning')">🌅 Morning</button>
+              <button class="btn btn-sm ${rec.afternoon ? 'btn-success' : 'btn-secondary'}" onclick="toggleMusterShift(${w.id}, 'afternoon')">🌇 Afternoon</button>
             </div>
-
-            <div class="shift-toggle-row">
-              <span class="shift-toggle-label">🌅 Morning Shift (0.5 Unit)</span>
-              <div class="status-toggle-group">
-                <div class="status-chip ${record.morning ? 'selected-present' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'morning', true)">Present</div>
-                <div class="status-chip ${!record.morning ? 'selected-absent' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'morning', false)">Absent</div>
-              </div>
-            </div>
-
-            <div class="shift-toggle-row">
-              <span class="shift-toggle-label">🌇 Afternoon Shift (0.5 Unit)</span>
-              <div class="status-toggle-group">
-                <div class="status-chip ${record.afternoon ? 'selected-present' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'afternoon', true)">Present</div>
-                <div class="status-chip ${!record.afternoon ? 'selected-absent' : ''}" onclick="setWorkerShiftStatus(${w.id}, 'afternoon', false)">Absent</div>
-              </div>
-            </div>
-          </div>`;
+          </div>
+        `;
       });
+    }
+
+    function toggleMusterShift(wId, shift) {
+      tempBatchAttendance[wId][shift] = !tempBatchAttendance[wId][shift];
+      renderBatchMuster();
     }
 
     function saveBatchAttendance() {
-      const date = document.getElementById('batchAttDate').value;
-      if (!date) return alert('Select date.');
+      const date = document.getElementById('batchAttDate').value || new Date().toISOString().slice(0, 10);
+      const mUnit = state.formulas.morningUnit || 0.5;
+      const aUnit = state.formulas.afternoonUnit || 0.5;
+
       const unitWorkerIds = state.workers.filter(w => w.unitId === state.selectedUnitId).map(w => w.id);
-
       state.attendance = state.attendance.filter(a => !(a.date === date && unitWorkerIds.includes(a.workerId)));
-      Object.keys(tempBatchAttendance).forEach(wId => {
-        const shifts = tempBatchAttendance[wId];
-        const units = (shifts.morning ? 0.5 : 0) + (shifts.afternoon ? 0.5 : 0);
-        let status = 'Absent';
-        if (units === 1.0) status = 'Present';
-        else if (units === 0.5) status = 'Half Day';
 
-        state.attendance.unshift({
-          date,
-          workerId: parseInt(wId),
-          morning: shifts.morning,
-          afternoon: shifts.afternoon,
-          units,
-          status
-        });
+      Object.keys(tempBatchAttendance).forEach(wId => {
+        const s = tempBatchAttendance[wId];
+        const units = (s.morning ? mUnit : 0) + (s.afternoon ? aUnit : 0);
+        state.attendance.unshift({ date, workerId: parseInt(wId), morning: s.morning, afternoon: s.afternoon, units });
       });
       persist();
-    }
-
-    // TIMING & OVERTIME
-    function persistTimeRules() {
-      state.timeRules = {
-        cutoffMorning: document.getElementById('timeCutoffMorning').value || "08:30",
-        cutoffAfternoon: document.getElementById('timeCutoffAfternoon').value || "13:30",
-        otRate: parseFloat(document.getElementById('timeOtRate').value) || 75
-      };
-      persist();
+      alert('Attendance muster saved successfully!');
     }
 
     function addOvertimeLog() {
       const date = document.getElementById('otLogDate').value;
       const workerId = parseInt(document.getElementById('otWorkerSelect').value);
       const hours = parseFloat(document.getElementById('otHoursInput').value) || 0;
-      const reason = document.getElementById('otReasonInput').value.trim() || 'General Maintenance';
-
-      if (!date || !workerId || hours <= 0) return alert('Fill overtime date, worker and valid hours.');
-      const rate = state.timeRules.otRate || 75;
-      const amount = hours * rate;
-
-      state.overtime.unshift({
-        id: Date.now(),
-        unitId: state.selectedUnitId,
-        date,
-        workerId,
-        hours,
-        rate,
-        amount,
-        reason
-      });
-
-      document.getElementById('otHoursInput').value = '';
-      document.getElementById('otReasonInput').value = '';
+      const reason = document.getElementById('otReasonInput').value.trim();
+      if (!date || !workerId || hours <= 0) return alert('Fill all OT parameters.');
+      const amount = hours * (state.formulas.otRate || 75);
+      state.overtime.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, workerId, hours, amount, reason });
       persist();
-      alert(`Recorded ${hours} OT hours (₹${amount}) for worker!`);
-    }
-
-    // VEHICLE DISPATCH
-    function issueVehicleGatePass() {
-      const dateTime = document.getElementById('gatePassDateTime').value;
-      const vehicleNo = document.getElementById('gateVehicleNo').value.trim();
-      const driverInfo = document.getElementById('gateDriverInfo').value.trim();
-      const cargo = document.getElementById('gateCargoType').value.trim() || 'General Cargo';
-      const quantity = parseInt(document.getElementById('gateQuantity').value) || 0;
-      const destination = document.getElementById('gateDestination').value.trim();
-      const disinfection = document.getElementById('gateDisinfection').value.trim() || 'Disinfected';
-
-      if (!dateTime || !vehicleNo || !driverInfo) return alert('Fill gate pass date, vehicle and driver details.');
-
-      const passNo = 'GP-' + (state.gatepasses.length + 1001);
-      const newPass = {
-        id: Date.now(),
-        passNo,
-        unitId: state.selectedUnitId,
-        dateTime,
-        vehicleNo,
-        driverInfo,
-        cargo,
-        quantity,
-        destination,
-        disinfection
-      };
-
-      state.gatepasses.unshift(newPass);
-      document.getElementById('gateVehicleNo').value = '';
-      document.getElementById('gateDriverInfo').value = '';
-      document.getElementById('gateCargoType').value = '';
-      document.getElementById('gateQuantity').value = '';
-      document.getElementById('gateDestination').value = '';
-      document.getElementById('gateDisinfection').value = '';
-      persist();
-
-      downloadSingleGatePassPDF(newPass);
-      alert(`Gate Pass #${passNo} issued successfully!`);
-    }
-
-    function downloadSingleGatePassPDF(pass) {
-      const doc = new jsPDF();
-      const unit = state.units.find(u => u.id === pass.unitId);
-
-      doc.setFillColor(225, 29, 72);
-      doc.rect(0, 0, doc.internal.pageSize.width, 28, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(16);
-      doc.setFont('helvetica', 'bold');
-      doc.text("AMUTAN GROUPS - VEHICLE GATE PASS", 14, 14);
-      doc.setFontSize(8.5);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${unit ? unit.name : 'Poultry Division'} | Gate Security Clearance`, 14, 22);
-
-      doc.setTextColor(15, 23, 42);
-      doc.autoTable({
-        startY: 36,
-        head: [['Gate Pass Parameter', 'Details / Clearance Manifest']],
-        body: [
-          ['Pass Number', pass.passNo],
-          ['Outward Date & Time', pass.dateTime],
-          ['Vehicle Registration', pass.vehicleNo],
-          ['Driver Contact', pass.driverInfo],
-          ['Cargo Loaded', `${pass.quantity.toLocaleString()} units of ${pass.cargo}`],
-          ['Destination Trader', pass.destination || 'Direct Wholesale lifting'],
-          ['Biosecurity Check', pass.disinfection]
-        ],
-        theme: 'grid',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-
-      const finalY = doc.lastAutoTable.finalY + 30;
-      doc.line(14, finalY, 70, finalY);
-      doc.text("Driver Signature", 14, finalY + 6);
-      doc.line(140, finalY, 196, finalY);
-      doc.text("Security Officer Stamp", 140, finalY + 6);
-
-      doc.save(`GatePass_${pass.passNo}_${pass.vehicleNo.replace(/\s+/g, '_')}.pdf`);
-    }
-
-    // WHATSAPP DISPATCH HELPER
-    function openWhatsAppLink(text, phone = '') {
-      let cleanPhone = phone.replace(/[^0-9]/g, '');
-      if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
-      const encoded = encodeURIComponent(text);
-      const url = cleanPhone.length >= 10 
-        ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encoded}`
-        : `https://api.whatsapp.com/send?text=${encoded}`;
-      const link = document.createElement('a');
-      link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer';
-      document.body.appendChild(link); link.click(); link.remove();
-    }
-
-    function shareViaWhatsAppDirect(workerId) {
-      const worker = state.workers.find(w => w.id === workerId);
-      if (!worker) return;
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-
-      const earnedUnits = state.attendance
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-
-      const adv = state.advances
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((s, a) => s + a.amount, 0);
-
-      const otAmount = state.overtime
-        .filter(o => o.workerId === worker.id && (!monthFilter || o.date.startsWith(monthFilter)))
-        .reduce((s, o) => s + o.amount, 0);
-
-      const gross = (earnedUnits * worker.wage) + otAmount;
-      const net = Math.max(0, gross - adv);
-
-      const msg = `*AMUTAN GROUPS - SALARY SLIP*\n` +
-                  `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                  `👤 *Worker:* ${worker.name} (${worker.role})\n` +
-                  `⏱️ *Earned Shifts:* ${earnedUnits} Shifts\n` +
-                  `⚡ *Overtime:* + Rs. ${otAmount}\n` +
-                  `💰 *Gross Wages:* Rs. ${gross.toLocaleString('en-IN')}\n` +
-                  `🔻 *Advances Deducted:* - Rs. ${adv.toLocaleString('en-IN')}\n` +
-                  `*NET PAYABLE:* Rs. ${net.toLocaleString('en-IN')}`;
-
-      openWhatsAppLink(msg, worker.phone || '');
-    }
-
-    function shareRosterWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let msg = `*AMUTAN GROUPS - WORKFORCE ROSTER*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n\n`;
-      unitWorkers.forEach((w, i) => {
-        msg += `${i+1}. *${w.name}* (${w.role}) - Rs. ${w.wage}/day | 📱 ${w.phone || '-'}\n`;
-      });
-      openWhatsAppLink(msg);
-    }
-
-    function shareAttendanceWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const date = document.getElementById('batchAttDate').value;
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let msg = `*AMUTAN GROUPS - SHIFT MUSTER REPORT*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📅 *Date:* ${date}\n\n`;
-      unitWorkers.forEach((w, i) => {
-        const att = state.attendance.find(a => a.workerId === w.id && a.date === date);
-        const m = att ? (att.morning ? '✔' : '❌') : '-';
-        const a = att ? (att.afternoon ? '✔' : '❌') : '-';
-        const units = att ? (att.units !== undefined ? att.units : 1.0) : 0;
-        msg += `${i+1}. *${w.name}*: Morning [${m}] | Afternoon [${a}] -> *${units} Units*\n`;
-      });
-      openWhatsAppLink(msg);
-    }
-
-    function shareMasterPayrollWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let totalGross = 0, totalAdv = 0, totalNet = 0;
-
-      unitWorkers.forEach(w => {
-        const units = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-        const adv = state.advances
-          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-        const ot = state.overtime
-          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
-          .reduce((s, o) => s + o.amount, 0);
-
-        const gross = (units * w.wage) + ot;
-        const net = Math.max(0, gross - adv);
-        totalGross += gross; totalAdv += adv; totalNet += net;
-      });
-
-      let msg = `*AMUTAN GROUPS - PAYROLL SUMMARY*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📅 *Month:* ${monthFilter || 'Current'}\n` +
-                `💰 *Total Gross:* Rs. ${totalGross.toLocaleString('en-IN')}\n` +
-                `🔻 *Total Advances:* - Rs. ${totalAdv.toLocaleString('en-IN')}\n` +
-                `💵 *NET PAYOUT:* Rs. ${totalNet.toLocaleString('en-IN')}`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareEggProductionWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
-      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
-      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
-      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      let msg = `*AMUTAN GROUPS - EGG PRODUCTION*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `🥚 *Total Collected:* ${totalEggs.toLocaleString('en-IN')} Eggs\n` +
-                `🐣 *Hatching Grade:* ${totalHatching.toLocaleString('en-IN')} Eggs (${hatchPct}%)\n` +
-                `💵 *Revenue:* Rs. ${totalRev.toLocaleString('en-IN')}`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareFeedWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
-      const totalIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
-      const totalOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
-      const balance = totalIn - totalOut;
-
-      let msg = `*AMUTAN GROUPS - FEED STOCK STATUS*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `📥 *Received:* ${totalIn} Bags | 📤 *Fed:* ${totalOut} Bags\n` +
-                `📦 *Remaining Balance:* ${balance} Bags`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareMortalityWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const totalMort = state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0);
-      let msg = `*AMUTAN GROUPS - FLOCK HEALTH & VACCINES*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `🩺 *Total Losses:* ${totalMort} Birds`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareFinancialWhatsApp() {
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalRevenue = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      let totalPayroll = 0;
-      unitWorkers.forEach(w => {
-        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
-        totalPayroll += (units * w.wage);
-      });
-
-      const totalExp = state.expenses.filter(e => e.unitId === state.selectedUnitId).reduce((s, e) => s + (e.amount || 0), 0);
-      const netPL = totalRevenue - (totalPayroll + totalExp);
-
-      let msg = `*AMUTAN GROUPS - P&L STATEMENT*\n` +
-                `🏢 *Division:* ${unit ? unit.name : 'Poultry Farm'}\n` +
-                `💵 *Revenue:* Rs. ${totalRevenue.toLocaleString('en-IN')}\n` +
-                `👥 *Payroll:* - Rs. ${totalPayroll.toLocaleString('en-IN')}\n` +
-                `🌾 *Expenses:* - Rs. ${totalExp.toLocaleString('en-IN')}\n` +
-                `📊 *NET ${netPL >= 0 ? 'PROFIT' : 'LOSS'}:* Rs. ${netPL.toLocaleString('en-IN')}`;
-      openWhatsAppLink(msg);
-    }
-
-    function shareComprehensiveUnitReportWhatsApp() {
-      shareFinancialWhatsApp();
-    }
-
-    // PDF GENERATION
-    function applyPremiumPdfStyling(doc, title, subtitle) {
-      const pageWidth = doc.internal.pageSize.width;
-      doc.setFillColor(225, 29, 72);
-      doc.rect(0, 0, pageWidth, 28, 'F');
-      doc.setFillColor(190, 18, 60);
-      doc.rect(0, 26, pageWidth, 2, 'F');
-
-      doc.setTextColor(255, 255, 255);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(15);
-      doc.text("AMUTAN GROUPS - " + title.toUpperCase(), 14, 13);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.text(subtitle + ` | Date: ${new Date().toLocaleDateString('en-IN')}`, 14, 21);
-
-      const pageCount = doc.internal.getNumberOfPages();
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(148, 163, 184);
-        doc.text("Amutan Groups Enterprise Portal • Confidential Poultry Ledger", 14, doc.internal.pageSize.height - 8);
-        doc.text(`Page ${i} of ${pageCount}`, pageWidth - 25, doc.internal.pageSize.height - 8);
-      }
-    }
-
-    function downloadPoultryStaffPDF() {
-      const doc = new jsPDF();
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const tableData = unitWorkers.map((w, idx) => [idx + 1, w.name, w.phone || '-', w.role, `Rs. ${w.wage} / day`]);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['#', 'Worker Name', 'WhatsApp Contact', 'Designation', 'Daily Rate']],
-        body: tableData,
-        theme: 'striped',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-      applyPremiumPdfStyling(doc, "STAFF DIRECTORY", `${unit ? unit.name : 'Poultry Farm'}`);
-      doc.save(`Staff_${unit ? unit.name.replace(/\s+/g, '_') : 'Roster'}.pdf`);
-    }
-
-    function downloadAllPayrollPDF() {
-      const doc = new jsPDF('landscape');
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-
-      let totalGross = 0, totalAdv = 0, totalNet = 0;
-      const tableData = [];
-
-      unitWorkers.forEach((w, idx) => {
-        const units = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-
-        const adv = state.advances
-          .filter(ad => ad.workerId === w.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-
-        const ot = state.overtime
-          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
-          .reduce((s, o) => s + o.amount, 0);
-
-        const gross = (units * w.wage) + ot;
-        const net = Math.max(0, gross - adv);
-        totalGross += gross; totalAdv += adv; totalNet += net;
-
-        tableData.push([
-          idx + 1, w.name, w.role, `Rs. ${w.wage}`, `${units} Shifts`, `+ Rs. ${ot}`, `Rs. ${gross.toLocaleString('en-IN')}`, `- Rs. ${adv.toLocaleString('en-IN')}`, `Rs. ${net.toLocaleString('en-IN')}`
-        ]);
-      });
-
-      tableData.push(['', 'TOTAL PAYOUT', '', '', '', '', `Rs. ${totalGross.toLocaleString('en-IN')}`, `- Rs. ${totalAdv.toLocaleString('en-IN')}`, `Rs. ${totalNet.toLocaleString('en-IN')}`]);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['#', 'Worker Name', 'Role', 'Wage Rate', 'Earned Shifts', 'Overtime', 'Gross Wages', 'Advances', 'Net Payable']],
-        body: tableData,
-        theme: 'grid',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-      applyPremiumPdfStyling(doc, "PAYROLL STATEMENT", `${unit ? unit.name : 'Division'} | Month: ${monthFilter || 'Current'}`);
-      doc.save(`Payroll_${unit ? unit.name.replace(/\s+/g, '_') : 'Statement'}.pdf`);
-    }
-
-    function downloadWorkerPayslipPDF(workerId) {
-      const doc = new jsPDF();
-      const worker = state.workers.find(w => w.id === workerId);
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
-
-      const earnedUnits = state.attendance
-        .filter(a => a.workerId === worker.id && (!monthFilter || a.date.startsWith(monthFilter)))
-        .reduce((sum, a) => sum + (a.units !== undefined ? a.units : 1.0), 0);
-
-      const advances = state.advances
-        .filter(ad => ad.workerId === worker.id && (!monthFilter || ad.date.startsWith(monthFilter)))
-        .reduce((s, a) => s + a.amount, 0);
-
-      const ot = state.overtime
-        .filter(o => o.workerId === worker.id && (!monthFilter || o.date.startsWith(monthFilter)))
-        .reduce((s, o) => s + o.amount, 0);
-
-      const gross = (earnedUnits * worker.wage) + ot;
-      const net = Math.max(0, gross - advances);
-
-      doc.setFillColor(225, 29, 72);
-      doc.rect(0, 0, 210, 30, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      doc.text("AMUTAN GROUPS", 15, 14);
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${unit ? unit.name : 'Poultry Division'} | Official Payslip`, 15, 22);
-
-      doc.setTextColor(15, 23, 42);
-      doc.autoTable({
-        startY: 40,
-        head: [['Worker Details', 'Billing Period']],
-        body: [
-          [`Worker Name: ${worker.name}`, `Month: ${monthFilter || 'Current Term'}`],
-          [`Role: ${worker.role}`, `Rate: Rs. ${worker.wage} / day`],
-          [`Mobile: ${worker.phone || '-'}`, `Date: ${new Date().toLocaleDateString('en-IN')}`]
-        ],
-        theme: 'plain'
-      });
-
-      doc.autoTable({
-        startY: doc.lastAutoTable.finalY + 6,
-        head: [['Item', 'Calculation Detail', 'Amount (INR)']],
-        body: [
-          ['Earned Shift Units', `${earnedUnits} Shifts worked`, `Rs. ${(earnedUnits * worker.wage).toLocaleString('en-IN')}`],
-          ['Overtime (OT)', 'Approved OT Hours', `+ Rs. ${ot.toLocaleString('en-IN')}`],
-          ['Salary Advances Deducted', 'Cash advances adjusted', `- Rs. ${advances.toLocaleString('en-IN')}`],
-          ['NET SALARY PAYABLE', 'Final Settlement', `Rs. ${net.toLocaleString('en-IN')}`]
-        ],
-        theme: 'striped',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-
-      const finalY = doc.lastAutoTable.finalY + 30;
-      doc.line(15, finalY, 70, finalY);
-      doc.text("Worker Signature / Thumb", 15, finalY + 6);
-      doc.line(135, finalY, 195, finalY);
-      doc.text("Authorized Signature (MD)", 135, finalY + 6);
-
-      doc.save(`Payslip_${worker.name.replace(/\s+/g, '_')}.pdf`);
-    }
-
-    function downloadComprehensiveUnitReportPDF() {
-      const doc = new jsPDF('landscape');
-      const unit = state.units.find(u => u.id === state.selectedUnitId);
-      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
-      const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
-      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
-      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
-      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
-      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || (e.sold * e.price) || 0), 0);
-
-      const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
-      const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
-      const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
-      const feedBal = feedIn - feedOut;
-
-      const totalMort = state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0);
-
-      let totalPayroll = 0;
-      unitWorkers.forEach(w => {
-        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
-        totalPayroll += (units * w.wage);
-      });
-      const totalExp = state.expenses.filter(e => e.unitId === state.selectedUnitId).reduce((s, e) => s + (e.amount || 0), 0);
-      const netPL = totalRev - (totalPayroll + totalExp);
-
-      doc.autoTable({
-        startY: 34,
-        head: [['Operational Dimension', 'Metric', 'Unit Value', 'Status']],
-        body: [
-          ['Staff Workforce', 'Total Active Roster', `${unitWorkers.length} Workers`, 'Active'],
-          ['Egg Collection', 'Hatchability Efficiency', `${hatchPct}%`, `${totalHatching.toLocaleString('en-IN')} Hatching / ${totalEggs.toLocaleString('en-IN')} Total Eggs`],
-          ['Feed Warehouse', 'Stock Balance', `${feedBal} Bags`, `Received: ${feedIn} / Fed: ${feedOut} Bags`],
-          ['Flock Health', 'Total Mortality', `${totalMort.toLocaleString('en-IN')} Birds`, 'Monitored'],
-          ['Unit Financials', 'Net Profit / Loss', `Rs. ${netPL.toLocaleString('en-IN')}`, netPL >= 0 ? 'PROFITABLE' : 'DEFICIT']
-        ],
-        theme: 'grid',
-        headStyles: { fillColor: [225, 29, 72], textColor: 255, fontStyle: 'bold' }
-      });
-      applyPremiumPdfStyling(doc, "UNIT AUDIT REPORT", `${unit ? unit.name : 'Poultry Division'}`);
-      doc.save(`FullReport_${unit ? unit.name.replace(/\s+/g, '_') : 'Division'}.pdf`);
-    }
-
-    function downloadFinancialPDF() { downloadComprehensiveUnitReportPDF(); }
-
-    function downloadMasterArchiveAndClearData() {
-      if (state.currentUser.role !== 'MD') return alert('MD Access Only.');
-      if (!confirm("Download Master Audit Archive and clear operational logs?")) return;
-      downloadComprehensiveUnitReportPDF();
-      state.attendance = []; state.overtime = []; state.gatepasses = []; state.advances = []; state.eggs = []; state.feed = []; state.mortality = []; state.expenses = [];
-      persist();
-      alert('Master Archive PDF downloaded and ledger safely cleared!');
-    }
-
-    function exportBackupJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-      const a = document.createElement('a'); a.href = dataStr; a.download = `Amutan_FullBackup.json`; a.click();
-    }
-    function importBackupJSON(e) {
-      const reader = new FileReader();
-      reader.onload = ev => { state = JSON.parse(ev.target.result); persist(); alert('Backup restored!'); };
-      reader.readAsText(e.target.files[0]);
-    }
-    function exportTableToCSV(tid, fn) {
-      let csv = [];
-      document.getElementById(tid).querySelectorAll('tr').forEach(r => {
-        let cols = []; r.querySelectorAll('td').forEach(c => cols.push('"' + c.innerText.trim() + '"'));
-        if (cols.length) csv.push(cols.join(','));
-      });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv.join('\n')], { type: 'text/csv' })); a.download = fn; a.click();
+      alert('OT recorded!');
     }
 
     function issueAdvance() {
@@ -2021,128 +880,143 @@
       const amount = parseFloat(document.getElementById('advAmount').value);
       if (!date || !workerId || isNaN(amount)) return alert('Fill advance details.');
       state.advances.unshift({ date, workerId, amount });
-      document.getElementById('advAmount').value = '';
       persist();
+      alert('Advance saved!');
     }
 
     function addEggLog() {
       const date = document.getElementById('eggDate').value;
-      const shed = document.getElementById('eggShed').value.trim() || 'General';
+      const shed = document.getElementById('eggShed').value.trim();
       const hatching = parseInt(document.getElementById('eggHatching').value) || 0;
       const commercial = parseInt(document.getElementById('eggCommercial').value) || 0;
       const broken = parseInt(document.getElementById('eggBroken').value) || 0;
       const sold = parseInt(document.getElementById('eggSold').value) || 0;
       const price = parseFloat(document.getElementById('eggPrice').value) || 0;
-      if (!date) return alert('Select date.');
       state.eggs.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, hatching, commercial, broken, sold, price, revenue: sold * price });
-      document.getElementById('eggHatching').value = '';
-      document.getElementById('eggCommercial').value = '';
-      document.getElementById('eggBroken').value = '';
-      document.getElementById('eggSold').value = '';
-      document.getElementById('eggPrice').value = '';
       persist();
+      alert('Egg collection logged!');
     }
 
     function addFeedLog() {
       const date = document.getElementById('feedDate').value;
-      const type = document.getElementById('feedType').value.trim() || 'General Feed';
+      const type = document.getElementById('feedType').value.trim();
       const feedIn = parseInt(document.getElementById('feedIn').value) || 0;
       const feedOut = parseInt(document.getElementById('feedOut').value) || 0;
       const cost = parseFloat(document.getElementById('feedCost').value) || 0;
-      if (!date) return alert('Select date.');
-      state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, type, feedIn, feedOut, cost });
-      if (cost > 0) {
-        state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date, category: 'Feed Purchase', description: `${feedIn} Bags of ${type}`, amount: cost });
-      }
-      document.getElementById('feedType').value = '';
-      document.getElementById('feedIn').value = '';
-      document.getElementById('feedOut').value = '';
-      document.getElementById('feedCost').value = '';
+      state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, type, feedIn, feedOut });
+      if (cost > 0) state.expenses.unshift({ id: Date.now() + 1, unitId: state.selectedUnitId, date, category: 'Feed Purchase', amount: cost });
       persist();
+      alert('Feed entry saved!');
     }
 
     function addMortLog() {
       const date = document.getElementById('mortDate').value;
-      const shed = document.getElementById('mortShed').value.trim() || 'General';
+      const shed = document.getElementById('mortShed').value.trim();
       const count = parseInt(document.getElementById('mortCount').value) || 0;
-      const vaccine = document.getElementById('vaccineName').value.trim() || '-';
-      const notes = document.getElementById('mortNotes').value.trim() || '-';
-      if (!date) return alert('Select date.');
+      const vaccine = document.getElementById('vaccineName').value.trim();
+      const notes = document.getElementById('mortNotes').value.trim();
       state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, vaccine, notes });
-      document.getElementById('mortCount').value = '';
-      document.getElementById('vaccineName').value = '';
-      document.getElementById('mortNotes').value = '';
       persist();
+      alert('Health log saved!');
+    }
+
+    function issueVehicleGatePass() {
+      const dateTime = document.getElementById('gatePassDateTime').value;
+      const vehicleNo = document.getElementById('gateVehicleNo').value.trim();
+      const driverInfo = document.getElementById('gateDriverInfo').value.trim();
+      const cargo = document.getElementById('gateCargoType').value.trim();
+      const quantity = parseInt(document.getElementById('gateQuantity').value) || 0;
+      const destination = document.getElementById('gateDestination').value.trim();
+      state.gatepasses.unshift({ id: Date.now(), unitId: state.selectedUnitId, dateTime, vehicleNo, driverInfo, cargo, quantity, destination });
+      persist();
+      alert('Gate Pass Generated!');
     }
 
     function addExpenseLog() {
       const date = document.getElementById('expDate').value;
-      const category = document.getElementById('expCategory').value.trim() || 'General Expense';
-      const description = document.getElementById('expDescription').value.trim() || category;
+      const category = document.getElementById('expCategory').value.trim();
       const amount = parseFloat(document.getElementById('expAmount').value) || 0;
-      if (!date || amount <= 0) return alert('Enter valid expense.');
-      state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, category, description, amount });
-      document.getElementById('expCategory').value = '';
-      document.getElementById('expDescription').value = '';
-      document.getElementById('expAmount').value = '';
+      state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, category, amount });
       persist();
+      alert('Expense recorded!');
     }
 
-    // AI VOICE & CHAT
-    function parseAndExecuteAiCommand(cmd) {
-      const lower = cmd.toLowerCase().trim();
-      const isTamil = /[^\u0000-\u007F]/.test(cmd) || document.getElementById('aiLangSelector').value === 'ta-IN';
-      const nums = cmd.match(/\d+(\.\d+)?/g) ? cmd.match(/\d+(\.\d+)?/g).map(Number) : [];
-
-      if (/(feed|mash|தீவனம்)/i.test(lower) && nums[0]) {
-        state.feed.unshift({ id: Date.now(), unitId: state.selectedUnitId || 1, date: new Date().toISOString().slice(0, 10), type: 'Breeder Mash', feedIn: nums[0], feedOut: 0, cost: nums[1] || nums[0] * 1850 });
-        persist();
-        return isTamil ? `✅ ${nums[0]} மூட்டை தீவனம் வரவு வைக்கப்பட்டது.` : `Added ${nums[0]} bags feed.`;
-      }
-      if (/(gate pass|dispatch|வாகனம்)/i.test(lower)) {
-        switchNav('gatePassPanel');
-        return isTamil ? `🚛 வாகன கேட் பாஸ் பகுதி திறக்கப்பட்டது.` : `Opened Vehicle Gate Pass & DOC Dispatch Tracker.`;
-      }
-      if (/(late|overtime|நேரம்)/i.test(lower)) {
-        switchNav('timeTrackerPanel');
-        return `⏱️ Opened Late Arrival & Overtime Tracker.`;
-      }
-      if (/(hatchery|ஹேட்சரி)/i.test(lower)) { openUnit(3); return `Switched to Amutan Hatcheries.`; }
-      if (/(breeding|ப்ரீடிங்)/i.test(lower)) { openUnit(1); return `Switched to Amutan Breeding Farm.`; }
-      if (/(farm|பண்ணை)/i.test(lower)) { openUnit(2); return `Switched to Amutan Farm.`; }
-
-      return `🤖 Command understood: "${cmd}". You can ask about gate passes, overtime, shift muster, or egg production.`;
+    function saveAdminFormulas() {
+      state.formulas = {
+        morningUnit: parseFloat(document.getElementById('cfgShiftMorning').value) || 0.5,
+        afternoonUnit: parseFloat(document.getElementById('cfgShiftAfternoon').value) || 0.5,
+        otRate: parseFloat(document.getElementById('cfgOtRate').value) || 75
+      };
+      persist();
+      alert('Calculation formulas updated successfully!');
     }
 
-    function sendAiMessage() {
-      const input = document.getElementById('aiChatInput');
-      const txt = input.value.trim();
-      if (!txt) return;
-      appendAiMsg(txt, true);
-      input.value = '';
-      setTimeout(() => { appendAiMsg(parseAndExecuteAiCommand(txt), false); }, 300);
+    function savePdfTemplateSettings() {
+      state.pdfSettings = {
+        headerTitle: document.getElementById('cfgPdfHeader').value.trim(),
+        subtitle: document.getElementById('cfgPdfSub').value.trim(),
+        primaryColor: document.getElementById('cfgPdfColor').value
+      };
+      persist();
+      alert('PDF Branding Template customized!');
     }
 
-    function toggleAiVoice() {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SR) return alert('Speech recognition not supported in this browser.');
-      const r = new SR();
-      r.lang = document.getElementById('aiLangSelector').value;
-      r.onresult = e => { document.getElementById('aiChatInput').value = e.results[0][0].transcript; sendAiMessage(); };
-      r.start();
+    // PDF GENERATOR ROUTINE
+    function applyPdfBranding(doc, title) {
+      const hex = state.pdfSettings.primaryColor || '#881326';
+      const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+      doc.setFillColor(r, g, b);
+      doc.rect(0, 0, doc.internal.pageSize.width, 28, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(15);
+      doc.text(state.pdfSettings.headerTitle + " - " + title.toUpperCase(), 14, 13);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.text(`${state.pdfSettings.subtitle} | Date: ${new Date().toLocaleDateString('en-IN')}`, 14, 21);
     }
 
-    function toggleAiChat() {
-      const m = document.getElementById('amutanAiChatModal');
-      m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+    function exportStaffPDF() {
+      const doc = new jsPDF();
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      const tableData = unitWorkers.map((w, idx) => [idx + 1, w.name, w.phone || '-', w.role, `Rs. ${w.wage} / day`]);
+
+      doc.autoTable({
+        startY: 34,
+        head: [['#', 'Worker Name', 'Contact Phone', 'Designation', 'Daily Wage Rate']],
+        body: tableData,
+        theme: 'striped',
+        headStyles: { fillColor: [136, 19, 38], textColor: 255 }
+      });
+      applyPdfBranding(doc, `${unit ? unit.name : 'Unit'} Staff Roster`);
+      doc.save(`Staff_${unit ? unit.name : 'List'}.pdf`);
     }
-    function appendAiMsg(t, u) {
-      const b = document.getElementById('aiChatBody');
-      const d = document.createElement('div');
-      d.className = `ai-msg ${u ? 'ai-msg-user' : 'ai-msg-bot'}`;
-      d.innerHTML = t;
-      b.appendChild(d);
-      b.scrollTop = b.scrollHeight;
+
+    function exportPayrollPDF() {
+      const doc = new jsPDF('landscape');
+      const unit = state.units.find(u => u.id === state.selectedUnitId);
+      const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
+      const rows = [];
+
+      unitWorkers.forEach((w, i) => {
+        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units || 1.0), 0);
+        const ot = state.overtime.filter(o => o.workerId === w.id).reduce((s, o) => s + o.amount, 0);
+        const adv = state.advances.filter(a => a.workerId === w.id).reduce((s, a) => s + a.amount, 0);
+        const gross = (units * w.wage) + ot;
+        const net = Math.max(0, gross - adv);
+        rows.push([i + 1, w.name, w.role, `Rs. ${w.wage}`, `${units} Shifts`, `+ Rs. ${ot}`, `Rs. ${gross}`, `- Rs. ${adv}`, `Rs. ${net}`]);
+      });
+
+      doc.autoTable({
+        startY: 34,
+        head: [['#', 'Worker Name', 'Role', 'Rate', 'Earned Units', 'OT Earned', 'Gross Wage', 'Advances', 'Net Payable']],
+        body: rows,
+        theme: 'grid',
+        headStyles: { fillColor: [136, 19, 38], textColor: 255 }
+      });
+      applyPdfBranding(doc, `${unit ? unit.name : 'Unit'} Payroll Statement`);
+      doc.save(`Payroll_${unit ? unit.name : 'Report'}.pdf`);
     }
 
     function renderWorkspace() {
@@ -2151,29 +1025,23 @@
       const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
       const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
       const unitExpenses = state.expenses.filter(e => e.unitId === state.selectedUnitId);
-      const monthFilter = document.getElementById('payrollMonthFilter')?.value || '';
 
       const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
       const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
       const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
       const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || 0), 0);
-      
+
       const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
       const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
       const feedBal = feedIn - feedOut;
 
       let totalPayroll = 0;
       unitWorkers.forEach(w => {
-        let totalUnits = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
-        
-        let otEarned = state.overtime
-          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
-          .reduce((sum, o) => sum + o.amount, 0);
-
-        totalPayroll += (totalUnits * w.wage) + otEarned;
+        let u = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units || 1.0), 0);
+        let ot = state.overtime.filter(o => o.workerId === w.id).reduce((s, o) => s + o.amount, 0);
+        totalPayroll += (u * w.wage) + ot;
       });
+
       const totalExp = unitExpenses.reduce((s, e) => s + (e.amount || 0), 0);
       const netPL = totalRev - (totalPayroll + totalExp);
 
@@ -2182,112 +1050,41 @@
       document.getElementById('kpiFeed').innerText = `${feedBal} Bags`;
       document.getElementById('kpiNetPL').innerText = `₹${netPL.toLocaleString()}`;
 
-      document.getElementById('plGrossRevenue').innerText = `₹${totalRev.toLocaleString()}`;
-      document.getElementById('plPayrollExpenses').innerText = `- ₹${totalPayroll.toLocaleString()}`;
-      document.getElementById('plFarmExpenses').innerText = `- ₹${totalExp.toLocaleString()}`;
-      document.getElementById('plNetBalance').innerText = `₹${netPL.toLocaleString()}`;
-
-      document.getElementById('repWorkersAtt').innerText = `${unitWorkers.length} Active Staff`;
-      document.getElementById('repFeedBalance').innerText = `${feedBal} Bags In Stock`;
-      document.getElementById('repHatchabilityVal').innerText = `${hatchPct}% (${totalHatching.toLocaleString()} Hatching)`;
-      document.getElementById('repMortalityVal').innerText = `${state.mortality.filter(m => m.unitId === state.selectedUnitId).reduce((s, m) => s + (m.count || 0), 0)} Birds`;
-      document.getElementById('repNetPLVal').innerText = `₹${netPL.toLocaleString()}`;
-
-      // Staff List & Dropdowns
-      const staffTbody = document.getElementById('staffList');
-      const advWorkerSelect = document.getElementById('advWorker');
+      // Staff Lists & Selects
+      const staffList = document.getElementById('staffList');
+      const advWorker = document.getElementById('advWorker');
       const otWorkerSelect = document.getElementById('otWorkerSelect');
-      const manualWorkerSelect = document.getElementById('manualWorkerSelect');
-      staffTbody.innerHTML = '';
-      advWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
+      staffList.innerHTML = '';
+      advWorker.innerHTML = '<option value="">-- Select Worker --</option>';
       otWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
-      if (manualWorkerSelect) manualWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
 
       unitWorkers.forEach((w, i) => {
-        staffTbody.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.phone || '-'}</td><td>${w.role}</td><td>₹${w.wage} / day</td><td><button class="btn btn-sm btn-secondary" onclick="deleteWorker(${w.id})">Remove</button></td></tr>`;
-        advWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
+        staffList.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.phone||'-'}</td><td>${w.role}</td><td>₹${w.wage}</td><td><button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">Delete</button></td></tr>`;
+        advWorker.innerHTML += `<option value="${w.id}">${w.name}</option>`;
         otWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
-        if (manualWorkerSelect) manualWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
       });
 
-      // Overtime List
-      const otTbody = document.getElementById('otListBody');
-      otTbody.innerHTML = '';
-      state.overtime.filter(o => o.unitId === state.selectedUnitId).slice(0, 6).forEach(o => {
-        const wk = state.workers.find(w => w.id === o.workerId);
-        otTbody.innerHTML += `<tr><td>${o.date}</td><td><strong>${wk ? wk.name : 'Worker'}</strong></td><td>${o.hours} Hours OT</td><td><strong style="color:var(--success)">+ ₹${o.amount}</strong></td><td>${o.reason}</td></tr>`;
-      });
-
-      // Gate Pass List
-      const gateTbody = document.getElementById('gatePassListBody');
-      gateTbody.innerHTML = '';
-      state.gatepasses.filter(g => g.unitId === state.selectedUnitId).slice(0, 6).forEach(g => {
-        gateTbody.innerHTML += `<tr><td><strong>${g.passNo}</strong></td><td>${g.dateTime}</td><td><strong>${g.vehicleNo}</strong></td><td>${g.driverInfo}</td><td>${g.quantity.toLocaleString()} ${g.cargo}</td><td>${g.destination}</td><td><button class="btn btn-sm btn-primary" onclick="downloadSingleGatePassPDF(state.gatepasses.find(gp=>gp.id===${g.id}))">📄 PDF</button></td></tr>`;
-      });
-
-      // Payroll List
-      const payTbody = document.getElementById('payrollList');
-      payTbody.innerHTML = '';
+      // Payroll Render
+      const payrollList = document.getElementById('payrollList');
+      payrollList.innerHTML = '';
       unitWorkers.forEach(w => {
-        let earnedUnits = state.attendance
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((sum, a) => sum + (a.units !== undefined ? a.units : (a.status === 'Present' ? 1.0 : 0.5)), 0);
-
-        let otAmount = state.overtime
-          .filter(o => o.workerId === w.id && (!monthFilter || o.date.startsWith(monthFilter)))
-          .reduce((sum, o) => sum + o.amount, 0);
-
-        let adv = state.advances
-          .filter(a => a.workerId === w.id && (!monthFilter || a.date.startsWith(monthFilter)))
-          .reduce((s, a) => s + a.amount, 0);
-
-        let gross = (earnedUnits * w.wage) + otAmount;
+        let units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units || 1.0), 0);
+        let ot = state.overtime.filter(o => o.workerId === w.id).reduce((s, o) => s + o.amount, 0);
+        let adv = state.advances.filter(a => a.workerId === w.id).reduce((s, a) => s + a.amount, 0);
+        let gross = (units * w.wage) + ot;
         let net = Math.max(0, gross - adv);
-
-        payTbody.innerHTML += `<tr><td><strong>${w.name}</strong></td><td>₹${w.wage}</td><td><strong>${earnedUnits} Units</strong></td><td style="color:var(--success)">+ ₹${otAmount}</td><td>₹${gross.toLocaleString()}</td><td>- ₹${adv.toLocaleString()}</td><td><strong style="color:var(--success);">₹${net.toLocaleString()}</strong></td><td style="display:flex; gap:0.3rem;"><button class="btn btn-sm btn-primary" onclick="downloadWorkerPayslipPDF(${w.id})">📄 PDF</button><button class="btn btn-sm btn-whatsapp" onclick="shareViaWhatsAppDirect(${w.id})">💬 WhatsApp</button></td></tr>`;
-      });
-
-      // Egg List
-      const eggTbody = document.getElementById('eggList');
-      eggTbody.innerHTML = '';
-      unitEggs.slice(0, 6).forEach(e => {
-        const tot = e.hatching + e.commercial + e.broken;
-        const pct = tot > 0 ? ((e.hatching / tot) * 100).toFixed(1) : 0;
-        eggTbody.innerHTML += `<tr><td>${e.date}</td><td>${e.shed}</td><td>${e.hatching.toLocaleString()}</td><td>${e.commercial}</td><td>${e.broken}</td><td>${tot.toLocaleString()}</td><td>${e.sold.toLocaleString()}</td><td>₹${e.revenue.toLocaleString()}</td><td>${pct}%</td></tr>`;
-      });
-
-      // Feed List
-      const feedTbody = document.getElementById('feedList');
-      feedTbody.innerHTML = '';
-      unitFeed.slice(0, 6).forEach(f => {
-        feedTbody.innerHTML += `<tr><td>${f.date}</td><td>${f.type}</td><td>+ ${f.feedIn}</td><td>- ${f.feedOut}</td></tr>`;
-      });
-
-      // Advances List
-      const advTbody = document.getElementById('advList');
-      advTbody.innerHTML = '';
-      state.advances.filter(a => unitWorkers.some(w => w.id === a.workerId)).slice(0, 6).forEach(a => {
-        const wk = state.workers.find(w => w.id === a.workerId);
-        advTbody.innerHTML += `<tr><td>${a.date}</td><td>${wk?wk.name:'Worker'}</td><td>₹${a.amount}</td></tr>`;
-      });
-
-      // Mortality List
-      const mortTbody = document.getElementById('mortList');
-      mortTbody.innerHTML = '';
-      state.mortality.filter(h => h.unitId === state.selectedUnitId).slice(0, 6).forEach(h => {
-        mortTbody.innerHTML += `<tr><td>${h.date}</td><td>${h.shed}</td><td>${h.count}</td><td><strong style="color:var(--primary);">${h.vaccine || '-'}</strong></td><td>${h.notes}</td></tr>`;
+        payrollList.innerHTML += `<tr><td><strong>${w.name}</strong></td><td>₹${w.wage}</td><td>${units}</td><td>+ ₹${ot}</td><td>₹${gross}</td><td>- ₹${adv}</td><td><strong style="color:var(--success);">₹${net}</strong></td><td><button class="btn btn-sm btn-whatsapp" onclick="alert('Salary summary ready for WhatsApp!')">💬</button></td></tr>`;
       });
     }
 
-    const todayStr = new Date().toISOString().slice(0, 10);
-    document.getElementById('batchAttDate').value = todayStr;
-    document.getElementById('otLogDate').value = todayStr;
-    document.getElementById('advDate').value = todayStr;
-    document.getElementById('eggDate').value = todayStr;
-    document.getElementById('feedDate').value = todayStr;
-    document.getElementById('mortDate').value = todayStr;
-    document.getElementById('expDate').value = todayStr;
-    document.getElementById('payrollMonthFilter').value = todayStr.slice(0, 7);
+    const t = new Date().toISOString().slice(0, 10);
+    document.getElementById('batchAttDate').value = t;
+    document.getElementById('otLogDate').value = t;
+    document.getElementById('advDate').value = t;
+    document.getElementById('eggDate').value = t;
+    document.getElementById('feedDate').value = t;
+    document.getElementById('mortDate').value = t;
+    document.getElementById('expDate').value = t;
     document.getElementById('gatePassDateTime').value = new Date().toISOString().slice(0, 16);
   </script>
 </body>
