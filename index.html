@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
+ 
   <!-- PDF Generation Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -31,6 +31,7 @@
       --border: #f0d5d8;
       --success: #059669;
       --danger: #dc2626;
+      --warning: #d97706;
       --radius: 20px;
       --radius-sm: 12px;
       --shadow-sm: 0 4px 14px rgba(108, 17, 30, 0.05);
@@ -101,6 +102,7 @@
     .btn-primary { background: var(--primary-gradient); color: #fff; box-shadow: var(--shadow-sm); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .btn-success { background: var(--success); color: #fff; }
+    .btn-warning { background: var(--warning); color: #fff; }
     .btn-whatsapp { background: #25d366; color: #fff; }
     .btn-secondary { background: #f1f5f9; color: var(--text); }
     .btn-danger { background: var(--danger); color: #fff; }
@@ -152,11 +154,11 @@
       display: flex; flex-direction: column;
     }
     .drawer.active { left: 0; }
-    .drawer-scroll-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem; }
+    .drawer-scroll-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
     .nav-section-title { font-size: 0.7rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
     .nav-link {
-      display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.9rem;
-      border-radius: var(--radius-sm); border: none; background: transparent; font-size: 0.88rem;
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.9rem;
+      border-radius: var(--radius-sm); border: none; background: transparent; font-size: 0.86rem;
       font-weight: 800; color: var(--text-muted); cursor: pointer; transition: 0.2s; width: 100%; text-align: left;
     }
     .nav-link:hover, .nav-link.active { background: #fff1f2; color: var(--primary); font-weight: 900; }
@@ -164,7 +166,7 @@
     /* =========================================================
        DASHBOARD & WORKSPACE
        ========================================================= */
-    .dashboard-container { max-width: 1280px; margin: 1.5rem auto; padding: 0 1.2rem; }
+    .dashboard-container { max-width: 1320px; margin: 1.5rem auto; padding: 0 1.2rem; }
     .landing-header { text-align: center; margin: 1.5rem 0 2rem; }
     .landing-header h2 { font-size: 2rem; font-weight: 900; color: var(--primary); }
     .landing-header p { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; margin-top: 0.3rem; }
@@ -185,13 +187,20 @@
     }
     .card-title { font-size: 1.15rem; font-weight: 900; color: var(--text); margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
 
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    /* Expanded 8 Core KPIs */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.9rem; margin-bottom: 1.5rem; }
     .kpi-card {
       background: var(--card-bg); border-radius: var(--radius); border: 2px solid var(--border);
-      padding: 1.2rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between;
     }
-    .kpi-card span { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-    .kpi-card h3 { font-size: 1.5rem; font-weight: 900; color: var(--primary); margin-top: 0.15rem; }
+    .kpi-card span { font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    .kpi-card h3 { font-size: 1.35rem; font-weight: 900; color: var(--primary); margin-top: 0.15rem; }
+
+    /* Notifications Hub */
+    .notif-banner { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .notif-pill { padding: 0.75rem 1.2rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 800; display: flex; justify-content: space-between; align-items: center; }
+    .notif-pill.danger { background: #fee2e2; color: #991b1b; border: 1.5px solid #f87171; }
+    .notif-pill.warning { background: #fef3c7; color: #92400e; border: 1.5px solid #fcd34d; }
 
     .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; align-items: end; }
     .table-responsive { overflow-x: auto; border-radius: var(--radius-sm); }
@@ -203,142 +212,49 @@
     .panel.active { display: block; }
 
     /* E-Signature & E-Stamp Components */
-    .sig-canvas-box {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius-sm);
-      background: #ffffff;
-      touch-action: none;
-      cursor: crosshair;
-    }
+    .sig-canvas-box { border: 2px dashed var(--border); border-radius: var(--radius-sm); background: #ffffff; touch-action: none; cursor: crosshair; }
     .e-stamp-preview {
-      width: 140px; height: 140px;
-      border: 3px double;
-      border-radius: 50%;
+      width: 140px; height: 140px; border: 3px double; border-radius: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; font-weight: 900; text-transform: uppercase;
-      transform: rotate(-10deg);
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      margin: 0.5rem auto;
+      text-align: center; font-weight: 900; text-transform: uppercase; transform: rotate(-10deg);
+      box-shadow: 0 0 10px rgba(0,0,0,0.05); margin: 0.5rem auto;
     }
-
     .photo-preview-box {
       width: 100%; height: 140px; border-radius: 12px; border: 2px dashed var(--border);
       display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--bg);
     }
     .photo-preview-box img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Attendance Matrix */
-    .att-stats-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 0.8rem;
-      margin-bottom: 1.2rem;
-    }
-    .att-stat-pill {
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 0.75rem 1rem;
-      text-align: center;
-    }
-    .att-stat-pill span {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-    .att-stat-pill strong {
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: var(--primary);
-    }
+    /* Attendance Matrix Components */
+    .att-stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem; }
+    .att-stat-pill { background: var(--bg); border: 1.5px solid var(--border); border-radius: 14px; padding: 0.75rem 1rem; text-align: center; }
+    .att-stat-pill span { display: block; font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    .att-stat-pill strong { font-size: 1.25rem; font-weight: 900; color: var(--primary); }
 
     .att-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      background: var(--bg);
-      padding: 0.9rem 1.1rem;
-      border-radius: 16px;
-      border: 1.5px solid var(--border);
-      margin-bottom: 1.2rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      gap: 0.8rem; background: var(--bg); padding: 0.9rem 1.1rem; border-radius: 16px;
+      border: 1.5px solid var(--border); margin-bottom: 1.2rem;
     }
 
     .shift-toggle-btn {
-      padding: 0.4rem 0.85rem;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
+      padding: 0.4rem 0.85rem; border-radius: 10px; font-size: 0.82rem; font-weight: 800;
+      border: 2px solid transparent; cursor: pointer; transition: all 0.15s ease;
+      display: inline-flex; align-items: center; gap: 0.4rem;
     }
-    .shift-toggle-btn.present {
-      background: #dcfce7;
-      color: #15803d;
-      border-color: #86efac;
-    }
-    .shift-toggle-btn.absent {
-      background: #fee2e2;
-      color: #b91c1c;
-      border-color: #fca5a5;
-    }
-    .shift-toggle-btn:hover {
-      transform: scale(1.04);
-    }
+    .shift-toggle-btn.present { background: #dcfce7; color: #15803d; border-color: #86efac; }
+    .shift-toggle-btn.absent { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
 
-    .quick-preset-group {
-      display: flex;
-      gap: 0.3rem;
-      background: var(--bg);
-      padding: 0.25rem;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
-      width: fit-content;
-    }
-    .quick-preset-btn {
-      padding: 0.3rem 0.65rem;
-      font-size: 0.75rem;
-      font-weight: 800;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      background: transparent;
-      color: var(--text-muted);
-      transition: 0.15s;
-    }
-    .quick-preset-btn:hover {
-      background: var(--card-bg);
-      color: var(--text);
-    }
-    .quick-preset-btn.active-preset {
-      background: var(--primary);
-      color: #fff;
-    }
+    .quick-preset-group { display: flex; gap: 0.3rem; background: var(--bg); padding: 0.25rem; border-radius: 12px; border: 1.5px solid var(--border); width: fit-content; }
+    .quick-preset-btn { padding: 0.3rem 0.65rem; font-size: 0.75rem; font-weight: 800; border-radius: 8px; border: none; cursor: pointer; background: transparent; color: var(--text-muted); transition: 0.15s; }
+    .quick-preset-btn:hover { background: var(--card-bg); color: var(--text); }
+    .quick-preset-btn.active-preset { background: var(--primary); color: #fff; }
 
     .autosave-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: var(--success);
-      background: #dcfce7;
-      padding: 0.35rem 0.8rem;
-      border-radius: 20px;
-      border: 1px solid #86efac;
+      display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 800;
+      color: var(--success); background: #dcfce7; padding: 0.35rem 0.8rem; border-radius: 20px; border: 1px solid #86efac;
     }
-    .autosave-badge.saving {
-      color: var(--accent-gold);
-      background: #fef3c7;
-      border-color: #fde68a;
-    }
+    .autosave-badge.saving { color: var(--accent-gold); background: #fef3c7; border-color: #fde68a; }
   </style>
 </head>
 <body>
@@ -370,7 +286,7 @@
   </div>
 
   <!-- =========================================================
-       DRAWER
+       DRAWER NAVIGATION
        ========================================================= -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
   <div class="drawer" id="drawer">
@@ -396,10 +312,15 @@
       <button class="nav-link" onclick="switchNav('eggPanel', this)">🥚 Egg Yield & Sales</button>
       <button class="nav-link" onclick="switchNav('feedPanel', this)">🌾 Feed Stock & Intake</button>
       <button class="nav-link" onclick="switchNav('mortalityPanel', this)">🩺 Flock Health & Vaccine</button>
+      <button class="nav-link" onclick="switchNav('flockPanel', this)">🐔 Flock Placements</button>
       <button class="nav-link" onclick="switchNav('gatePassPanel', this)">🚛 Smart Gate Pass & E-Sign</button>
 
-      <span class="nav-section-title">Financials</span>
-      <button class="nav-link" onclick="switchNav('financePanel', this)">💵 Unit P&L Statement</button>
+      <span class="nav-section-title">Compliance & Audits</span>
+      <button class="nav-link" onclick="switchNav('biosecurityPanel', this)">🛡️ Biosecurity & Visitor Log</button>
+
+      <span class="nav-section-title">Financials & Reports</span>
+      <button class="nav-link" onclick="switchNav('financePanel', this)">💵 Unit Expenses</button>
+      <button class="nav-link" onclick="switchNav('reportsPanel', this)">📊 Reports Center (PDF)</button>
 
       <!-- ADMIN ONLY SECTION -->
       <div id="adminNavSection" style="display: none;">
@@ -449,13 +370,12 @@
           <h2>Select Operational Unit</h2>
           <p>Manage daily operations, workforce, muster, production, and gate passes across divisions</p>
         </div>
-
         <div class="units-grid" id="unitsGridContainer"></div>
       </div>
 
       <!-- SCREEN 2: ACTIVE WORKSPACE -->
       <div id="unitWorkspaceScreen" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
           <div>
             <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent-gold); text-transform: uppercase;">Active Division</span>
             <h2 id="currentUnitTitle" style="color: var(--primary);">Unit Workspace</h2>
@@ -463,12 +383,19 @@
           <button class="btn btn-secondary" onclick="goToUnitSelection()">← Switch Unit</button>
         </div>
 
-        <!-- KPIS -->
+        <!-- NOTIFICATION BANNER SECTION -->
+        <div id="notifContainer" class="notif-banner"></div>
+
+        <!-- 8 LIVE OPERATIONAL KPIS -->
         <div class="kpi-grid">
-          <div class="kpi-card"><div><span>Hatchability</span><h3 id="kpiHatchability">0%</h3></div><div style="font-size: 1.5rem;">🎯</div></div>
-          <div class="kpi-card"><div><span>Total Eggs</span><h3 id="kpiEggs">0</h3></div><div style="font-size: 1.5rem;">🥚</div></div>
-          <div class="kpi-card"><div><span>Feed Balance</span><h3 id="kpiFeed">0 Bags</h3></div><div style="font-size: 1.5rem;">🌾</div></div>
-          <div class="kpi-card"><div><span>Net Balance</span><h3 id="kpiNetPL">₹0</h3></div><div style="font-size: 1.5rem;">💰</div></div>
+          <div class="kpi-card"><div><span>Today's Eggs</span><h3 id="kpiTodayEggs">0</h3></div><div style="font-size: 1.4rem;">🥚</div></div>
+          <div class="kpi-card"><div><span>Feed Intake (Today)</span><h3 id="kpiFeedConsumed">0 Bags</h3></div><div style="font-size: 1.4rem;">🌾</div></div>
+          <div class="kpi-card"><div><span>Mortality (Today)</span><h3 id="kpiTodayMort">0 Birds</h3></div><div style="font-size: 1.4rem;">🩺</div></div>
+          <div class="kpi-card"><div><span>Current Flock</span><h3 id="kpiFlockCount">0 Birds</h3></div><div style="font-size: 1.4rem;">🐔</div></div>
+          <div class="kpi-card"><div><span>Today's Expenses</span><h3 id="kpiTodayExp">₹0</h3></div><div style="font-size: 1.4rem;">💸</div></div>
+          <div class="kpi-card"><div><span>Revenue (Lifetime)</span><h3 id="kpiRevenue">₹0</h3></div><div style="font-size: 1.4rem;">💵</div></div>
+          <div class="kpi-card"><div><span>Net Profit / Loss</span><h3 id="kpiNetPL">₹0</h3></div><div style="font-size: 1.4rem;">📈</div></div>
+          <div class="kpi-card"><div><span>Feed Cost / Egg</span><h3 id="kpiFeedCostEgg">₹0.00</h3></div><div style="font-size: 1.4rem;">🎯</div></div>
         </div>
 
         <!-- 1. STAFF -->
@@ -508,39 +435,20 @@
               </div>
             </div>
 
-            <!-- Live Attendance Statistics Header -->
             <div class="att-stats-bar">
-              <div class="att-stat-pill">
-                <span>Total Roster</span>
-                <strong id="statTotalStaff">0</strong>
-              </div>
-              <div class="att-stat-pill">
-                <span>Full Day (1.0)</span>
-                <strong id="statFullDay" style="color: #15803d;">0</strong>
-              </div>
-              <div class="att-stat-pill">
-                <span>Half Day (0.5)</span>
-                <strong id="statHalfDay" style="color: var(--accent-gold);">0</strong>
-              </div>
-              <div class="att-stat-pill">
-                <span>Absent (0.0)</span>
-                <strong id="statAbsent" style="color: var(--danger);">0</strong>
-              </div>
-              <div class="att-stat-pill">
-                <span>Total Shift Units</span>
-                <strong id="statTotalUnits" style="color: var(--primary);">0.0</strong>
-              </div>
+              <div class="att-stat-pill"><span>Total Roster</span><strong id="statTotalStaff">0</strong></div>
+              <div class="att-stat-pill"><span>Full Day (1.0)</span><strong id="statFullDay" style="color: #15803d;">0</strong></div>
+              <div class="att-stat-pill"><span>Half Day (0.5)</span><strong id="statHalfDay" style="color: var(--accent-gold);">0</strong></div>
+              <div class="att-stat-pill"><span>Absent (0.0)</span><strong id="statAbsent" style="color: var(--danger);">0</strong></div>
+              <div class="att-stat-pill"><span>Total Shift Units</span><strong id="statTotalUnits" style="color: var(--primary);">0.0</strong></div>
             </div>
 
-            <!-- Muster Toolbar & Bulk Actions -->
             <div class="att-toolbar">
               <div style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;">
                 <label style="font-weight: 800; font-size: 0.84rem;">📅 Date:</label>
                 <input type="date" id="batchAttDate" class="form-control" style="width: auto;" onchange="loadBatchAttendanceForDate()">
                 <input type="text" id="attSearchInput" class="form-control" placeholder="🔍 Search worker or role..." style="width: 220px;" oninput="renderAttendanceTable()">
               </div>
-
-              <!-- Instant Bulk Fill Presets -->
               <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                 <span style="font-size: 0.76rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Bulk Presets:</span>
                 <button class="btn btn-success btn-sm" onclick="bulkSetAllMuster('full')">Mark All Full Day (1.0)</button>
@@ -550,7 +458,6 @@
               </div>
             </div>
 
-            <!-- Attendance Fast Table Matrix -->
             <div class="table-responsive">
               <table>
                 <thead>
@@ -605,7 +512,7 @@
             </div>
             <div class="table-responsive">
               <table>
-                <thead><tr><th>Worker</th><th>Rate</th><th>Shifts</th><th>OT (₹)</th><th>Gross</th><th>Advances</th><th>Net Salary</th><th>Actions</th></tr></thead>
+                <thead><tr><th>Worker</th><th>Rate</th><th>Shifts</th><th>OT (₹)</th><th>Gross</th><th>Advances</th><th>Net Salary</th></tr></thead>
                 <tbody id="payrollList"></tbody>
               </table>
             </div>
@@ -653,29 +560,100 @@
               <div class="form-group"><label>Shed #</label><input type="text" id="mortShed" class="form-control" placeholder="Shed 1"></div>
               <div class="form-group"><label>Mortality Count</label><input type="number" id="mortCount" class="form-control" placeholder="0"></div>
               <div class="form-group"><label>Vaccine Name</label><input type="text" id="vaccineName" class="form-control" placeholder="Lasota"></div>
-              <div class="form-group"><label>Notes</label><input type="text" id="mortNotes" class="form-control" placeholder="Water intake normal"></div>
+              <div class="form-group"><label>Next Scheduled Dose Date</label><input type="date" id="vaccineDueDate" class="form-control"></div>
               <button class="btn btn-primary" onclick="addMortLog()">Record Health</button>
             </div>
           </div>
         </div>
 
-        <!-- 9. SMART VEHICLE GATE PASS WITH PHOTO & E-SIGNATURE -->
+        <!-- FLOCK PLACEMENT INITIALIZER -->
+        <div id="flockPanel" class="panel">
+          <div class="card">
+            <div class="card-title">Flock Stock Initializer</div>
+            <div class="form-grid">
+              <div class="form-group"><label>Batch / Shed Name</label><input type="text" id="flockBatch" class="form-control" placeholder="Batch A"></div>
+              <div class="form-group"><label>Initial Bird Count Placed</label><input type="number" id="flockPlaced" class="form-control" placeholder="10000"></div>
+              <button class="btn btn-primary" onclick="addFlockPlacement()">Set Placement</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. BIOSECURITY, VISITOR LOG & DOWNTIME AUDITS -->
+        <div id="biosecurityPanel" class="panel">
+          <div class="card">
+            <div class="card-title">
+              <span>🛡️ Biosecurity Visitor Entry & Quarantine Log</span>
+              <button class="btn btn-primary btn-sm" onclick="exportBiosecurityPDF()">📄 Export Audit PDF</button>
+            </div>
+            <div class="form-grid">
+              <div class="form-group"><label>Date & Time</label><input type="datetime-local" id="bioVisitDate" class="form-control"></div>
+              <div class="form-group"><label>Visitor / Auditor Name</label><input type="text" id="bioVisitorName" class="form-control" placeholder="Dr. S. Kumar"></div>
+              <div class="form-group"><label>Organization / Purpose</label><input type="text" id="bioVisitPurpose" class="form-control" placeholder="Veterinary Inspection"></div>
+              <div class="form-group"><label>Last Poultry Farm Visited</label><input type="text" id="bioLastFarm" class="form-control" placeholder="None / Farm 2 (>72 hrs ago)"></div>
+              <div class="form-group">
+                <label>Shower-In & PPE Protocol</label>
+                <select id="bioPpeStatus" class="form-control">
+                  <option value="Complied (Shower + Full PPE)">Complied (Shower + Full PPE)</option>
+                  <option value="Boots & Sanitization Only">Boots & Sanitization Only</option>
+                  <option value="Non-Complied / Restricted">Non-Complied / Restricted</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="addVisitorBioLog()">Log Visitor Clearance</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🚛 Vehicle Wheel-Dip Disinfection Checkpoint</div>
+            <div class="form-grid">
+              <div class="form-group"><label>Date & Time</label><input type="datetime-local" id="bioVehDate" class="form-control"></div>
+              <div class="form-group"><label>Vehicle Registration #</label><input type="text" id="bioVehNumber" class="form-control" placeholder="TN 38 AB 1234"></div>
+              <div class="form-group"><label>Disinfectant Chemical</label><input type="text" id="bioVehChemical" class="form-control" placeholder="Virkon-S / Glutex (2%)"></div>
+              <div class="form-group">
+                <label>Wheel-Dip & Spray Status</label>
+                <select id="bioVehStatus" class="form-control">
+                  <option value="Passed (Wheel Dip + Spray Tunnel)">Passed (Wheel Dip + Spray Tunnel)</option>
+                  <option value="Manual Spray Passed">Manual Spray Passed</option>
+                  <option value="Failed / Turned Away">Failed / Turned Away</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="addVehicleDisinfectionLog()">Log Disinfection</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⏳ Shed Downtime, Fumigation & Depletion Sanitization</div>
+            <div class="form-grid">
+              <div class="form-group"><label>Shed Number</label><input type="text" id="bioShedNo" class="form-control" placeholder="Shed 2"></div>
+              <div class="form-group"><label>Depletion / Clearing Date</label><input type="date" id="bioDepleteDate" class="form-control"></div>
+              <div class="form-group"><label>Fumigation Date</label><input type="date" id="bioFumigateDate" class="form-control"></div>
+              <div class="form-group"><label>Mandatory Downtime (Days)</label><input type="number" id="bioDowntimeDays" class="form-control" value="14"></div>
+              <div class="form-group">
+                <label>Clearance Status</label>
+                <select id="bioShedStatus" class="form-control">
+                  <option value="Under Rest Period">Under Rest Period</option>
+                  <option value="Fumigated & Sealed">Fumigated & Sealed</option>
+                  <option value="Swab Tested & Cleared">Swab Tested & Cleared for Next Flock</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="addShedDowntimeLog()">Record Downtime Cycle</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. SMART VEHICLE GATE PASS -->
         <div id="gatePassPanel" class="panel">
           <div class="card">
             <div class="card-title">🚛 Issue Vehicle Gate Pass (With Photo & Digital Signature)</div>
-            
             <div class="form-grid" style="margin-bottom: 1.5rem;">
               <div class="form-group"><label>Date & Time</label><input type="datetime-local" id="gatePassDateTime" class="form-control"></div>
-              <div class="form-group"><label>Vehicle Registration Number</label><input type="text" id="gateVehicleNo" class="form-control" placeholder="e.g. TN 38 AB 1234"></div>
+              <div class="form-group"><label>Vehicle Registration #</label><input type="text" id="gateVehicleNo" class="form-control" placeholder="e.g. TN 38 AB 1234"></div>
               <div class="form-group"><label>Driver Name & Phone</label><input type="text" id="gateDriverInfo" class="form-control" placeholder="Driver Contact"></div>
-              <div class="form-group"><label>Cargo Type</label><input type="text" id="gateCargoType" class="form-control" placeholder="e.g. DOC Chicks / Eggs / Cull Birds"></div>
+              <div class="form-group"><label>Cargo Type</label><input type="text" id="gateCargoType" class="form-control" placeholder="DOC Chicks / Eggs / Cull Birds"></div>
               <div class="form-group"><label>Quantity</label><input type="number" id="gateQuantity" class="form-control" placeholder="10000"></div>
               <div class="form-group"><label>Destination / Trader</label><input type="text" id="gateDestination" class="form-control" placeholder="Trader / Farm Name"></div>
             </div>
 
-            <!-- Vehicle Photo Upload & E-Sign Grid -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 1.5rem;">
-              <!-- Vehicle Photo Upload -->
               <div>
                 <label style="font-weight: 800; font-size: 0.82rem; display: block; margin-bottom: 0.4rem;">📷 Upload Vehicle / Dispatch Photo</label>
                 <div class="photo-preview-box" id="vehiclePhotoBox">
@@ -684,7 +662,6 @@
                 <input type="file" id="vehiclePhotoInput" accept="image/*" class="form-control" style="margin-top: 0.5rem;" onchange="handleVehiclePhotoUpload(event)">
               </div>
 
-              <!-- Driver E-Signature Pad -->
               <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
                   <label style="font-weight: 800; font-size: 0.82rem;">✍️ Driver Digital Signature</label>
@@ -693,7 +670,6 @@
                 <canvas id="driverSignaturePad" class="sig-canvas-box" width="320" height="140"></canvas>
               </div>
 
-              <!-- Official E-Stamp Preview -->
               <div>
                 <label style="font-weight: 800; font-size: 0.82rem; display: block; margin-bottom: 0.4rem;">🛡️ Unit Security E-Stamp</label>
                 <div class="e-stamp-preview" id="unitEStampDisplay">
@@ -718,7 +694,7 @@
           </div>
         </div>
 
-        <!-- 10. FINANCE -->
+        <!-- 11. FINANCE -->
         <div id="financePanel" class="panel">
           <div class="card">
             <div class="card-title">Record Operational Expense</div>
@@ -731,17 +707,32 @@
           </div>
         </div>
 
-        <!-- 11. MASTER ADMIN CONTROL CENTER (RESTRICTED TO ADMIN) -->
+        <!-- 12. COMPREHENSIVE REPORTS CENTER -->
+        <div id="reportsPanel" class="panel">
+          <div class="card">
+            <div class="card-title">📑 Master Reports Center (Export PDF Ledgers)</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
+              <button class="btn btn-secondary" onclick="exportDailyFarmReportPDF()">📅 Daily Farm Report PDF</button>
+              <button class="btn btn-secondary" onclick="exportMonthlyProductionPDF()">📈 Monthly Production PDF</button>
+              <button class="btn btn-secondary" onclick="exportFeedReportPDF()">🌾 Feed Movement PDF</button>
+              <button class="btn btn-secondary" onclick="exportMortalityReportPDF()">🩺 Mortality & Health PDF</button>
+              <button class="btn btn-secondary" onclick="exportBiosecurityPDF()">🛡️ Biosecurity & Audit PDF</button>
+              <button class="btn btn-secondary" onclick="exportExpenseReportPDF()">💸 Expense Ledger PDF</button>
+              <button class="btn btn-secondary" onclick="exportProfitLossPDF()">📊 Profit & Loss PDF</button>
+              <button class="btn btn-secondary" onclick="exportPayrollPDF()">📄 Payroll Master PDF</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13. MASTER ADMIN CONTROL CENTER -->
         <div id="adminPanel" class="panel">
-          <!-- Unit Management (Admin Only) -->
           <div class="card" style="border-color: var(--primary);">
             <div class="card-title" style="color: var(--primary);">🏢 Unit Management (Create & Delete Divisions)</div>
             <div class="form-grid" style="margin-bottom: 1.5rem;">
               <div class="form-group"><label>Unit Name</label><input type="text" id="adminUnitName" class="form-control" placeholder="e.g. AMUTAN BREEDING FARM 4"></div>
-              <div class="form-group"><label>Description / Scope</label><input type="text" id="adminUnitDesc" class="form-control" placeholder="e.g. Breeder Operations"></div>
+              <div class="form-group"><label>Description / Scope</label><input type="text" id="adminUnitDesc" class="form-control" placeholder="Breeder Operations"></div>
               <button class="btn btn-primary" onclick="adminAddNewUnit()">➕ Add New Unit</button>
             </div>
-
             <div class="table-responsive">
               <table>
                 <thead><tr><th>Unit ID</th><th>Division Name</th><th>Description</th><th>Admin Actions</th></tr></thead>
@@ -750,33 +741,30 @@
             </div>
           </div>
 
-          <!-- PDF Template Customizer -->
           <div class="card">
             <div class="card-title">📄 Master PDF Template Customization</div>
             <div class="form-grid">
               <div class="form-group"><label>Company Header Title</label><input type="text" id="cfgPdfHeader" class="form-control" value="AMUTAN GROUP OF ENTERPRISES"></div>
-              <div class="form-group"><label>PDF Subtitle / Header Bio</label><input type="text" id="cfgPdfSub" class="form-control" value="Poultry Operations, Breeding Farms & Hatcheries"></div>
-              <div class="form-group"><label>PDF Footer Confidentiality Text</label><input type="text" id="cfgPdfFooter" class="form-control" value="Amutan Groups Enterprise Portal • Confidential Poultry Ledger"></div>
-              <div class="form-group"><label>PDF Primary Brand Color</label><input type="color" id="cfgPdfColor" class="form-control" value="#6c111e" style="height: 46px; padding: 4px;"></div>
-              <div class="form-group"><label>Table Header Fill Color</label><input type="color" id="cfgPdfTableColor" class="form-control" value="#6c111e" style="height: 46px; padding: 4px;"></div>
+              <div class="form-group"><label>PDF Subtitle / Bio</label><input type="text" id="cfgPdfSub" class="form-control" value="Poultry Operations, Breeding Farms & Hatcheries"></div>
+              <div class="form-group"><label>PDF Footer Text</label><input type="text" id="cfgPdfFooter" class="form-control" value="Amutan Groups Enterprise Portal • Confidential Poultry Ledger"></div>
+              <div class="form-group"><label>Primary Color</label><input type="color" id="cfgPdfColor" class="form-control" value="#6c111e" style="height: 46px; padding: 4px;"></div>
+              <div class="form-group"><label>Table Color</label><input type="color" id="cfgPdfTableColor" class="form-control" value="#6c111e" style="height: 46px; padding: 4px;"></div>
               <button class="btn btn-primary" onclick="saveAdminPdfTemplate()">Update PDF Styling</button>
             </div>
           </div>
 
-          <!-- E-Stamp Customizer -->
           <div class="card">
-            <div class="card-title">🛡️ Official E-Stamp & Digital Seal Customization</div>
+            <div class="card-title">🛡️ Official E-Stamp Customization</div>
             <div class="form-grid">
-              <div class="form-group"><label>Stamp Header Arc Text</label><input type="text" id="cfgStampHeader" class="form-control" value="AMUTAN GROUP"></div>
-              <div class="form-group"><label>Stamp Center Seal Text</label><input type="text" id="cfgStampCenter" class="form-control" value="SECURITY VERIFIED"></div>
-              <div class="form-group"><label>Stamp Footer Text</label><input type="text" id="cfgStampFooter" class="form-control" value="OUTWARD DISPATCH"></div>
-              <div class="form-group"><label>Stamp Ink Color</label><input type="color" id="cfgStampColor" class="form-control" value="#6c111e" style="height: 46px; padding: 4px;"></div>
-              <div class="form-group"><label>Stamp Rotation Angle (Degrees)</label><input type="number" id="cfgStampRotate" class="form-control" value="-10"></div>
+              <div class="form-group"><label>Stamp Header</label><input type="text" id="cfgStampHeader" class="form-control" value="AMUTAN GROUP"></div>
+              <div class="form-group"><label>Stamp Center Text</label><input type="text" id="cfgStampCenter" class="form-control" value="SECURITY VERIFIED"></div>
+              <div class="form-group"><label>Stamp Footer</label><input type="text" id="cfgStampFooter" class="form-control" value="OUTWARD DISPATCH"></div>
+              <div class="form-group"><label>Stamp Color</label><input type="color" id="cfgStampColor" class="form-control" value="#6c111e" style="height: 46px; padding: 4px;"></div>
+              <div class="form-group"><label>Rotation Angle</label><input type="number" id="cfgStampRotate" class="form-control" value="-10"></div>
               <button class="btn btn-primary" onclick="saveAdminEStamp()">Update E-Stamp Seal</button>
             </div>
           </div>
 
-          <!-- Calculation Formulas -->
           <div class="card">
             <div class="card-title">⚙️ Wage & OT Formulas Engine</div>
             <div class="form-grid">
@@ -848,13 +836,15 @@
       eggs: JSON.parse(localStorage.getItem('ag_eggs')) || [],
       feed: JSON.parse(localStorage.getItem('ag_feed')) || [],
       mortality: JSON.parse(localStorage.getItem('ag_mortality')) || [],
-      expenses: JSON.parse(localStorage.getItem('ag_expenses')) || []
+      expenses: JSON.parse(localStorage.getItem('ag_expenses')) || [],
+      flockPlacements: JSON.parse(localStorage.getItem('ag_flock')) || [],
+      biosecurityVisitors: JSON.parse(localStorage.getItem('ag_bio_visitors')) || [],
+      biosecurityVehicles: JSON.parse(localStorage.getItem('ag_bio_vehicles')) || [],
+      biosecurityDowntime: JSON.parse(localStorage.getItem('ag_bio_downtime')) || []
     };
 
     let tempBatchAttendance = {};
     let tempVehiclePhotoBase64 = null;
-
-    // Digital Signature Pad Logic
     let isDrawing = false;
     let sigCanvas, sigCtx;
 
@@ -944,6 +934,16 @@
       alert('PDF Template styling customized successfully!');
     }
 
+    function saveAdminFormulas() {
+      state.formulas = {
+        morningUnit: parseFloat(document.getElementById('cfgShiftMorning').value) || 0.5,
+        afternoonUnit: parseFloat(document.getElementById('cfgShiftAfternoon').value) || 0.5,
+        otRate: parseFloat(document.getElementById('cfgOtRate').value) || 75
+      };
+      persist();
+      alert('Calculation formulas updated successfully!');
+    }
+
     function persist() {
       localStorage.setItem('ag_dyn_units', JSON.stringify(state.units));
       localStorage.setItem('ag_formulas', JSON.stringify(state.formulas));
@@ -959,6 +959,10 @@
       localStorage.setItem('ag_feed', JSON.stringify(state.feed));
       localStorage.setItem('ag_mortality', JSON.stringify(state.mortality));
       localStorage.setItem('ag_expenses', JSON.stringify(state.expenses));
+      localStorage.setItem('ag_flock', JSON.stringify(state.flockPlacements));
+      localStorage.setItem('ag_bio_visitors', JSON.stringify(state.biosecurityVisitors));
+      localStorage.setItem('ag_bio_vehicles', JSON.stringify(state.biosecurityVehicles));
+      localStorage.setItem('ag_bio_downtime', JSON.stringify(state.biosecurityDowntime));
 
       db.ref('amutan_enterprise_data').set(state).catch(e => console.log("Firebase sync: ", e));
       renderWorkspace();
@@ -970,18 +974,12 @@
         const d = snap.val();
         if (d) {
           state = { ...state, ...d };
-
-          // Enforce admin password as 1234 in Firebase & memory
           let adminAcc = state.users ? state.users.find(u => u.user.toLowerCase() === 'admin') : null;
           if (!adminAcc) {
             state.users = state.users || [];
             state.users.push({ user: 'admin', pass: '1234', role: 'Admin', name: 'Master Admin' });
             persist();
-          } else if (adminAcc.pass !== '1234') {
-            adminAcc.pass = '1234';
-            persist();
           }
-
           renderWorkspace();
           renderUnitCards();
           renderAdminUnitsTable();
@@ -1121,9 +1119,7 @@
       persist();
     }
 
-    /* =========================================================
-       HIGH-EFFICIENCY ATTENDANCE MATRIX LOGIC
-       ========================================================= */
+    /* Attendance Muster Engine */
     function loadBatchAttendanceForDate() {
       const date = document.getElementById('batchAttDate').value || new Date().toISOString().slice(0, 10);
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
@@ -1152,7 +1148,6 @@
       );
 
       tb.innerHTML = '';
-
       let totalStaff = unitWorkers.length;
       let fullDayCount = 0;
       let halfDayCount = 0;
@@ -1197,35 +1192,25 @@
               <strong>${w.name}</strong>
               <small style="display:block; color:var(--text-muted); font-size:0.75rem;">${w.role || 'Staff'} • ₹${w.wage}/day</small>
             </td>
-            
-            <!-- Morning Shift Direct Toggle -->
             <td style="text-align: center;">
               <button class="shift-toggle-btn ${rec.morning ? 'present' : 'absent'}" onclick="toggleShift(${w.id}, 'morning')">
                 ${rec.morning ? '✔ Present (0.5)' : '✕ Absent (0.0)'}
               </button>
             </td>
-
-            <!-- Afternoon Shift Direct Toggle -->
             <td style="text-align: center;">
               <button class="shift-toggle-btn ${rec.afternoon ? 'present' : 'absent'}" onclick="toggleShift(${w.id}, 'afternoon')">
                 ${rec.afternoon ? '✔ Present (0.5)' : '✕ Absent (0.0)'}
               </button>
             </td>
-
-            <!-- Fast One-Click Presets -->
             <td style="text-align: center;">
               <div class="quick-preset-group" style="margin: 0 auto;">
-                <button class="quick-preset-btn ${units === 1.0 ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'full')" title="Full Day">Full</button>
-                <button class="quick-preset-btn ${units === 0.5 && rec.morning ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'morning')" title="Morning Only">Morn</button>
-                <button class="quick-preset-btn ${units === 0.5 && rec.afternoon ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'afternoon')" title="Afternoon Only">Aft</button>
-                <button class="quick-preset-btn ${units === 0 ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'absent')" title="Absent">Off</button>
+                <button class="quick-preset-btn ${units === 1.0 ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'full')">Full</button>
+                <button class="quick-preset-btn ${units === 0.5 && rec.morning ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'morning')">Morn</button>
+                <button class="quick-preset-btn ${units === 0.5 && rec.afternoon ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'afternoon')">Aft</button>
+                <button class="quick-preset-btn ${units === 0 ? 'active-preset' : ''}" onclick="setWorkerPreset(${w.id}, 'absent')">Off</button>
               </div>
             </td>
-
-            <!-- Units Counter -->
-            <td style="text-align: right;">
-              ${unitBadge}
-            </td>
+            <td style="text-align: right;">${unitBadge}</td>
           </tr>
         `;
       });
@@ -1243,7 +1228,6 @@
       else if (mode === 'morning') tempBatchAttendance[wId] = { morning: true, afternoon: false };
       else if (mode === 'afternoon') tempBatchAttendance[wId] = { morning: false, afternoon: true };
       else if (mode === 'absent') tempBatchAttendance[wId] = { morning: false, afternoon: false };
-      
       triggerAutoSaveAttendance();
       renderAttendanceTable();
     }
@@ -1267,7 +1251,6 @@
         indicator.classList.add('saving');
         indicator.innerText = '⟳ Saving...';
       }
-
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
         saveBatchAttendanceSilent();
@@ -1291,13 +1274,7 @@
         const units = (s.morning ? mUnit : 0) + (s.afternoon ? aUnit : 0);
         state.attendance.unshift({ date, workerId: parseInt(wId), morning: s.morning, afternoon: s.afternoon, units });
       });
-
       persist();
-    }
-
-    function saveBatchAttendance() {
-      saveBatchAttendanceSilent();
-      alert('Attendance muster saved & synced!');
     }
 
     function shareAttendanceWhatsApp() {
@@ -1320,9 +1297,7 @@
       });
 
       msg += `\n*TOTAL WORKFORCE ON SHIFT:* ${totalUnits} Units`;
-
-      const encoded = encodeURIComponent(msg);
-      window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     function addOvertimeLog() {
@@ -1377,10 +1352,62 @@
       const shed = document.getElementById('mortShed').value.trim();
       const count = parseInt(document.getElementById('mortCount').value) || 0;
       const vaccine = document.getElementById('vaccineName').value.trim();
-      const notes = document.getElementById('mortNotes').value.trim();
-      state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, vaccine, notes });
+      const dueDate = document.getElementById('vaccineDueDate').value;
+      state.mortality.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, shed, count, vaccine, dueDate });
       persist();
       alert('Health log saved!');
+    }
+
+    function addFlockPlacement() {
+      const batch = document.getElementById('flockBatch').value.trim();
+      const count = parseInt(document.getElementById('flockPlaced').value) || 0;
+      state.flockPlacements.unshift({ id: Date.now(), unitId: state.selectedUnitId, batch, count });
+      persist();
+      alert('Flock placement initialized!');
+    }
+
+    function addExpenseLog() {
+      const date = document.getElementById('expDate').value;
+      const category = document.getElementById('expCategory').value.trim();
+      const amount = parseFloat(document.getElementById('expAmount').value) || 0;
+      state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, category, amount });
+      persist();
+      alert('Expense recorded!');
+    }
+
+    function addVisitorBioLog() {
+      const dateTime = document.getElementById('bioVisitDate').value;
+      const name = document.getElementById('bioVisitorName').value.trim();
+      const purpose = document.getElementById('bioVisitPurpose').value.trim();
+      const lastFarm = document.getElementById('bioLastFarm').value.trim();
+      const ppeStatus = document.getElementById('bioPpeStatus').value;
+      if (!dateTime || !name) return alert('Fill visitor name and date.');
+      state.biosecurityVisitors.unshift({ id: Date.now(), unitId: state.selectedUnitId, dateTime, name, purpose, lastFarm, ppeStatus });
+      persist();
+      alert('Visitor biosecurity clearance recorded!');
+    }
+
+    function addVehicleDisinfectionLog() {
+      const dateTime = document.getElementById('bioVehDate').value;
+      const vehNo = document.getElementById('bioVehNumber').value.trim();
+      const chemical = document.getElementById('bioVehChemical').value.trim();
+      const status = document.getElementById('bioVehStatus').value;
+      if (!dateTime || !vehNo) return alert('Fill vehicle number and date.');
+      state.biosecurityVehicles.unshift({ id: Date.now(), unitId: state.selectedUnitId, dateTime, vehNo, chemical, status });
+      persist();
+      alert('Vehicle disinfection logged!');
+    }
+
+    function addShedDowntimeLog() {
+      const shed = document.getElementById('bioShedNo').value.trim();
+      const depleteDate = document.getElementById('bioDepleteDate').value;
+      const fumigateDate = document.getElementById('bioFumigateDate').value;
+      const downtimeDays = parseInt(document.getElementById('bioDowntimeDays').value) || 14;
+      const status = document.getElementById('bioShedStatus').value;
+      if (!shed || !depleteDate) return alert('Fill shed and depletion date.');
+      state.biosecurityDowntime.unshift({ id: Date.now(), unitId: state.selectedUnitId, shed, depleteDate, fumigateDate, downtimeDays, status });
+      persist();
+      alert('Shed downtime cycle recorded!');
     }
 
     function issueVehicleGatePass() {
@@ -1415,7 +1442,6 @@
       persist();
       downloadSingleGatePassPDF(newPass);
 
-      // Reset
       document.getElementById('gateVehicleNo').value = '';
       document.getElementById('gateDriverInfo').value = '';
       document.getElementById('gateCargoType').value = '';
@@ -1428,20 +1454,16 @@
       alert(`Gate Pass ${passNo} generated successfully with E-Signature!`);
     }
 
-    /* =========================================================
-       CUSTOMIZABLE PDF GENERATION ENGINES
-       ========================================================= */
+    /* Custom PDF Styling Engine */
     function applyCustomPdfBranding(doc, title, subtitleText) {
       const hex = state.pdfSettings.primaryColor || '#6c111e';
       const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
       const pageWidth = doc.internal.pageSize.width;
       const pageHeight = doc.internal.pageSize.height;
 
-      // Header Fill
       doc.setFillColor(r, g, b);
       doc.rect(0, 0, pageWidth, 28, 'F');
 
-      // Top Header Title & Subtitle
       doc.setTextColor(255, 255, 255);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(14);
@@ -1450,7 +1472,6 @@
       doc.setFontSize(8.5);
       doc.text((subtitleText || state.pdfSettings.subtitle) + ` | Generated: ${new Date().toLocaleDateString('en-IN')}`, 14, 21);
 
-      // Bottom Running Footers
       const pageCount = doc.internal.getNumberOfPages();
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
@@ -1464,7 +1485,6 @@
     function downloadSingleGatePassPDF(pass) {
       const doc = new jsPDF();
       const unit = state.units.find(u => u.id === pass.unitId);
-
       const tableHex = state.pdfSettings.tableColor || '#6c111e';
       const tr = parseInt(tableHex.slice(1, 3), 16), tg = parseInt(tableHex.slice(3, 5), 16), tb = parseInt(tableHex.slice(5, 7), 16);
 
@@ -1486,8 +1506,6 @@
       applyCustomPdfBranding(doc, "OFFICIAL GATE PASS", `${unit ? unit.name : 'Poultry Division'} | Outward Clearance`);
 
       let currentY = doc.lastAutoTable.finalY + 12;
-
-      // Add Vehicle Photo
       if (pass.vehiclePhoto) {
         doc.setTextColor(26, 30, 36);
         doc.setFontSize(9);
@@ -1496,20 +1514,15 @@
         doc.addImage(pass.vehiclePhoto, 'JPEG', 14, currentY + 4, 60, 45);
       }
 
-      // Add E-Signature
       if (pass.signature) {
         doc.setTextColor(26, 30, 36);
         doc.setFontSize(9);
         doc.setFont('helvetica', 'bold');
         doc.text("Driver Digital E-Signature:", 90, currentY);
         doc.addImage(pass.signature, 'PNG', 90, currentY + 4, 50, 25);
-        doc.setFontSize(7.5);
-        doc.setFont('helvetica', 'normal');
-        doc.text("Digitally signed at checkpoint", 90, currentY + 34);
       }
 
-      // Render Customized Dynamic E-Stamp Seal
-      const stampColorHex = pass.stampMeta.color || '#6c111e';
+      const stampColorHex = (pass.stampMeta && pass.stampMeta.color) || '#6c111e';
       const sr = parseInt(stampColorHex.slice(1, 3), 16), sg = parseInt(stampColorHex.slice(3, 5), 16), sb = parseInt(stampColorHex.slice(5, 7), 16);
       const stampX = 162, stampY = currentY + 20;
 
@@ -1520,11 +1533,11 @@
       doc.setFontSize(6.5);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(sr, sg, sb);
-      doc.text(pass.stampMeta.header, stampX + 15, stampY - 8, { align: 'center' });
+      doc.text((pass.stampMeta && pass.stampMeta.header) || 'AMUTAN GROUP', stampX + 15, stampY - 8, { align: 'center' });
       doc.setFontSize(7.5);
-      doc.text(pass.stampMeta.center, stampX + 15, stampY + 1, { align: 'center' });
+      doc.text((pass.stampMeta && pass.stampMeta.center) || 'SECURITY VERIFIED', stampX + 15, stampY + 1, { align: 'center' });
       doc.setFontSize(6);
-      doc.text(pass.stampMeta.footer, stampX + 15, stampY + 9, { align: 'center' });
+      doc.text((pass.stampMeta && pass.stampMeta.footer) || 'OUTWARD DISPATCH', stampX + 15, stampY + 9, { align: 'center' });
 
       doc.save(`GatePass_${pass.passNo}_${pass.vehicleNo.replace(/\s+/g, '_')}.pdf`);
     }
@@ -1534,7 +1547,6 @@
       const unit = state.units.find(u => u.id === state.selectedUnitId);
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
       const tableData = unitWorkers.map((w, idx) => [idx + 1, w.name, w.phone || '-', w.role, `Rs. ${w.wage} / day`]);
-
       const tableHex = state.pdfSettings.tableColor || '#6c111e';
       const tr = parseInt(tableHex.slice(1, 3), 16), tg = parseInt(tableHex.slice(3, 5), 16), tb = parseInt(tableHex.slice(5, 7), 16);
 
@@ -1556,7 +1568,7 @@
       const rows = [];
 
       unitWorkers.forEach((w, i) => {
-        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units || 1.0), 0);
+        const units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
         const ot = state.overtime.filter(o => o.workerId === w.id).reduce((s, o) => s + o.amount, 0);
         const adv = state.advances.filter(a => a.workerId === w.id).reduce((s, a) => s + a.amount, 0);
         const gross = (units * w.wage) + ot;
@@ -1578,78 +1590,169 @@
       doc.save(`Payroll_${unit ? unit.name.replace(/\s+/g, '_') : 'Report'}.pdf`);
     }
 
-    function addExpenseLog() {
-      const date = document.getElementById('expDate').value;
-      const category = document.getElementById('expCategory').value.trim();
-      const amount = parseFloat(document.getElementById('expAmount').value) || 0;
-      state.expenses.unshift({ id: Date.now(), unitId: state.selectedUnitId, date, category, amount });
-      persist();
-      alert('Expense recorded!');
+    function exportDailyFarmReportPDF() {
+      const doc = new jsPDF();
+      doc.autoTable({
+        startY: 34,
+        head: [['KPI Parameter', 'Current Metric']],
+        body: [
+          ["Today's Egg Production", document.getElementById('kpiTodayEggs').innerText],
+          ["Today's Feed Consumed", document.getElementById('kpiFeedConsumed').innerText],
+          ["Today's Mortality", document.getElementById('kpiTodayMort').innerText],
+          ["Live Flock Count", document.getElementById('kpiFlockCount').innerText],
+          ["Today's Expenses", document.getElementById('kpiTodayExp').innerText],
+          ["Feed Cost Per Egg", document.getElementById('kpiFeedCostEgg').innerText]
+        ],
+        theme: 'grid'
+      });
+      applyCustomPdfBranding(doc, "DAILY FARM REPORT", "Daily Operations Summary");
+      doc.save('Daily_Farm_Report.pdf');
     }
 
-    function saveAdminFormulas() {
-      state.formulas = {
-        morningUnit: parseFloat(document.getElementById('cfgShiftMorning').value) || 0.5,
-        afternoonUnit: parseFloat(document.getElementById('cfgShiftAfternoon').value) || 0.5,
-        otRate: parseFloat(document.getElementById('cfgOtRate').value) || 75
-      };
-      persist();
-      alert('Calculation formulas updated successfully!');
+    function exportMonthlyProductionPDF() {
+      const doc = new jsPDF();
+      const rows = state.eggs.filter(e => e.unitId === state.selectedUnitId).map(e => [e.date, e.shed, e.hatching, e.commercial, e.broken, e.sold, `Rs. ${e.revenue}`]);
+      doc.autoTable({ startY: 34, head: [['Date', 'Shed', 'Hatching', 'Table', 'Broken', 'Sold', 'Revenue']], body: rows, theme: 'grid' });
+      applyCustomPdfBranding(doc, "PRODUCTION LEDGER", "Monthly Egg Collection & Sales");
+      doc.save('Monthly_Production_Report.pdf');
     }
 
+    function exportFeedReportPDF() {
+      const doc = new jsPDF();
+      const rows = state.feed.filter(f => f.unitId === state.selectedUnitId).map(f => [f.date, f.type, f.feedIn, f.feedOut]);
+      doc.autoTable({ startY: 34, head: [['Date', 'Type', 'Received (Bags)', 'Fed / Consumed (Bags)']], body: rows, theme: 'grid' });
+      applyCustomPdfBranding(doc, "FEED REPORT", "Feed Movement & Silo Balances");
+      doc.save('Feed_Report.pdf');
+    }
+
+    function exportMortalityReportPDF() {
+      const doc = new jsPDF();
+      const rows = state.mortality.filter(m => m.unitId === state.selectedUnitId).map(m => [m.date, m.shed, m.count, m.vaccine || '-', m.dueDate || '-']);
+      doc.autoTable({ startY: 34, head: [['Date', 'Shed', 'Mortality', 'Vaccine Given', 'Next Due Date']], body: rows, theme: 'grid' });
+      applyCustomPdfBranding(doc, "VETERINARY REPORT", "Flock Mortality & Health Log");
+      doc.save('Mortality_Report.pdf');
+    }
+
+    function exportBiosecurityPDF() {
+      const doc = new jsPDF('landscape');
+      const vRows = state.biosecurityVisitors.filter(v => v.unitId === state.selectedUnitId).map(v => [v.dateTime, v.name, v.purpose, v.lastFarm, v.ppeStatus]);
+      doc.autoTable({ startY: 34, head: [['Date & Time', 'Visitor / Auditor Name', 'Purpose', 'Last Visited Site', 'PPE Compliance']], body: vRows, theme: 'grid' });
+
+      let startY2 = doc.lastAutoTable.finalY + 12;
+      doc.text("Vehicle Disinfection & Wheel-Dip Checkpoint Manifest", 14, startY2);
+      const vehRows = state.biosecurityVehicles.filter(vh => vh.unitId === state.selectedUnitId).map(vh => [vh.dateTime, vh.vehNo, vh.chemical, vh.status]);
+      doc.autoTable({ startY: startY2 + 5, head: [['Date & Time', 'Vehicle Number', 'Disinfectant Agent', 'Status / Clearance']], body: vehRows, theme: 'grid' });
+
+      applyCustomPdfBranding(doc, "BIOSECURITY AUDIT", "Quarantine, Disinfection & Visitor Ledger");
+      doc.save('Biosecurity_Audit_Report.pdf');
+    }
+
+    function exportExpenseReportPDF() {
+      const doc = new jsPDF();
+      const rows = state.expenses.filter(e => e.unitId === state.selectedUnitId).map(e => [e.date, e.category, `Rs. ${e.amount}`]);
+      doc.autoTable({ startY: 34, head: [['Date', 'Category', 'Amount']], body: rows, theme: 'grid' });
+      applyCustomPdfBranding(doc, "EXPENSE LEDGER", "Operational Expenditures");
+      doc.save('Expense_Report.pdf');
+    }
+
+    function exportProfitLossPDF() {
+      const doc = new jsPDF();
+      doc.autoTable({
+        startY: 34,
+        head: [['Financial Parameter', 'Total (INR)']],
+        body: [
+          ['Total Egg Sales Revenue', document.getElementById('kpiRevenue').innerText],
+          ['Net Operational Balance (P&L)', document.getElementById('kpiNetPL').innerText],
+          ['Feed Cost Per Egg', document.getElementById('kpiFeedCostEgg').innerText]
+        ],
+        theme: 'grid'
+      });
+      applyCustomPdfBranding(doc, "PROFIT & LOSS STATEMENT", "Net Unit Financial Performance");
+      doc.save('Profit_Loss_Statement.pdf');
+    }
+
+    /* Master Workspace Engine */
     function renderWorkspace() {
       if (!state.selectedUnitId) return;
+      const today = new Date().toISOString().slice(0, 10);
+
       const unitWorkers = state.workers.filter(w => w.unitId === state.selectedUnitId);
       const unitEggs = state.eggs.filter(e => e.unitId === state.selectedUnitId);
       const unitFeed = state.feed.filter(f => f.unitId === state.selectedUnitId);
-      const unitExpenses = state.expenses.filter(e => e.unitId === state.selectedUnitId);
+      const unitMort = state.mortality.filter(m => m.unitId === state.selectedUnitId);
+      const unitExp = state.expenses.filter(e => e.unitId === state.selectedUnitId);
+      const unitFlock = state.flockPlacements.filter(fl => fl.unitId === state.selectedUnitId);
 
-      const totalEggs = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
-      const totalHatching = unitEggs.reduce((s, e) => s + (e.hatching || 0), 0);
-      const hatchPct = totalEggs > 0 ? ((totalHatching / totalEggs) * 100).toFixed(1) : 0;
-      const totalRev = unitEggs.reduce((s, e) => s + (e.revenue || 0), 0);
+      const todayEggs = unitEggs.filter(e => e.date === today).reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
+      const todayFeedFed = unitFeed.filter(f => f.date === today).reduce((s, f) => s + (f.feedOut || 0), 0);
+      const todayMort = unitMort.filter(m => m.date === today).reduce((s, m) => s + (m.count || 0), 0);
+      
+      const totalPlaced = unitFlock.reduce((s, fl) => s + fl.count, 0);
+      const totalMortAll = unitMort.reduce((s, m) => s + m.count, 0);
+      const currentFlock = Math.max(0, totalPlaced - totalMortAll);
+
+      const todayExp = unitExp.filter(e => e.date === today).reduce((s, e) => s + (e.amount || 0), 0);
+      const totalRevenue = unitEggs.reduce((s, e) => s + (e.revenue || 0), 0);
 
       const feedIn = unitFeed.reduce((s, f) => s + (f.feedIn || 0), 0);
       const feedOut = unitFeed.reduce((s, f) => s + (f.feedOut || 0), 0);
-      const feedBal = feedIn - feedOut;
+      const feedBalance = feedIn - feedOut;
 
       let totalPayroll = 0;
       unitWorkers.forEach(w => {
-        let u = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units || 1.0), 0);
+        let u = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
         let ot = state.overtime.filter(o => o.workerId === w.id).reduce((s, o) => s + o.amount, 0);
         totalPayroll += (u * w.wage) + ot;
       });
+      const totalExpensesAll = unitExp.reduce((s, e) => s + (e.amount || 0), 0) + totalPayroll;
+      const netPL = totalRevenue - totalExpensesAll;
 
-      const totalExp = unitExpenses.reduce((s, e) => s + (e.amount || 0), 0);
-      const netPL = totalRev - (totalPayroll + totalExp);
+      const totalFeedCost = unitExp.filter(e => e.category === 'Feed Purchase').reduce((s, e) => s + e.amount, 0);
+      const totalEggsAll = unitEggs.reduce((s, e) => s + (e.hatching + e.commercial + e.broken || 0), 0);
+      const feedCostPerEgg = totalEggsAll > 0 ? (totalFeedCost / totalEggsAll).toFixed(2) : "0.00";
 
-      document.getElementById('kpiHatchability').innerText = `${hatchPct}%`;
-      document.getElementById('kpiEggs').innerText = totalEggs.toLocaleString();
-      document.getElementById('kpiFeed').innerText = `${feedBal} Bags`;
+      document.getElementById('kpiTodayEggs').innerText = todayEggs.toLocaleString();
+      document.getElementById('kpiFeedConsumed').innerText = `${todayFeedFed} Bags`;
+      document.getElementById('kpiTodayMort').innerText = `${todayMort} Birds`;
+      document.getElementById('kpiFlockCount').innerText = `${currentFlock.toLocaleString()} Birds`;
+      document.getElementById('kpiTodayExp').innerText = `₹${todayExp.toLocaleString()}`;
+      document.getElementById('kpiRevenue').innerText = `₹${totalRevenue.toLocaleString()}`;
       document.getElementById('kpiNetPL').innerText = `₹${netPL.toLocaleString()}`;
+      document.getElementById('kpiFeedCostEgg').innerText = `₹${feedCostPerEgg}`;
 
-      const staffList = document.getElementById('staffList');
-      const advWorker = document.getElementById('advWorker');
-      const otWorkerSelect = document.getElementById('otWorkerSelect');
-      staffList.innerHTML = '';
-      advWorker.innerHTML = '<option value="">-- Select Worker --</option>';
-      otWorkerSelect.innerHTML = '<option value="">-- Select Worker --</option>';
-
-      unitWorkers.forEach((w, i) => {
-        staffList.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.phone||'-'}</td><td>${w.role}</td><td>₹${w.wage}</td><td><button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">Delete</button></td></tr>`;
-        advWorker.innerHTML += `<option value="${w.id}">${w.name}</option>`;
-        otWorkerSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
+      const notifBox = document.getElementById('notifContainer');
+      notifBox.innerHTML = '';
+      if (feedBalance < 20) {
+        notifBox.innerHTML += `<div class="notif-pill danger">⚠️ Critical Stock Alert: Feed balance is low (${feedBalance} bags remaining). Re-order stock immediately.</div>`;
+      }
+      unitMort.filter(m => m.dueDate && m.dueDate <= today).forEach(v => {
+        notifBox.innerHTML += `<div class="notif-pill warning">💉 Vaccination / Medicine Due: ${v.vaccine} is scheduled on/before ${v.dueDate} (Shed ${v.shed}).</div>`;
       });
 
-      const payrollList = document.getElementById('payrollList');
-      payrollList.innerHTML = '';
+      const advW = document.getElementById('advWorker');
+      const otW = document.getElementById('otWorkerSelect');
+      advW.innerHTML = '<option value="">-- Select Worker --</option>';
+      otW.innerHTML = '<option value="">-- Select Worker --</option>';
       unitWorkers.forEach(w => {
-        let units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units || 1.0), 0);
+        advW.innerHTML += `<option value="${w.id}">${w.name}</option>`;
+        otW.innerHTML += `<option value="${w.id}">${w.name}</option>`;
+      });
+
+      const staffList = document.getElementById('staffList');
+      staffList.innerHTML = '';
+      unitWorkers.forEach((w, i) => {
+        staffList.innerHTML += `<tr><td>${i+1}</td><td><strong>${w.name}</strong></td><td>${w.phone||'-'}</td><td>${w.role}</td><td>₹${w.wage}</td><td><button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">Delete</button></td></tr>`;
+      });
+
+      const pList = document.getElementById('payrollList');
+      pList.innerHTML = '';
+      unitWorkers.forEach(w => {
+        let units = state.attendance.filter(a => a.workerId === w.id).reduce((s, a) => s + (a.units !== undefined ? a.units : 1.0), 0);
         let ot = state.overtime.filter(o => o.workerId === w.id).reduce((s, o) => s + o.amount, 0);
         let adv = state.advances.filter(a => a.workerId === w.id).reduce((s, a) => s + a.amount, 0);
         let gross = (units * w.wage) + ot;
         let net = Math.max(0, gross - adv);
-        payrollList.innerHTML += `<tr><td><strong>${w.name}</strong></td><td>₹${w.wage}</td><td>${units}</td><td>+ ₹${ot}</td><td>₹${gross}</td><td>- ₹${adv}</td><td><strong style="color:var(--success);">₹${net}</strong></td><td><button class="btn btn-sm btn-whatsapp" onclick="alert('Salary summary dispatched!')">💬</button></td></tr>`;
+        pList.innerHTML += `<tr><td><strong>${w.name}</strong></td><td>₹${w.wage}</td><td>${units}</td><td>+ ₹${ot}</td><td>₹${gross}</td><td>- ₹${adv}</td><td><strong style="color:var(--success);">₹${net}</strong></td></tr>`;
       });
 
       const gateTbody = document.getElementById('gatePassListBody');
@@ -1669,14 +1772,16 @@
       });
     }
 
-    const t = new Date().toISOString().slice(0, 10);
-    document.getElementById('batchAttDate').value = t;
-    document.getElementById('otLogDate').value = t;
-    document.getElementById('advDate').value = t;
-    document.getElementById('eggDate').value = t;
-    document.getElementById('feedDate').value = t;
-    document.getElementById('mortDate').value = t;
-    document.getElementById('expDate').value = t;
+    // Default dates initialization
+    const curDate = new Date().toISOString().slice(0, 10);
+    document.getElementById('eggDate').value = curDate;
+    document.getElementById('feedDate').value = curDate;
+    document.getElementById('mortDate').value = curDate;
+    document.getElementById('expDate').value = curDate;
+    document.getElementById('batchAttDate').value = curDate;
+    document.getElementById('otLogDate').value = curDate;
+    document.getElementById('advDate').value = curDate;
+    document.getElementById('bioDepleteDate').value = curDate;
     document.getElementById('gatePassDateTime').value = new Date().toISOString().slice(0, 16);
   </script>
 </body>
